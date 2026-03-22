@@ -1,0 +1,384 @@
+{
+  "metadata": {
+    "source": "https://www.laboratacadista.com.br",
+    "extracted_at": "2026-02-01",
+    "version": "1.0"
+  },
+  "brand_analysis": {
+    "name": "Labor Atacadista",
+    "logo_url": "https://laboratacadista.agilecdn.com.br/imgs/labor-1743127507.png",
+    "favicon_url": "https://laboratacadista.agilecdn.com.br/imgs/fav-labor1-1743127512.png",
+    "contact": {
+      "phone": "(11) 2076-5670",
+      "whatsapp": "https://api.whatsapp.com/send?phone=551120765670"
+    },
+    "cdn": "laboratacadista.agilecdn.com.br",
+    "platform": "AgileEcommerce",
+    "visual_identity": {
+      "primary_colors": ["#1a1a1a", "#ffffff", "#f5f5f5"],
+      "style": "Clean, profissional, foco em funcionalidade",
+      "typography": "Sans-serif moderna"
+    }
+  },
+  "categories": [
+    {
+      "name": "ABRASIVOS",
+      "slug": "abrasivos",
+      "url": "https://www.laboratacadista.com.br/abrasivos",
+      "subcategories": [
+        {"name": "DISCO FLAP", "slug": "disco-flap", "url": "https://www.laboratacadista.com.br/abrasivos/disco-flap"},
+        {"name": "DISCO LIXA", "slug": "disco-lixa", "url": "https://www.laboratacadista.com.br/abrasivos/disco-lixa"},
+        {"name": "DISCO LIXA DIAMANTADO P/ POLIMENTO", "slug": "disco-lixa-diamantado-p-polimento", "url": "https://www.laboratacadista.com.br/abrasivos/disco-lixa-diamantado-p-polimento"},
+        {"name": "DISCO LIXA VELCRO", "slug": "disco-lixa-velcro", "url": "https://www.laboratacadista.com.br/abrasivos/disco-lixa-velcro"},
+        {"name": "ESCOVA CIRCULAR /ESCOVA TIPO COPO", "slug": "escova-circular-escova-tipo-copo", "url": "https://www.laboratacadista.com.br/abrasivos/escova-circular-escova-tipo-copo"}
+      ]
+    },
+    {
+      "name": "ADESIVOS E FITAS",
+      "slug": "adesivos-e-fitas",
+      "url": "https://www.laboratacadista.com.br/adesivos-e-fitas",
+      "subcategories": [
+        {"name": "ADESIVO ARALDITE", "slug": "adesivo-araldite", "url": "https://www.laboratacadista.com.br/adesivos-e-fitas/adesivo-araldite"},
+        {"name": "ADESIVO DE SILICONE", "slug": "adesivo-de-silicone", "url": "https://www.laboratacadista.com.br/adesivos-e-fitas/adesivo-de-silicone"},
+        {"name": "ADESIVO INSTANTÂNEO", "slug": "adesivo-instantaneo", "url": "https://www.laboratacadista.com.br/adesivos-e-fitas/adesivo-instantaneo"},
+        {"name": "ADESIVO PU", "slug": "adesivo-pu", "url": "https://www.laboratacadista.com.br/adesivos-e-fitas/adesivo-pu"},
+        {"name": "ADESIVO SELADOR", "slug": "adesivo-selador", "url": "https://www.laboratacadista.com.br/adesivos-e-fitas/adesivo-selador"},
+        {"name": "ADESIVO VEDADOR", "slug": "adesivo-vedador", "url": "https://www.laboratacadista.com.br/adesivos-e-fitas/adesivo-vedador"},
+        {"name": "COLA BRANCA", "slug": "cola-branca", "url": "https://www.laboratacadista.com.br/adesivos-e-fitas/cola-branca"},
+        {"name": "COLA DE CONTATO", "slug": "cola-de-contato", "url": "https://www.laboratacadista.com.br/adesivos-e-fitas/cola-de-contato"},
+        {"name": "COLA INSTANTANEA HENKEL", "slug": "cola-instantanea-henkel", "url": "https://www.laboratacadista.com.br/adesivos-e-fitas/cola-instantanea-henkel"},
+        {"name": "COLA PARA MADEIRA", "slug": "cola-para-madeira", "url": "https://www.laboratacadista.com.br/adesivos-e-fitas/cola-para-madeira"},
+        {"name": "ESPUMA EXPANSIVA", "slug": "espuma-expansiva", "url": "https://www.laboratacadista.com.br/adesivos-e-fitas/espuma-expansiva"},
+        {"name": "FITA ANTIDERRAPANTE", "slug": "fita-antiderrapante", "url": "https://www.laboratacadista.com.br/adesivos-e-fitas/fita-antiderrapante"},
+        {"name": "FITA CREPE", "slug": "fita-crepe", "url": "https://www.laboratacadista.com.br/adesivos-e-fitas/fita-crepe"},
+        {"name": "FITA DE AUTO FUSAO", "slug": "fita-de-auto-fusao", "url": "https://www.laboratacadista.com.br/adesivos-e-fitas/fita-de-auto-fusao"},
+        {"name": "FITA DE EMPACOTAMENTO", "slug": "fita-de-empacotamento", "url": "https://www.laboratacadista.com.br/adesivos-e-fitas/fita-de-empacotamento"},
+        {"name": "FITA DEMARCACAO", "slug": "fita-demarcacao", "url": "https://www.laboratacadista.com.br/adesivos-e-fitas/fita-demarcacao"},
+        {"name": "FITA DUPLA FACE", "slug": "fita-dupla-face", "url": "https://www.laboratacadista.com.br/adesivos-e-fitas/fita-dupla-face"},
+        {"name": "FITA ISOLANTE", "slug": "fita-isolante", "url": "https://www.laboratacadista.com.br/adesivos-e-fitas/fita-isolante"},
+        {"name": "FITA SILVER TAPE", "slug": "fita-silver-tape", "url": "https://www.laboratacadista.com.br/adesivos-e-fitas/fita-silver-tape"},
+        {"name": "FIXA CUBA", "slug": "fixa-cuba", "url": "https://www.laboratacadista.com.br/adesivos-e-fitas/fixa-cuba"},
+        {"name": "FIXA FORTE", "slug": "fixa-forte", "url": "https://www.laboratacadista.com.br/adesivos-e-fitas/fixa-forte"},
+        {"name": "REFIL COLA BASTAO", "slug": "refil-cola-bastao", "url": "https://www.laboratacadista.com.br/adesivos-e-fitas/refil-cola-bastao"},
+        {"name": "SELANTES", "slug": "selantes", "url": "https://www.laboratacadista.com.br/adesivos-e-fitas/selantes"},
+        {"name": "SILICONE SPRAY", "slug": "silicone-spray", "url": "https://www.laboratacadista.com.br/adesivos-e-fitas/silicone-spray"},
+        {"name": "SPRAY", "slug": "spray", "url": "https://www.laboratacadista.com.br/adesivos-e-fitas/spray"}
+      ]
+    },
+    {
+      "name": "AUTOMOTIVO",
+      "slug": "automotivo",
+      "url": "https://www.laboratacadista.com.br/automotivo",
+      "subcategories": [
+        {"name": "CINTA P/ AMARRACAO DE CARGA", "slug": "cinta-p-amarracao-de-carga", "url": "https://www.laboratacadista.com.br/automotivo/cinta-p-amarracao-de-carga"},
+        {"name": "ESTETICA AUTOMOTIVA", "slug": "estetica--automotiva", "url": "https://www.laboratacadista.com.br/automotivo/estetica--automotiva"},
+        {"name": "MASSA DE POLIR", "slug": "massa-de-polir", "url": "https://www.laboratacadista.com.br/automotivo/massa-de-polir"},
+        {"name": "TINTA AUTOMOTIVA", "slug": "tinta-automotiva", "url": "https://www.laboratacadista.com.br/automotivo/tinta-automotiva"}
+      ]
+    },
+    {
+      "name": "BANHEIRO",
+      "slug": "banheiro",
+      "url": "https://www.laboratacadista.com.br/banheiro",
+      "subcategories": [
+        {"name": "ACABAMENTO P/ REGISTRO", "slug": "acabamento-p-registro", "url": "https://www.laboratacadista.com.br/banheiro/acabamento-p-registro"},
+        {"name": "ARMARIO PARA BANHEIRO ASTRA", "slug": "armario-para-banheiro-astra", "url": "https://www.laboratacadista.com.br/banheiro/armario-para-banheiro-astra"},
+        {"name": "ASSENTO", "slug": "assento", "url": "https://www.laboratacadista.com.br/banheiro/assento"},
+        {"name": "ASSENTO SANITARIO ASTRA", "slug": "assento-sanitario-astra", "url": "https://www.laboratacadista.com.br/banheiro/assento-sanitario-astra"},
+        {"name": "BOLSA DE LIGAÇÃO EXCENTRICA", "slug": "bolsa-de-ligacao-excentrica", "url": "https://www.laboratacadista.com.br/banheiro/bolsa-de-ligacao-excentrica"},
+        {"name": "BOLSA DE VEDACAO P/ CX ACOPLADA", "slug": "bolsa-de-vedacao-p-cx-acoplada", "url": "https://www.laboratacadista.com.br/banheiro/bolsa-de-vedacao-p-cx-acoplada"},
+        {"name": "BOLSA P/ VASO", "slug": "bolsa-p-vaso", "url": "https://www.laboratacadista.com.br/banheiro/bolsa-p-vaso"},
+        {"name": "BOTAO ACIONADOR SUPERIOR", "slug": "botao-acionador-superior", "url": "https://www.laboratacadista.com.br/banheiro/botao-acionador-superior"},
+        {"name": "BOTAO ACIONAMENTO LATERAL", "slug": "botao-acionamento-lateral", "url": "https://www.laboratacadista.com.br/banheiro/botao-acionamento-lateral"},
+        {"name": "BRACO DE CHUVEIRO", "slug": "braco-de-chuveiro", "url": "https://www.laboratacadista.com.br/banheiro/braco-de-chuveiro"},
+        {"name": "BRACO PARA CHUVEIRO PVC", "slug": "braco-para-chuveiro-pvc", "url": "https://www.laboratacadista.com.br/banheiro/braco-para-chuveiro-pvc"},
+        {"name": "CAIXA DE DESCARGA", "slug": "caixa-de-descarga", "url": "https://www.laboratacadista.com.br/banheiro/caixa-de-descarga"},
+        {"name": "CASTELO ACIONAMENTO CX ACOPLADA", "slug": "castelo-acionamento-cx-acoplada", "url": "https://www.laboratacadista.com.br/banheiro/castelo-acionamento-cx-acoplada"},
+        {"name": "COLUNA P/ LAVATORIO", "slug": "coluna-p-lavatorio", "url": "https://www.laboratacadista.com.br/banheiro/coluna-p-lavatorio"},
+        {"name": "CORRENTE CAIXA ACOPLADA", "slug": "corrente-caixa--acoplada", "url": "https://www.laboratacadista.com.br/banheiro/corrente-caixa--acoplada"},
+        {"name": "CUBA EMBUTIR OVAL", "slug": "cuba-embutir-oval", "url": "https://www.laboratacadista.com.br/banheiro/cuba-embutir-oval"},
+        {"name": "CUBA EMBUTIR REDONDA", "slug": "cuba-embutir-redonda", "url": "https://www.laboratacadista.com.br/banheiro/cuba-embutir-redonda"},
+        {"name": "DUCHA", "slug": "ducha", "url": "https://www.laboratacadista.com.br/banheiro/ducha"},
+        {"name": "GRELHA QUADRADA", "slug": "grelha-quadrada", "url": "https://www.laboratacadista.com.br/banheiro/grelha-quadrada"},
+        {"name": "GRELHA REDONDA", "slug": "grelha-redonda", "url": "https://www.laboratacadista.com.br/banheiro/grelha-redonda"},
+        {"name": "KIT BACIA P/ CAIXA ACOPLADA", "slug": "kit-bacia--p-caixa-acoplada", "url": "https://www.laboratacadista.com.br/banheiro/kit-bacia--p-caixa-acoplada"},
+        {"name": "KIT FIXACAO CAIXA ACOPLADA", "slug": "kit-fixacao-caixa--acoplada", "url": "https://www.laboratacadista.com.br/banheiro/kit-fixacao-caixa--acoplada"},
+        {"name": "KIT MECANISMO CX ACOPLADA UNIVERSAL", "slug": "kit-mecanismo-cx-acoplada-universal", "url": "https://www.laboratacadista.com.br/banheiro/kit-mecanismo-cx-acoplada-universal"},
+        {"name": "KIT VASO C/ CX ACOPLADA", "slug": "kit-vaso-c-cx-acoplada", "url": "https://www.laboratacadista.com.br/banheiro/kit-vaso-c-cx-acoplada"},
+        {"name": "LAVATORIO PLASTICO", "slug": "lavatorio-plastico", "url": "https://www.laboratacadista.com.br/banheiro/lavatorio-plastico"},
+        {"name": "MECANISMO ENTRADA CX ACOPLADA", "slug": "mecanismo-entrada-cx-acoplada", "url": "https://www.laboratacadista.com.br/banheiro/mecanismo-entrada-cx-acoplada"},
+        {"name": "MECANISMO FECHAMENTO CX ACOPLADA", "slug": "mecanismo-fechamento-cx-acoplada", "url": "https://www.laboratacadista.com.br/banheiro/mecanismo-fechamento-cx-acoplada"},
+        {"name": "MECANISMO SAIDA CX ACOPLADA", "slug": "mecanismo-saida-cx-acoplada", "url": "https://www.laboratacadista.com.br/banheiro/mecanismo-saida-cx-acoplada"},
+        {"name": "MICTORIO", "slug": "mictorio", "url": "https://www.laboratacadista.com.br/banheiro/mictorio"},
+        {"name": "OBTURADOR UNIVERSAL CX ACOPLADA", "slug": "obturador-universal-cx-acoplada", "url": "https://www.laboratacadista.com.br/banheiro/obturador-universal-cx-acoplada"},
+        {"name": "PORTA GRELHA QUADRADO", "slug": "porta-grelha-quadrado", "url": "https://www.laboratacadista.com.br/banheiro/porta-grelha-quadrado"},
+        {"name": "PORTA GRELHA REDONDO", "slug": "porta-grelha-redondo", "url": "https://www.laboratacadista.com.br/banheiro/porta-grelha-redondo"},
+        {"name": "RALO", "slug": "ralo", "url": "https://www.laboratacadista.com.br/banheiro/ralo"},
+        {"name": "REPARO P/ CX ACOPLADA", "slug": "reparo-p-cx-acoplada", "url": "https://www.laboratacadista.com.br/banheiro/reparo-p-cx-acoplada"},
+        {"name": "RESISTENCIA /CHUVEIRO/DUCHA", "slug": "resistencia-chuveiroducha", "url": "https://www.laboratacadista.com.br/banheiro/resistencia-chuveiroducha"},
+        {"name": "TORNEIRAS ABS/ METAIS /ACESSORIOS SANITARIOS", "slug": "torneiras-abs-metais-acessorios-sanitarios", "url": "https://www.laboratacadista.com.br/banheiro/torneiras-abs-metais-acessorios-sanitarios"},
+        {"name": "VASO CONVENCIONAL", "slug": "vaso-convencional", "url": "https://www.laboratacadista.com.br/banheiro/vaso-convencional"}
+      ]
+    },
+    {
+      "name": "ELETRICA",
+      "slug": "eletrica",
+      "url": "https://www.laboratacadista.com.br/eletrica",
+      "subcategories": [
+        {"name": "ABRACADEIRA NYLON", "slug": "abracadeira-nylon", "url": "https://www.laboratacadista.com.br/eletrica/abracadeira-nylon"},
+        {"name": "ALICATE AMPERIMETRO", "slug": "alicate-amperimetro", "url": "https://www.laboratacadista.com.br/eletrica/alicate-amperimetro"},
+        {"name": "CABO COAXIAL", "slug": "cabo-coaxial", "url": "https://www.laboratacadista.com.br/eletrica/cabo-coaxial"},
+        {"name": "CABO FLEXIVEL 750V - ROLO 100M", "slug": "cabo-flexivel-750v---rolo-100m", "url": "https://www.laboratacadista.com.br/eletrica/cabo-flexivel-750v---rolo-100m"},
+        {"name": "CABO PP - ROLO 100M", "slug": "cabo-pp---rolo-100m", "url": "https://www.laboratacadista.com.br/eletrica/cabo-pp---rolo-100m"},
+        {"name": "CAIXA SOBREPOR", "slug": "caixa-sobrepor", "url": "https://www.laboratacadista.com.br/eletrica/caixa-sobrepor"},
+        {"name": "CONECTOR DE PORCELANA", "slug": "conector-de-porcelana", "url": "https://www.laboratacadista.com.br/eletrica/conector-de-porcelana"},
+        {"name": "ELETRODUTO CORRUGADO", "slug": "eletroduto-corrugado", "url": "https://www.laboratacadista.com.br/eletrica/eletroduto-corrugado"},
+        {"name": "ESPELHO", "slug": "espelho", "url": "https://www.laboratacadista.com.br/eletrica/espelho"},
+        {"name": "EXTENSAO", "slug": "extensao", "url": "https://www.laboratacadista.com.br/eletrica/extensao"},
+        {"name": "FILTRO DE LINHA", "slug": "filtro-de-linha", "url": "https://www.laboratacadista.com.br/eletrica/filtro-de-linha"},
+        {"name": "FIO PARALELO - ROLO 100M", "slug": "fio-paralelo--rolo-100m", "url": "https://www.laboratacadista.com.br/eletrica/fio-paralelo--rolo-100m"},
+        {"name": "INTERRUPTOR PARALELO", "slug": "interruptor-paralelo", "url": "https://www.laboratacadista.com.br/eletrica/interruptor-paralelo"},
+        {"name": "INTERRUPTOR SIMPLES", "slug": "interruptor-simples", "url": "https://www.laboratacadista.com.br/eletrica/interruptor-simples"},
+        {"name": "ISOLADOR DE PORCELANA", "slug": "isolador-de-porcelana", "url": "https://www.laboratacadista.com.br/eletrica/isolador-de-porcelana"},
+        {"name": "MANGUEIRA ELETRODUTO", "slug": "mangueira-eletroduto", "url": "https://www.laboratacadista.com.br/eletrica/mangueira-eletroduto"},
+        {"name": "MODULO", "slug": "modulo", "url": "https://www.laboratacadista.com.br/eletrica/modulo"},
+        {"name": "MULTIMETRO DIGITAL", "slug": "multimetro-digital", "url": "https://www.laboratacadista.com.br/eletrica/multimetro-digital"},
+        {"name": "PASSA FIO", "slug": "passa-fio", "url": "https://www.laboratacadista.com.br/eletrica/passa-fio"},
+        {"name": "PLACA CEGA / PLACA", "slug": "placa-cega--placa", "url": "https://www.laboratacadista.com.br/eletrica/placa-cega--placa"},
+        {"name": "PLUGE", "slug": "pluge", "url": "https://www.laboratacadista.com.br/eletrica/pluge"},
+        {"name": "PROLONGADOR FEMEA", "slug": "prolongador-femea", "url": "https://www.laboratacadista.com.br/eletrica/prolongador-femea"},
+        {"name": "PULSADOR DE CAMPAINHA", "slug": "pulsador-de-campainha", "url": "https://www.laboratacadista.com.br/eletrica/pulsador-de-campainha"},
+        {"name": "QUADRO ELETRICO", "slug": "quadro-eletrico", "url": "https://www.laboratacadista.com.br/eletrica/quadro-eletrico"},
+        {"name": "RECEPTACULO PORCELANA", "slug": "receptaculo-porcelana", "url": "https://www.laboratacadista.com.br/eletrica/receptaculo-porcelana"},
+        {"name": "RELE FOTOELETRICO", "slug": "rele-fotoeletrico", "url": "https://www.laboratacadista.com.br/eletrica/rele-fotoeletrico"},
+        {"name": "SOQUETE COM PLUG", "slug": "soquete-com-plug", "url": "https://www.laboratacadista.com.br/eletrica/soquete-com-plug"},
+        {"name": "SOQUETE DE PORCELANA", "slug": "soquete-de-porcelana", "url": "https://www.laboratacadista.com.br/eletrica/soquete-de-porcelana"},
+        {"name": "SOQUETE NYLON C/ RABICHO", "slug": "soquete-nylon-c-rabicho", "url": "https://www.laboratacadista.com.br/eletrica/soquete-nylon-c-rabicho"},
+        {"name": "SOQUETE P/ ABAJUR", "slug": "soquete-p-abajur", "url": "https://www.laboratacadista.com.br/eletrica/soquete-p-abajur"},
+        {"name": "SOQUETE PLASTICO C/CHAVE", "slug": "soquete-plastico-cchave", "url": "https://www.laboratacadista.com.br/eletrica/soquete-plastico-cchave"},
+        {"name": "SOQUETE PLASTICO S/CHAVE", "slug": "soquete-plastico-schave", "url": "https://www.laboratacadista.com.br/eletrica/soquete-plastico-schave"},
+        {"name": "SOQUETE TERMOPLASTICO", "slug": "soquete-termoplastico", "url": "https://www.laboratacadista.com.br/eletrica/soquete-termoplastico"},
+        {"name": "TESTE DIGITAL", "slug": "teste-digital", "url": "https://www.laboratacadista.com.br/eletrica/teste-digital"},
+        {"name": "TOMADA", "slug": "tomada", "url": "https://www.laboratacadista.com.br/eletrica/tomada"}
+      ]
+    },
+    {
+      "name": "FERRAGENS",
+      "slug": "ferragens",
+      "url": "https://www.laboratacadista.com.br/ferragens",
+      "subcategories": [
+        {"name": "OLHAL / PARAFUSO/ PORCA", "slug": "olhal--parafuso-porca", "url": "https://www.laboratacadista.com.br/ferragens/olhal--parafuso-porca"},
+        {"name": "ABRACADEIRA METAL ROSCA S/ FIM", "slug": "abracadeira-metal-rosca-s-fim", "url": "https://www.laboratacadista.com.br/ferragens/abracadeira-metal-rosca-s-fim"},
+        {"name": "ARAME RECOZIDO TORCIDO", "slug": "arame-recozido-torcido", "url": "https://www.laboratacadista.com.br/ferragens/arame-recozido-torcido"},
+        {"name": "ARRUELA DE PRESSÃO", "slug": "arruela-de-pressao", "url": "https://www.laboratacadista.com.br/ferragens/arruela-de-pressao"},
+        {"name": "ARRUELA LIZA ZINCADA", "slug": "arruela-liza-zincada", "url": "https://www.laboratacadista.com.br/ferragens/arruela-liza-zincada"},
+        {"name": "BALDE PARA CONCRETO", "slug": "balde-para-concreto", "url": "https://www.laboratacadista.com.br/ferragens/balde-para-concreto"},
+        {"name": "BARRA ROSCADA ZINCADA", "slug": "barra-roscada-zincada", "url": "https://www.laboratacadista.com.br/ferragens/barra-roscada-zincada"},
+        {"name": "BUCHA DE NYLON", "slug": "bucha-de-nylon", "url": "https://www.laboratacadista.com.br/ferragens/bucha-de-nylon"},
+        {"name": "BUCHA DE PLASTICO", "slug": "bucha-de-plastico", "url": "https://www.laboratacadista.com.br/ferragens/bucha-de-plastico"},
+        {"name": "BUCHA NYLON COM PARAFUSO", "slug": "bucha-nylon-com-parafuso", "url": "https://www.laboratacadista.com.br/ferragens/bucha-nylon-com-parafuso"},
+        {"name": "BUCHA PARA GESSO/DRYWALL", "slug": "bucha-para-gessodrywall", "url": "https://www.laboratacadista.com.br/ferragens/bucha-para-gessodrywall"},
+        {"name": "BUCHA PARA TIJOLO FURADO", "slug": "bucha-para-tijolo-furado", "url": "https://www.laboratacadista.com.br/ferragens/bucha-para-tijolo-furado"},
+        {"name": "CABO DE ACO", "slug": "cabo-de-aco", "url": "https://www.laboratacadista.com.br/ferragens/cabo-de-aco"},
+        {"name": "CADEADO LATAO", "slug": "cadeado-latao", "url": "https://www.laboratacadista.com.br/ferragens/cadeado-latao"},
+        {"name": "CADEADO LATAO SEGREDO IGUAL", "slug": "cadeado-latao-segredo-igual", "url": "https://www.laboratacadista.com.br/ferragens/cadeado-latao-segredo-igual"},
+        {"name": "CAIXA DE MASSA", "slug": "caixa-de-massa", "url": "https://www.laboratacadista.com.br/ferragens/caixa-de-massa"},
+        {"name": "CANTONEIRA L POLIDA", "slug": "cantoneira-l-polida", "url": "https://www.laboratacadista.com.br/ferragens/cantoneira-l-polida"},
+        {"name": "CHUMBADOR", "slug": "chumbador", "url": "https://www.laboratacadista.com.br/ferragens/chumbador"},
+        {"name": "CILINDRO", "slug": "cilindro", "url": "https://www.laboratacadista.com.br/ferragens/cilindro"},
+        {"name": "CONCERTINA GALV", "slug": "concertina-galv", "url": "https://www.laboratacadista.com.br/ferragens/concertina-galv"},
+        {"name": "CORDA DE POLIESTER", "slug": "corda-de-poliester", "url": "https://www.laboratacadista.com.br/ferragens/corda-de-poliester"},
+        {"name": "CORRENTE GALVANIZADA", "slug": "corrente-galvanizada", "url": "https://www.laboratacadista.com.br/ferragens/corrente-galvanizada"},
+        {"name": "CORRENTE S/FIM", "slug": "corrente-sfim", "url": "https://www.laboratacadista.com.br/ferragens/corrente-sfim"},
+        {"name": "DOBRADIÇA", "slug": "dobradica", "url": "https://www.laboratacadista.com.br/ferragens/dobradica"},
+        {"name": "ESTICADOR P/ CABO", "slug": "esticador-p-cabo", "url": "https://www.laboratacadista.com.br/ferragens/esticador-p-cabo"},
+        {"name": "EXTENSOR P/ CAVADEIRA", "slug": "extensor-p-cavadeira", "url": "https://www.laboratacadista.com.br/ferragens/extensor-p-cavadeira"},
+        {"name": "FECHADURA INTERNO/EXTERNO", "slug": "fechadura-internoexterno", "url": "https://www.laboratacadista.com.br/ferragens/fechadura-internoexterno"},
+        {"name": "FECHADURA TRAVA TRETA", "slug": "fechadura-trava-treta", "url": "https://www.laboratacadista.com.br/ferragens/fechadura-trava-treta"},
+        {"name": "FECHADURAS BANHEIROS", "slug": "fechaduras-banheiros", "url": "https://www.laboratacadista.com.br/ferragens/fechaduras-banheiros"},
+        {"name": "FECHADURAS EXTERNAS", "slug": "fechaduras-externas", "url": "https://www.laboratacadista.com.br/ferragens/fechaduras-externas"},
+        {"name": "FECHADURAS P/SERRALHEIRO", "slug": "fechaduras-pserralheiro", "url": "https://www.laboratacadista.com.br/ferragens/fechaduras-pserralheiro"},
+        {"name": "GANCHO FORJADO / GRAMPO", "slug": "gancho-forjado--grampo", "url": "https://www.laboratacadista.com.br/ferragens/gancho-forjado--grampo"},
+        {"name": "MANILHA / MOSQUETÃO", "slug": "manilha--mosquetao", "url": "https://www.laboratacadista.com.br/ferragens/manilha--mosquetao"},
+        {"name": "MASSA P/ CALAFETAR", "slug": "massa-p-calafetar", "url": "https://www.laboratacadista.com.br/ferragens/massa-p-calafetar"},
+        {"name": "OLEO DESINGRIPANTE / LUBRIFICANTE", "slug": "oleo-desingripante--lubrificante", "url": "https://www.laboratacadista.com.br/ferragens/oleo-desingripante--lubrificante"},
+        {"name": "PARAFUSO AUTO-FIX CABEÇA CHATA PHILIPS", "slug": "parafuso-autofix-cabeca-chata-philips", "url": "https://www.laboratacadista.com.br/ferragens/parafuso-autofix-cabeca-chata-philips"},
+        {"name": "PARAFUSO BROCA-FIX FLANGEADO", "slug": "parafuso-brocafix-flangeado", "url": "https://www.laboratacadista.com.br/ferragens/parafuso-brocafix-flangeado"},
+        {"name": "PARAFUSO BROCA-FIX SEXTAVADO C/ARRUELA", "slug": "parafuso-brocafix-sextavado-carruela", "url": "https://www.laboratacadista.com.br/ferragens/parafuso-brocafix-sextavado-carruela"},
+        {"name": "PARAFUSO CHIP-FIX CABECA CHATA PHILIPS BICRO", "slug": "parafuso-chipfix-cabeca-chata-philips-bicro", "url": "https://www.laboratacadista.com.br/ferragens/parafuso-chipfix-cabeca-chata-philips-bicro"},
+        {"name": "PARAFUSO DRY-FIX AGULHA FLANGEADO", "slug": "parafuso-dryfix-agulha-flangeado", "url": "https://www.laboratacadista.com.br/ferragens/parafuso-dryfix-agulha-flangeado"},
+        {"name": "PARAFUSO DRY-FIX AGULHA TROMBETA", "slug": "parafuso-dryfix-agulha-trombeta", "url": "https://www.laboratacadista.com.br/ferragens/parafuso-dryfix-agulha-trombeta"},
+        {"name": "PARAFUSO FRANCES C/PORCA", "slug": "parafuso-frances-cporca", "url": "https://www.laboratacadista.com.br/ferragens/parafuso-frances-cporca"},
+        {"name": "PARAFUSO PARA TELHA SEXTAVADO", "slug": "parafuso-para-telha-sextavado", "url": "https://www.laboratacadista.com.br/ferragens/parafuso-para-telha-sextavado"},
+        {"name": "PARAFUSO ROSCA SOBERBA SEXTAVADO", "slug": "parafuso-rosca-soberba-sextavado", "url": "https://www.laboratacadista.com.br/ferragens/parafuso-rosca-soberba-sextavado"},
+        {"name": "PARAFUSO SEXTAVADO POLEGADA", "slug": "parafuso-sextavado-polegada", "url": "https://www.laboratacadista.com.br/ferragens/parafuso-sextavado-polegada"},
+        {"name": "PORCAS SACO SEXT. POLEGADA", "slug": "porcas-saco-sext-polegada", "url": "https://www.laboratacadista.com.br/ferragens/porcas-saco-sext-polegada"},
+        {"name": "PREGO POLIDO COM CABEÇA", "slug": "prego-polido-com-cabeca", "url": "https://www.laboratacadista.com.br/ferragens/prego-polido-com-cabeca"},
+        {"name": "PREGO POLIDO COM CABEÇA DUPLA", "slug": "prego-polido-com-cabeca-dupla", "url": "https://www.laboratacadista.com.br/ferragens/prego-polido-com-cabeca-dupla"},
+        {"name": "REBITE DE ALUMINIO", "slug": "rebite-de-aluminio", "url": "https://www.laboratacadista.com.br/ferragens/rebite-de-aluminio"},
+        {"name": "RODIZIO TRANSPARENTE COM FREIO GIRATORIO NIQUEL", "slug": "rodizio-transparente-com-freio-giratorio-niquel", "url": "https://www.laboratacadista.com.br/ferragens/rodizio-transparente-com-freio-giratorio-niquel"},
+        {"name": "ROLDANA / SAPATILHA", "slug": "roldana--sapatilha", "url": "https://www.laboratacadista.com.br/ferragens/roldana--sapatilha"},
+        {"name": "SUPORTE PRATELEIRA (CANTONEIRA ) FORTE", "slug": "suporte-prateleira--cantoneira--forte", "url": "https://www.laboratacadista.com.br/ferragens/suporte-prateleira--cantoneira--forte"},
+        {"name": "SUPORTE PRATELEIRA (CANTONEIRA) LEVE", "slug": "suporte-prateleira-cantoneira-leve", "url": "https://www.laboratacadista.com.br/ferragens/suporte-prateleira-cantoneira-leve"},
+        {"name": "SUPORTE PRATELEIRA PODIUM FORTE", "slug": "suporte-prateleira-podium-forte", "url": "https://www.laboratacadista.com.br/ferragens/suporte-prateleira-podium-forte"},
+        {"name": "SUPORTE PRATELEIRA PODIUM LEVE", "slug": "suporte-prateleira-podium-leve", "url": "https://www.laboratacadista.com.br/ferragens/suporte-prateleira-podium-leve"},
+        {"name": "TRAVA PORTA", "slug": "trava-porta", "url": "https://www.laboratacadista.com.br/ferragens/trava-porta"}
+      ]
+    },
+    {
+      "name": "FERRAMENTAS ELETRICAS",
+      "slug": "ferramentas-eletricas",
+      "url": "https://www.laboratacadista.com.br/ferramentas-eletricas",
+      "subcategories": [
+        {"name": "ELETRODO", "slug": "eletrodo", "url": "https://www.laboratacadista.com.br/ferramentas-eletricas/eletrodo"}
+      ]
+    },
+    {
+      "name": "FERRAMENTAS MANUAIS",
+      "slug": "ferramentas-manuais",
+      "url": "https://www.laboratacadista.com.br/ferramentas-manuais",
+      "subcategories": [
+        {"name": "ALICATE BICO RETO", "slug": "alicate-bico-reto", "url": "https://www.laboratacadista.com.br/ferramentas-manuais/alicate-bico-reto"},
+        {"name": "ALICATE BOMBA D'AGUA", "slug": "alicate-bomba-dagua", "url": "https://www.laboratacadista.com.br/ferramentas-manuais/alicate-bomba-dagua"},
+        {"name": "ALICATE CORTE", "slug": "alicate-corte", "url": "https://www.laboratacadista.com.br/ferramentas-manuais/alicate-corte"},
+        {"name": "ALICATE P/ NIVELAMENTO", "slug": "alicate-p-nivelamento", "url": "https://www.laboratacadista.com.br/ferramentas-manuais/alicate-p-nivelamento"},
+        {"name": "ALICATE UNIVERSAL", "slug": "alicate-universal", "url": "https://www.laboratacadista.com.br/ferramentas-manuais/alicate-universal"},
+        {"name": "BROCA", "slug": "broca", "url": "https://www.laboratacadista.com.br/ferramentas-manuais/broca"},
+        {"name": "COLHER DE PEDREIRO", "slug": "colher-de-pedreiro", "url": "https://www.laboratacadista.com.br/ferramentas-manuais/colher-de-pedreiro"},
+        {"name": "DISCO DE CORTE DIAMANTADO", "slug": "disco-de-corte-diamantado", "url": "https://www.laboratacadista.com.br/ferramentas-manuais/disco-de-corte-diamantado"},
+        {"name": "DISCO DE CORTE P/ FERRO", "slug": "disco-de-corte-p-ferro", "url": "https://www.laboratacadista.com.br/ferramentas-manuais/disco-de-corte-p-ferro"},
+        {"name": "DISCO DE CORTE P/ INOX", "slug": "disco-de-corte-p-inox", "url": "https://www.laboratacadista.com.br/ferramentas-manuais/disco-de-corte-p-inox"},
+        {"name": "DISCO DE DESBASTE", "slug": "disco-de-desbaste", "url": "https://www.laboratacadista.com.br/ferramentas-manuais/disco-de-desbaste"},
+        {"name": "DISCO DIAMANTADO TURBO", "slug": "disco-diamantado-turbo", "url": "https://www.laboratacadista.com.br/ferramentas-manuais/disco-diamantado-turbo"},
+        {"name": "MARTELO UNHA", "slug": "martelo-unha", "url": "https://www.laboratacadista.com.br/ferramentas-manuais/martelo-unha"},
+        {"name": "TRENA", "slug": "trena", "url": "https://www.laboratacadista.com.br/ferramentas-manuais/trena"}
+      ]
+    },
+    {
+      "name": "HIDRAULICA",
+      "slug": "hidraulica",
+      "url": "https://www.laboratacadista.com.br/hidraulica",
+      "subcategories": [
+        {"name": "ACABAMENTO P/ VALVULA DE DESCARGA", "slug": "acabamento-p-valvula-de-descarga", "url": "https://www.laboratacadista.com.br/hidraulica/acabamento-p-valvula-de-descarga"},
+        {"name": "CAIXA D AGUA", "slug": "caixa-d-agua", "url": "https://www.laboratacadista.com.br/hidraulica/caixa-d-agua"},
+        {"name": "ENGATE FLEXIVEL INOX", "slug": "engate-flexivel-inox", "url": "https://www.laboratacadista.com.br/hidraulica/engate-flexivel-inox"},
+        {"name": "MANGUEIRA CRISTAL", "slug": "mangueira-cristal", "url": "https://www.laboratacadista.com.br/hidraulica/mangueira-cristal"},
+        {"name": "REGISTRO DE GAVETA", "slug": "registro-de--gaveta", "url": "https://www.laboratacadista.com.br/hidraulica/registro-de--gaveta"},
+        {"name": "SIFAO SANFONADO", "slug": "sifao-sanfonado", "url": "https://www.laboratacadista.com.br/hidraulica/sifao-sanfonado"},
+        {"name": "TORNEIRA ESFERA", "slug": "torneira-esfera", "url": "https://www.laboratacadista.com.br/hidraulica/torneira-esfera"},
+        {"name": "VEDA ROSCA", "slug": "veda-rosca", "url": "https://www.laboratacadista.com.br/hidraulica/veda-rosca"}
+      ]
+    },
+    {
+      "name": "ILUMINACAO",
+      "slug": "iluminacao",
+      "url": "https://www.laboratacadista.com.br/iluminacao",
+      "subcategories": [
+        {"name": "ARANDELA", "slug": "arandela", "url": "https://www.laboratacadista.com.br/iluminacao/arandela"},
+        {"name": "BATERIA", "slug": "bateria", "url": "https://www.laboratacadista.com.br/iluminacao/bateria"},
+        {"name": "LAMPADA LED BULBO E27", "slug": "lampada-led-bulbo-e27", "url": "https://www.laboratacadista.com.br/iluminacao/lampada-led-bulbo-e27"},
+        {"name": "LUMINARIA DE EMERGENCIA", "slug": "luminaria-de-emergencia", "url": "https://www.laboratacadista.com.br/iluminacao/luminaria-de-emergencia"},
+        {"name": "REFLETOR LED", "slug": "refletor-led", "url": "https://www.laboratacadista.com.br/iluminacao/refletor-led"}
+      ]
+    },
+    {
+      "name": "IMPERMEABILIZANTE E ISOLANTE",
+      "slug": "impermeabilizante-e-isolante",
+      "url": "https://www.laboratacadista.com.br/impermeabilizante-e-isolante",
+      "subcategories": [
+        {"name": "BIANCO", "slug": "bianco", "url": "https://www.laboratacadista.com.br/impermeabilizante-e-isolante/bianco"},
+        {"name": "NEUTROL", "slug": "neutrol", "url": "https://www.laboratacadista.com.br/impermeabilizante-e-isolante/neutrol"},
+        {"name": "VEDACIT E SIMILAR", "slug": "vedacit-e-similar", "url": "https://www.laboratacadista.com.br/impermeabilizante-e-isolante/vedacit-e-similar"},
+        {"name": "VEDAPREN E SIMILAR", "slug": "vedapren-e-similar", "url": "https://www.laboratacadista.com.br/impermeabilizante-e-isolante/vedapren-e-similar"},
+        {"name": "VIAMANTA", "slug": "viamanta", "url": "https://www.laboratacadista.com.br/impermeabilizante-e-isolante/viamanta"},
+        {"name": "VIAPLUS", "slug": "viaplus", "url": "https://www.laboratacadista.com.br/impermeabilizante-e-isolante/viaplus"}
+      ]
+    },
+    {
+      "name": "JARDIM E PISCINA",
+      "slug": "jardim-e-piscina",
+      "url": "https://www.laboratacadista.com.br/jardim-e-piscina",
+      "subcategories": [
+        {"name": "CAVADEIRA", "slug": "cavadeira", "url": "https://www.laboratacadista.com.br/jardim-e-piscina/cavadeira"},
+        {"name": "ENXADA / ENXADAO", "slug": "enxada---enxadao", "url": "https://www.laboratacadista.com.br/jardim-e-piscina/enxada---enxadao"},
+        {"name": "LONA AZUL", "slug": "lona-azul", "url": "https://www.laboratacadista.com.br/jardim-e-piscina/lona-azul"},
+        {"name": "MANGUEIRA RECAPADA PVC", "slug": "mangueira-recapada-pvc", "url": "https://www.laboratacadista.com.br/jardim-e-piscina/mangueira-recapada-pvc"},
+        {"name": "PULVERIZADOR MANUAL", "slug": "pulverizador-manual", "url": "https://www.laboratacadista.com.br/jardim-e-piscina/pulverizador-manual"}
+      ]
+    },
+    {
+      "name": "LINHA CONVERSAO",
+      "slug": "linha-conversao",
+      "url": "https://www.laboratacadista.com.br/linha-conversao",
+      "subcategories": [
+        {"name": "GRUPO CONVERSAO", "slug": "grupo-conversao", "url": "https://www.laboratacadista.com.br/linha-conversao/grupo-conversao"}
+      ]
+    },
+    {
+      "name": "MARKETING",
+      "slug": "marketing",
+      "url": "https://www.laboratacadista.com.br/marketing",
+      "subcategories": [
+        {"name": "EXPOSITORES", "slug": "expositores", "url": "https://www.laboratacadista.com.br/marketing/expositores"}
+      ]
+    },
+    {
+      "name": "PINTURA",
+      "slug": "pintura",
+      "url": "https://www.laboratacadista.com.br/pintura",
+      "subcategories": [
+        {"name": "AGUARRAS", "slug": "aguarras", "url": "https://www.laboratacadista.com.br/pintura/aguarras"},
+        {"name": "ARGAMASSA", "slug": "argamassa", "url": "https://www.laboratacadista.com.br/pintura/argamassa"},
+        {"name": "BANDEJA PARA PINTURA", "slug": "bandeja-para-pintura", "url": "https://www.laboratacadista.com.br/pintura/bandeja-para-pintura"},
+        {"name": "BROXA", "slug": "broxa", "url": "https://www.laboratacadista.com.br/pintura/broxa"},
+        {"name": "CABO PARA ROLO", "slug": "cabo-para-rolo", "url": "https://www.laboratacadista.com.br/pintura/cabo-para-rolo"},
+        {"name": "CIMENTO", "slug": "cimento", "url": "https://www.laboratacadista.com.br/pintura/cimento"},
+        {"name": "KIT PINTURA", "slug": "kit-pintura", "url": "https://www.laboratacadista.com.br/pintura/kit-pintura"},
+        {"name": "LONA PRETA", "slug": "lona-preta", "url": "https://www.laboratacadista.com.br/pintura/lona-preta"},
+        {"name": "MASSA F12", "slug": "massa-f12", "url": "https://www.laboratacadista.com.br/pintura/massa-f12"},
+        {"name": "REJUNTE", "slug": "rejunte", "url": "https://www.laboratacadista.com.br/pintura/rejunte"},
+        {"name": "ROLO DE ESPUMA", "slug": "rolo-de-espuma", "url": "https://www.laboratacadista.com.br/pintura/rolo-de-espuma"},
+        {"name": "ROLO DE LA", "slug": "rolo-de-la", "url": "https://www.laboratacadista.com.br/pintura/rolo-de-la"},
+        {"name": "ROLO DE MICROFIBRA", "slug": "rolo-de-microfibra", "url": "https://www.laboratacadista.com.br/pintura/rolo-de-microfibra"},
+        {"name": "ROLO PARA TEXTURA", "slug": "rolo-para-textura", "url": "https://www.laboratacadista.com.br/pintura/rolo-para-textura"},
+        {"name": "THINNER", "slug": "thinner", "url": "https://www.laboratacadista.com.br/pintura/thinner"},
+        {"name": "TINTA SPRAY", "slug": "tinta-spray", "url": "https://www.laboratacadista.com.br/pintura/tinta-spray"},
+        {"name": "TRINCHA", "slug": "trincha", "url": "https://www.laboratacadista.com.br/pintura/trincha"},
+        {"name": "VERNIZ", "slug": "verniz", "url": "https://www.laboratacadista.com.br/pintura/verniz"}
+      ]
+    },
+    {
+      "name": "SEGURANÇA E COMUNICAÇÃO",
+      "slug": "seguranca-e-comunicacao",
+      "url": "https://www.laboratacadista.com.br/seguranca-e-comunicacao",
+      "subcategories": [
+        {"name": "IMPERMEABILIZANTE", "slug": "impermeabilizante", "url": "https://www.laboratacadista.com.br/seguranca-e-comunicacao/impermeabilizante"}
+      ]
+    },
+    {
+      "name": "UTILIDADE DOMESTICA",
+      "slug": "utilidade-domestica",
+      "url": "https://www.laboratacadista.com.br/utilidade-domestica",
+      "subcategories": [
+        {"name": "CAIXA DE CORRESPONDENCIA", "slug": "caixa-de-correspondencia", "url": "https://www.laboratacadista.com.br/utilidade-domestica/caixa-de-correspondencia"},
+        {"name": "DESENTUPIDOR", "slug": "desentupidor", "url": "https://www.laboratacadista.com.br/utilidade-domestica/desentupidor"},
+        {"name": "ESTANTE MULTIUSO", "slug": "estante-multiuso", "url": "https://www.laboratacadista.com.br/utilidade-domestica/estante-multiuso"},
+        {"name": "FILTRO DE AGUA", "slug": "filtro-de-agua", "url": "https://www.laboratacadista.com.br/utilidade-domestica/filtro-de-agua"},
+        {"name": "LANTERNA", "slug": "lanterna", "url": "https://www.laboratacadista.com.br/utilidade-domestica/lanterna"},
+        {"name": "PILHA ALCALINA", "slug": "pilha-alcalina", "url": "https://www.laboratacadista.com.br/utilidade-domestica/pilha-alcalina"},
+        {"name": "PORTA SANFONADA", "slug": "porta-sanfonada", "url": "https://www.laboratacadista.com.br/utilidade-domestica/porta-sanfonada"},
+        {"name": "RODO", "slug": "rodo", "url": "https://www.laboratacadista.com.br/utilidade-domestica/rodo"},
+        {"name": "SUPORTE TV ARTICULADO", "slug": "suporte-tv-articulado", "url": "https://www.laboratacadista.com.br/utilidade-domestica/suporte-tv-articulado"},
+        {"name": "TORNEIRA/TORNEIRA ELETRICA", "slug": "torneiratorneira-eletrica", "url": "https://www.laboratacadista.com.br/utilidade-domestica/torneiratorneira-eletrica"},
+        {"name": "VASSOURA", "slug": "vassoura", "url": "https://www.laboratacadista.com.br/utilidade-domestica/vassoura"},
+        {"name": "VENTILADOR", "slug": "ventilador", "url": "https://www.laboratacadista.com.br/utilidade-domestica/ventilador"}
+      ]
+    }
+  ],
+  "statistics": {
+    "total_categories": 18,
+    "total_subcategories": 245,
+    "url_pattern": "https://www.laboratacadista.com.br/{category}/{subcategory}",
+    "image_cdn_pattern": "https://laboratacadista.agilecdn.com.br/"
+  }
+}

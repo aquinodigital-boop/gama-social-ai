@@ -1,0 +1,1639 @@
+{
+  "site": "https://www.gamatintas.com.br",
+  "info_geral": {
+    "titulo": "Gama Distribuidora",
+    "descricao": "",
+    "contatos": [
+      "(11) 5555-1457\n (11) 5555-1457",
+      "(11) 5555-1457\n        \n\n(11) 5555-1457"
+    ],
+    "endereco": "Institucional Quem Somos Política de Privacidade Política de Troca e Devolução Baixe já nosso APP Departamentos ADESIVOS AUTOMOTIVO AUTOMOTIVOS CARREGAMENTO ELÉTRICA TIGRE EPI FERRAMENTA DE PINTURA FE",
+    "redes_sociais": [
+      "https://api.whatsapp.com/send?phone=551155551457"
+    ]
+  },
+  "identidade_visual": {
+    "logos": [
+      "https://assets.agilecdn.com.br/images/ico_gamadistribuidora.png?v=690",
+      "https://assets.agilecdn.com.br/images/logo_gamadistribuidora.png?v=690",
+      "https://gamadistribuidora.agilecdn.com.br/banners/henkel-4-1756758622.jpg",
+      "https://gamadistribuidora.agilecdn.com.br/banners/copia-de-henkel-1-1756758758.jpg",
+      "https://gamadistribuidora.agilecdn.com.br/banners/copia-de-mactra-1200x-1729520451.jpg",
+      "https://gamadistribuidora.agilecdn.com.br/banners/mactra-1729520457.jpg",
+      "https://gamadistribuidora.agilecdn.com.br/banners/final-1-1756839909.jpg",
+      "https://gamadistribuidora.agilecdn.com.br/banners/copia-de-final-1756839915.jpg",
+      "https://assets.agilecdn.com.br/images/LOGO-AGILE-B2B.webp"
+    ],
+    "cores": [],
+    "fontes": [],
+    "favicon": "https://assets.agilecdn.com.br/images/ico_gamadistribuidora.png?v=690"
+  },
+  "marcas": [
+    "MASCARA",
+    "FORTLEV",
+    "PLASILONA",
+    "SPARLACK",
+    "REAL",
+    "STAR QUIMICA",
+    "TERUYA",
+    "THERON MARKETING LTDA",
+    "BELL ITALY",
+    "IPAPEIS",
+    "REPROTECNICA IND PROD GRAFLT",
+    "NATRIELLI",
+    "GENCO",
+    "SALVABRAS",
+    "ROMAR",
+    "JIMO",
+    "BASTON",
+    "PLASTIC",
+    "FABRIMAR",
+    "MAXI RUBBER INS QUIMICAS LTDA",
+    "NORTON  ABRASIVOS",
+    "ANDRA",
+    "NAO DEFINIDO",
+    "TRAMONTINA   ELETRICA",
+    "NORTON",
+    "TRAMONTINA",
+    "COLORGIN",
+    "REGINA APARECIDA O D DE ASSI",
+    "TIGRE TC",
+    "ADELBRAS",
+    "CORAL",
+    "VIAPOL",
+    "INFINITY",
+    "MULTILONAS",
+    "TECH PAINT",
+    "ATLAS",
+    "DELTA PLUS",
+    "SOUDAL",
+    "HENKEL",
+    "STA MARINA",
+    "MBR",
+    "PILAR COML",
+    "ITAQUA SOLVENTES",
+    "TIGRE",
+    "SIL FIOS E CABOS",
+    "HYDRA",
+    "TOTALKRAFT",
+    "KROS",
+    "BIOCOR",
+    "MARLUVAS",
+    "MACTRA"
+  ],
+  "categorias": [
+    {
+      "nome": "DEPARTAMENTOS",
+      "url": "https://www.gamatintas.com.br"
+    },
+    {
+      "nome": "ADESIVOS",
+      "url": "https://www.gamatintas.com.br/adesivos"
+    },
+    {
+      "nome": "AUTOMOTIVO",
+      "url": "https://www.gamatintas.com.br/automotivo"
+    },
+    {
+      "nome": "AUTOMOTIVOS",
+      "url": "https://www.gamatintas.com.br/automotivos"
+    },
+    {
+      "nome": "CARREGAMENTO",
+      "url": "https://www.gamatintas.com.br/carregamento"
+    },
+    {
+      "nome": "ELÉTRICA TIGRE",
+      "url": "https://www.gamatintas.com.br/eletrica-tigre"
+    },
+    {
+      "nome": "EPI",
+      "url": "https://www.gamatintas.com.br/epi"
+    },
+    {
+      "nome": "FERRAMENTA DE PINTURA",
+      "url": "https://www.gamatintas.com.br/ferramenta-de-pintura"
+    },
+    {
+      "nome": "FERRAMENTAS",
+      "url": "https://www.gamatintas.com.br/ferramentas"
+    },
+    {
+      "nome": "FITA ADESIVA",
+      "url": "https://www.gamatintas.com.br/fita--adesiva"
+    },
+    {
+      "nome": "HIDRAULICA",
+      "url": "https://www.gamatintas.com.br/hidraulica"
+    },
+    {
+      "nome": "ILUMINAÇÃO",
+      "url": "https://www.gamatintas.com.br/iluminacao"
+    },
+    {
+      "nome": "LIMPEZA",
+      "url": "https://www.gamatintas.com.br/limpeza"
+    },
+    {
+      "nome": "LINHA CONVERSAO",
+      "url": "https://www.gamatintas.com.br/linha-conversao"
+    },
+    {
+      "nome": "MARKETING",
+      "url": "https://www.gamatintas.com.br/marketing"
+    },
+    {
+      "nome": "PREMIUM",
+      "url": "https://www.gamatintas.com.br/premium"
+    },
+    {
+      "nome": "STANDART",
+      "url": "https://www.gamatintas.com.br/standart"
+    },
+    {
+      "nome": "TINTA SPRAY",
+      "url": "https://www.gamatintas.com.br/tinta-spray"
+    },
+    {
+      "nome": "TINTAS / VERNIZES / COMPLEMENTOS",
+      "url": "https://www.gamatintas.com.br/tintas--vernizes--complementos"
+    },
+    {
+      "nome": "TORNEIRAS ABS / METAIS / ACESSORIOS SANITÁRIOS",
+      "url": "https://www.gamatintas.com.br/torneiras-abs--metais--acessorios-sanitarios"
+    },
+    {
+      "nome": "TUBOS",
+      "url": "https://www.gamatintas.com.br/tubos"
+    }
+  ],
+  "produtos": {
+    "TINTAS  VERNIZES  COMPLEMENTOS": [
+      {
+        "nome": "Entrar",
+        "imagem": "",
+        "codigo": "",
+        "embalagem": "",
+        "url": "https://www.gamatintas.com.br/tintas--vernizes--complementos"
+      },
+      {
+        "nome": "Entrar",
+        "imagem": "",
+        "codigo": "",
+        "embalagem": "",
+        "url": "https://www.gamatintas.com.br/tintas--vernizes--complementos"
+      },
+      {
+        "nome": "Entrar",
+        "imagem": "",
+        "codigo": "",
+        "embalagem": "",
+        "url": "https://www.gamatintas.com.br/tintas--vernizes--complementos"
+      },
+      {
+        "nome": "Cadastrar",
+        "imagem": "",
+        "codigo": "",
+        "embalagem": "",
+        "url": "https://www.gamatintas.com.br/tintas--vernizes--complementos"
+      },
+      {
+        "nome": "Cadastrar",
+        "imagem": "",
+        "codigo": "",
+        "embalagem": "",
+        "url": "https://www.gamatintas.com.br/tintas--vernizes--complementos"
+      },
+      {
+        "nome": "Cadastrar",
+        "imagem": "",
+        "codigo": "",
+        "embalagem": "",
+        "url": "https://www.gamatintas.com.br/tintas--vernizes--complementos"
+      },
+      {
+        "nome": "ADESIVOS HENKEL",
+        "imagem": "",
+        "codigo": "",
+        "embalagem": "",
+        "url": "https://www.gamatintas.com.br/tintas--vernizes--complementos"
+      },
+      {
+        "nome": "ADESIVOS",
+        "imagem": "",
+        "codigo": "",
+        "embalagem": "",
+        "url": "https://www.gamatintas.com.br/tintas--vernizes--complementos"
+      },
+      {
+        "nome": "ADESIVOS",
+        "imagem": "",
+        "codigo": "",
+        "embalagem": "",
+        "url": "https://www.gamatintas.com.br/tintas--vernizes--complementos"
+      },
+      {
+        "nome": "HENKEL",
+        "imagem": "",
+        "codigo": "",
+        "embalagem": "",
+        "url": "https://www.gamatintas.com.br/tintas--vernizes--complementos"
+      },
+      {
+        "nome": "HENKEL",
+        "imagem": "",
+        "codigo": "",
+        "embalagem": "",
+        "url": "https://www.gamatintas.com.br/tintas--vernizes--complementos"
+      },
+      {
+        "nome": "HENKEL",
+        "imagem": "",
+        "codigo": "",
+        "embalagem": "",
+        "url": "https://www.gamatintas.com.br/tintas--vernizes--complementos"
+      },
+      {
+        "nome": "HENKEL",
+        "imagem": "",
+        "codigo": "",
+        "embalagem": "",
+        "url": "https://www.gamatintas.com.br/tintas--vernizes--complementos"
+      },
+      {
+        "nome": "AUTOMOTIVO MAXI RUBBER",
+        "imagem": "",
+        "codigo": "",
+        "embalagem": "",
+        "url": "https://www.gamatintas.com.br/tintas--vernizes--complementos"
+      },
+      {
+        "nome": "AUTOMOTIVO",
+        "imagem": "",
+        "codigo": "",
+        "embalagem": "",
+        "url": "https://www.gamatintas.com.br/tintas--vernizes--complementos"
+      },
+      {
+        "nome": "AUTOMOTIVO",
+        "imagem": "",
+        "codigo": "",
+        "embalagem": "",
+        "url": "https://www.gamatintas.com.br/tintas--vernizes--complementos"
+      },
+      {
+        "nome": "MAXI RUBBER",
+        "imagem": "",
+        "codigo": "",
+        "embalagem": "",
+        "url": "https://www.gamatintas.com.br/tintas--vernizes--complementos"
+      },
+      {
+        "nome": "MAXI RUBBER",
+        "imagem": "",
+        "codigo": "",
+        "embalagem": "",
+        "url": "https://www.gamatintas.com.br/tintas--vernizes--complementos"
+      },
+      {
+        "nome": "MAXI RUBBER",
+        "imagem": "",
+        "codigo": "",
+        "embalagem": "",
+        "url": "https://www.gamatintas.com.br/tintas--vernizes--complementos"
+      },
+      {
+        "nome": "MAXI RUBBER",
+        "imagem": "",
+        "codigo": "",
+        "embalagem": "",
+        "url": "https://www.gamatintas.com.br/tintas--vernizes--complementos"
+      },
+      {
+        "nome": "AUTOMOTIVOS MASSA DE POLIR MAXI RUBBER",
+        "imagem": "",
+        "codigo": "",
+        "embalagem": "",
+        "url": "https://www.gamatintas.com.br/tintas--vernizes--complementos"
+      },
+      {
+        "nome": "AUTOMOTIVOS",
+        "imagem": "",
+        "codigo": "",
+        "embalagem": "",
+        "url": "https://www.gamatintas.com.br/tintas--vernizes--complementos"
+      },
+      {
+        "nome": "AUTOMOTIVOS",
+        "imagem": "",
+        "codigo": "",
+        "embalagem": "",
+        "url": "https://www.gamatintas.com.br/tintas--vernizes--complementos"
+      }
+    ],
+    "ACRILICA ECONOMICA": [
+      {
+        "nome": "Entrar",
+        "imagem": "",
+        "codigo": "",
+        "embalagem": "",
+        "url": "https://www.gamatintas.com.br/tintas--vernizes--complementos/acrilica-economica"
+      },
+      {
+        "nome": "Entrar",
+        "imagem": "",
+        "codigo": "",
+        "embalagem": "",
+        "url": "https://www.gamatintas.com.br/tintas--vernizes--complementos/acrilica-economica"
+      },
+      {
+        "nome": "Entrar",
+        "imagem": "",
+        "codigo": "",
+        "embalagem": "",
+        "url": "https://www.gamatintas.com.br/tintas--vernizes--complementos/acrilica-economica"
+      },
+      {
+        "nome": "Cadastrar",
+        "imagem": "",
+        "codigo": "",
+        "embalagem": "",
+        "url": "https://www.gamatintas.com.br/tintas--vernizes--complementos/acrilica-economica"
+      },
+      {
+        "nome": "Cadastrar",
+        "imagem": "",
+        "codigo": "",
+        "embalagem": "",
+        "url": "https://www.gamatintas.com.br/tintas--vernizes--complementos/acrilica-economica"
+      },
+      {
+        "nome": "Cadastrar",
+        "imagem": "",
+        "codigo": "",
+        "embalagem": "",
+        "url": "https://www.gamatintas.com.br/tintas--vernizes--complementos/acrilica-economica"
+      },
+      {
+        "nome": "ADESIVOS HENKEL",
+        "imagem": "",
+        "codigo": "",
+        "embalagem": "",
+        "url": "https://www.gamatintas.com.br/tintas--vernizes--complementos/acrilica-economica"
+      },
+      {
+        "nome": "ADESIVOS",
+        "imagem": "",
+        "codigo": "",
+        "embalagem": "",
+        "url": "https://www.gamatintas.com.br/tintas--vernizes--complementos/acrilica-economica"
+      },
+      {
+        "nome": "ADESIVOS",
+        "imagem": "",
+        "codigo": "",
+        "embalagem": "",
+        "url": "https://www.gamatintas.com.br/tintas--vernizes--complementos/acrilica-economica"
+      },
+      {
+        "nome": "HENKEL",
+        "imagem": "",
+        "codigo": "",
+        "embalagem": "",
+        "url": "https://www.gamatintas.com.br/tintas--vernizes--complementos/acrilica-economica"
+      },
+      {
+        "nome": "HENKEL",
+        "imagem": "",
+        "codigo": "",
+        "embalagem": "",
+        "url": "https://www.gamatintas.com.br/tintas--vernizes--complementos/acrilica-economica"
+      },
+      {
+        "nome": "HENKEL",
+        "imagem": "",
+        "codigo": "",
+        "embalagem": "",
+        "url": "https://www.gamatintas.com.br/tintas--vernizes--complementos/acrilica-economica"
+      },
+      {
+        "nome": "HENKEL",
+        "imagem": "",
+        "codigo": "",
+        "embalagem": "",
+        "url": "https://www.gamatintas.com.br/tintas--vernizes--complementos/acrilica-economica"
+      },
+      {
+        "nome": "AUTOMOTIVO MAXI RUBBER",
+        "imagem": "",
+        "codigo": "",
+        "embalagem": "",
+        "url": "https://www.gamatintas.com.br/tintas--vernizes--complementos/acrilica-economica"
+      },
+      {
+        "nome": "AUTOMOTIVO",
+        "imagem": "",
+        "codigo": "",
+        "embalagem": "",
+        "url": "https://www.gamatintas.com.br/tintas--vernizes--complementos/acrilica-economica"
+      },
+      {
+        "nome": "AUTOMOTIVO",
+        "imagem": "",
+        "codigo": "",
+        "embalagem": "",
+        "url": "https://www.gamatintas.com.br/tintas--vernizes--complementos/acrilica-economica"
+      },
+      {
+        "nome": "MAXI RUBBER",
+        "imagem": "",
+        "codigo": "",
+        "embalagem": "",
+        "url": "https://www.gamatintas.com.br/tintas--vernizes--complementos/acrilica-economica"
+      },
+      {
+        "nome": "MAXI RUBBER",
+        "imagem": "",
+        "codigo": "",
+        "embalagem": "",
+        "url": "https://www.gamatintas.com.br/tintas--vernizes--complementos/acrilica-economica"
+      },
+      {
+        "nome": "MAXI RUBBER",
+        "imagem": "",
+        "codigo": "",
+        "embalagem": "",
+        "url": "https://www.gamatintas.com.br/tintas--vernizes--complementos/acrilica-economica"
+      },
+      {
+        "nome": "MAXI RUBBER",
+        "imagem": "",
+        "codigo": "",
+        "embalagem": "",
+        "url": "https://www.gamatintas.com.br/tintas--vernizes--complementos/acrilica-economica"
+      },
+      {
+        "nome": "AUTOMOTIVOS MASSA DE POLIR MAXI RUBBER",
+        "imagem": "",
+        "codigo": "",
+        "embalagem": "",
+        "url": "https://www.gamatintas.com.br/tintas--vernizes--complementos/acrilica-economica"
+      },
+      {
+        "nome": "AUTOMOTIVOS",
+        "imagem": "",
+        "codigo": "",
+        "embalagem": "",
+        "url": "https://www.gamatintas.com.br/tintas--vernizes--complementos/acrilica-economica"
+      },
+      {
+        "nome": "AUTOMOTIVOS",
+        "imagem": "",
+        "codigo": "",
+        "embalagem": "",
+        "url": "https://www.gamatintas.com.br/tintas--vernizes--complementos/acrilica-economica"
+      }
+    ],
+    "ACRILICA PREMIUM": [
+      {
+        "nome": "Entrar",
+        "imagem": "",
+        "codigo": "",
+        "embalagem": "",
+        "url": "https://www.gamatintas.com.br/tintas--vernizes--complementos/acrilica-premium"
+      },
+      {
+        "nome": "Entrar",
+        "imagem": "",
+        "codigo": "",
+        "embalagem": "",
+        "url": "https://www.gamatintas.com.br/tintas--vernizes--complementos/acrilica-premium"
+      },
+      {
+        "nome": "Entrar",
+        "imagem": "",
+        "codigo": "",
+        "embalagem": "",
+        "url": "https://www.gamatintas.com.br/tintas--vernizes--complementos/acrilica-premium"
+      },
+      {
+        "nome": "Cadastrar",
+        "imagem": "",
+        "codigo": "",
+        "embalagem": "",
+        "url": "https://www.gamatintas.com.br/tintas--vernizes--complementos/acrilica-premium"
+      },
+      {
+        "nome": "Cadastrar",
+        "imagem": "",
+        "codigo": "",
+        "embalagem": "",
+        "url": "https://www.gamatintas.com.br/tintas--vernizes--complementos/acrilica-premium"
+      },
+      {
+        "nome": "Cadastrar",
+        "imagem": "",
+        "codigo": "",
+        "embalagem": "",
+        "url": "https://www.gamatintas.com.br/tintas--vernizes--complementos/acrilica-premium"
+      },
+      {
+        "nome": "ADESIVOS HENKEL",
+        "imagem": "",
+        "codigo": "",
+        "embalagem": "",
+        "url": "https://www.gamatintas.com.br/tintas--vernizes--complementos/acrilica-premium"
+      },
+      {
+        "nome": "ADESIVOS",
+        "imagem": "",
+        "codigo": "",
+        "embalagem": "",
+        "url": "https://www.gamatintas.com.br/tintas--vernizes--complementos/acrilica-premium"
+      },
+      {
+        "nome": "ADESIVOS",
+        "imagem": "",
+        "codigo": "",
+        "embalagem": "",
+        "url": "https://www.gamatintas.com.br/tintas--vernizes--complementos/acrilica-premium"
+      },
+      {
+        "nome": "HENKEL",
+        "imagem": "",
+        "codigo": "",
+        "embalagem": "",
+        "url": "https://www.gamatintas.com.br/tintas--vernizes--complementos/acrilica-premium"
+      },
+      {
+        "nome": "HENKEL",
+        "imagem": "",
+        "codigo": "",
+        "embalagem": "",
+        "url": "https://www.gamatintas.com.br/tintas--vernizes--complementos/acrilica-premium"
+      },
+      {
+        "nome": "HENKEL",
+        "imagem": "",
+        "codigo": "",
+        "embalagem": "",
+        "url": "https://www.gamatintas.com.br/tintas--vernizes--complementos/acrilica-premium"
+      },
+      {
+        "nome": "HENKEL",
+        "imagem": "",
+        "codigo": "",
+        "embalagem": "",
+        "url": "https://www.gamatintas.com.br/tintas--vernizes--complementos/acrilica-premium"
+      },
+      {
+        "nome": "AUTOMOTIVO MAXI RUBBER",
+        "imagem": "",
+        "codigo": "",
+        "embalagem": "",
+        "url": "https://www.gamatintas.com.br/tintas--vernizes--complementos/acrilica-premium"
+      },
+      {
+        "nome": "AUTOMOTIVO",
+        "imagem": "",
+        "codigo": "",
+        "embalagem": "",
+        "url": "https://www.gamatintas.com.br/tintas--vernizes--complementos/acrilica-premium"
+      },
+      {
+        "nome": "AUTOMOTIVO",
+        "imagem": "",
+        "codigo": "",
+        "embalagem": "",
+        "url": "https://www.gamatintas.com.br/tintas--vernizes--complementos/acrilica-premium"
+      },
+      {
+        "nome": "MAXI RUBBER",
+        "imagem": "",
+        "codigo": "",
+        "embalagem": "",
+        "url": "https://www.gamatintas.com.br/tintas--vernizes--complementos/acrilica-premium"
+      },
+      {
+        "nome": "MAXI RUBBER",
+        "imagem": "",
+        "codigo": "",
+        "embalagem": "",
+        "url": "https://www.gamatintas.com.br/tintas--vernizes--complementos/acrilica-premium"
+      },
+      {
+        "nome": "MAXI RUBBER",
+        "imagem": "",
+        "codigo": "",
+        "embalagem": "",
+        "url": "https://www.gamatintas.com.br/tintas--vernizes--complementos/acrilica-premium"
+      },
+      {
+        "nome": "MAXI RUBBER",
+        "imagem": "",
+        "codigo": "",
+        "embalagem": "",
+        "url": "https://www.gamatintas.com.br/tintas--vernizes--complementos/acrilica-premium"
+      },
+      {
+        "nome": "AUTOMOTIVOS MASSA DE POLIR MAXI RUBBER",
+        "imagem": "",
+        "codigo": "",
+        "embalagem": "",
+        "url": "https://www.gamatintas.com.br/tintas--vernizes--complementos/acrilica-premium"
+      },
+      {
+        "nome": "AUTOMOTIVOS",
+        "imagem": "",
+        "codigo": "",
+        "embalagem": "",
+        "url": "https://www.gamatintas.com.br/tintas--vernizes--complementos/acrilica-premium"
+      },
+      {
+        "nome": "AUTOMOTIVOS",
+        "imagem": "",
+        "codigo": "",
+        "embalagem": "",
+        "url": "https://www.gamatintas.com.br/tintas--vernizes--complementos/acrilica-premium"
+      }
+    ],
+    "ESMALTE PREMIUM": [
+      {
+        "nome": "Entrar",
+        "imagem": "",
+        "codigo": "",
+        "embalagem": "",
+        "url": "https://www.gamatintas.com.br/tintas--vernizes--complementos/esmalte-premium"
+      },
+      {
+        "nome": "Entrar",
+        "imagem": "",
+        "codigo": "",
+        "embalagem": "",
+        "url": "https://www.gamatintas.com.br/tintas--vernizes--complementos/esmalte-premium"
+      },
+      {
+        "nome": "Entrar",
+        "imagem": "",
+        "codigo": "",
+        "embalagem": "",
+        "url": "https://www.gamatintas.com.br/tintas--vernizes--complementos/esmalte-premium"
+      },
+      {
+        "nome": "Cadastrar",
+        "imagem": "",
+        "codigo": "",
+        "embalagem": "",
+        "url": "https://www.gamatintas.com.br/tintas--vernizes--complementos/esmalte-premium"
+      },
+      {
+        "nome": "Cadastrar",
+        "imagem": "",
+        "codigo": "",
+        "embalagem": "",
+        "url": "https://www.gamatintas.com.br/tintas--vernizes--complementos/esmalte-premium"
+      },
+      {
+        "nome": "Cadastrar",
+        "imagem": "",
+        "codigo": "",
+        "embalagem": "",
+        "url": "https://www.gamatintas.com.br/tintas--vernizes--complementos/esmalte-premium"
+      },
+      {
+        "nome": "ADESIVOS HENKEL",
+        "imagem": "",
+        "codigo": "",
+        "embalagem": "",
+        "url": "https://www.gamatintas.com.br/tintas--vernizes--complementos/esmalte-premium"
+      },
+      {
+        "nome": "ADESIVOS",
+        "imagem": "",
+        "codigo": "",
+        "embalagem": "",
+        "url": "https://www.gamatintas.com.br/tintas--vernizes--complementos/esmalte-premium"
+      },
+      {
+        "nome": "ADESIVOS",
+        "imagem": "",
+        "codigo": "",
+        "embalagem": "",
+        "url": "https://www.gamatintas.com.br/tintas--vernizes--complementos/esmalte-premium"
+      },
+      {
+        "nome": "HENKEL",
+        "imagem": "",
+        "codigo": "",
+        "embalagem": "",
+        "url": "https://www.gamatintas.com.br/tintas--vernizes--complementos/esmalte-premium"
+      },
+      {
+        "nome": "HENKEL",
+        "imagem": "",
+        "codigo": "",
+        "embalagem": "",
+        "url": "https://www.gamatintas.com.br/tintas--vernizes--complementos/esmalte-premium"
+      },
+      {
+        "nome": "HENKEL",
+        "imagem": "",
+        "codigo": "",
+        "embalagem": "",
+        "url": "https://www.gamatintas.com.br/tintas--vernizes--complementos/esmalte-premium"
+      },
+      {
+        "nome": "HENKEL",
+        "imagem": "",
+        "codigo": "",
+        "embalagem": "",
+        "url": "https://www.gamatintas.com.br/tintas--vernizes--complementos/esmalte-premium"
+      },
+      {
+        "nome": "AUTOMOTIVO MAXI RUBBER",
+        "imagem": "",
+        "codigo": "",
+        "embalagem": "",
+        "url": "https://www.gamatintas.com.br/tintas--vernizes--complementos/esmalte-premium"
+      },
+      {
+        "nome": "AUTOMOTIVO",
+        "imagem": "",
+        "codigo": "",
+        "embalagem": "",
+        "url": "https://www.gamatintas.com.br/tintas--vernizes--complementos/esmalte-premium"
+      },
+      {
+        "nome": "AUTOMOTIVO",
+        "imagem": "",
+        "codigo": "",
+        "embalagem": "",
+        "url": "https://www.gamatintas.com.br/tintas--vernizes--complementos/esmalte-premium"
+      },
+      {
+        "nome": "MAXI RUBBER",
+        "imagem": "",
+        "codigo": "",
+        "embalagem": "",
+        "url": "https://www.gamatintas.com.br/tintas--vernizes--complementos/esmalte-premium"
+      },
+      {
+        "nome": "MAXI RUBBER",
+        "imagem": "",
+        "codigo": "",
+        "embalagem": "",
+        "url": "https://www.gamatintas.com.br/tintas--vernizes--complementos/esmalte-premium"
+      },
+      {
+        "nome": "MAXI RUBBER",
+        "imagem": "",
+        "codigo": "",
+        "embalagem": "",
+        "url": "https://www.gamatintas.com.br/tintas--vernizes--complementos/esmalte-premium"
+      },
+      {
+        "nome": "MAXI RUBBER",
+        "imagem": "",
+        "codigo": "",
+        "embalagem": "",
+        "url": "https://www.gamatintas.com.br/tintas--vernizes--complementos/esmalte-premium"
+      },
+      {
+        "nome": "AUTOMOTIVOS MASSA DE POLIR MAXI RUBBER",
+        "imagem": "",
+        "codigo": "",
+        "embalagem": "",
+        "url": "https://www.gamatintas.com.br/tintas--vernizes--complementos/esmalte-premium"
+      },
+      {
+        "nome": "AUTOMOTIVOS",
+        "imagem": "",
+        "codigo": "",
+        "embalagem": "",
+        "url": "https://www.gamatintas.com.br/tintas--vernizes--complementos/esmalte-premium"
+      },
+      {
+        "nome": "AUTOMOTIVOS",
+        "imagem": "",
+        "codigo": "",
+        "embalagem": "",
+        "url": "https://www.gamatintas.com.br/tintas--vernizes--complementos/esmalte-premium"
+      }
+    ],
+    "VERNIZES": [
+      {
+        "nome": "Entrar",
+        "imagem": "",
+        "codigo": "",
+        "embalagem": "",
+        "url": "https://www.gamatintas.com.br/tintas--vernizes--complementos/vernizes"
+      },
+      {
+        "nome": "Entrar",
+        "imagem": "",
+        "codigo": "",
+        "embalagem": "",
+        "url": "https://www.gamatintas.com.br/tintas--vernizes--complementos/vernizes"
+      },
+      {
+        "nome": "Entrar",
+        "imagem": "",
+        "codigo": "",
+        "embalagem": "",
+        "url": "https://www.gamatintas.com.br/tintas--vernizes--complementos/vernizes"
+      },
+      {
+        "nome": "Cadastrar",
+        "imagem": "",
+        "codigo": "",
+        "embalagem": "",
+        "url": "https://www.gamatintas.com.br/tintas--vernizes--complementos/vernizes"
+      },
+      {
+        "nome": "Cadastrar",
+        "imagem": "",
+        "codigo": "",
+        "embalagem": "",
+        "url": "https://www.gamatintas.com.br/tintas--vernizes--complementos/vernizes"
+      },
+      {
+        "nome": "Cadastrar",
+        "imagem": "",
+        "codigo": "",
+        "embalagem": "",
+        "url": "https://www.gamatintas.com.br/tintas--vernizes--complementos/vernizes"
+      },
+      {
+        "nome": "ADESIVOS HENKEL",
+        "imagem": "",
+        "codigo": "",
+        "embalagem": "",
+        "url": "https://www.gamatintas.com.br/tintas--vernizes--complementos/vernizes"
+      },
+      {
+        "nome": "ADESIVOS",
+        "imagem": "",
+        "codigo": "",
+        "embalagem": "",
+        "url": "https://www.gamatintas.com.br/tintas--vernizes--complementos/vernizes"
+      },
+      {
+        "nome": "ADESIVOS",
+        "imagem": "",
+        "codigo": "",
+        "embalagem": "",
+        "url": "https://www.gamatintas.com.br/tintas--vernizes--complementos/vernizes"
+      },
+      {
+        "nome": "HENKEL",
+        "imagem": "",
+        "codigo": "",
+        "embalagem": "",
+        "url": "https://www.gamatintas.com.br/tintas--vernizes--complementos/vernizes"
+      },
+      {
+        "nome": "HENKEL",
+        "imagem": "",
+        "codigo": "",
+        "embalagem": "",
+        "url": "https://www.gamatintas.com.br/tintas--vernizes--complementos/vernizes"
+      },
+      {
+        "nome": "HENKEL",
+        "imagem": "",
+        "codigo": "",
+        "embalagem": "",
+        "url": "https://www.gamatintas.com.br/tintas--vernizes--complementos/vernizes"
+      },
+      {
+        "nome": "HENKEL",
+        "imagem": "",
+        "codigo": "",
+        "embalagem": "",
+        "url": "https://www.gamatintas.com.br/tintas--vernizes--complementos/vernizes"
+      },
+      {
+        "nome": "AUTOMOTIVO MAXI RUBBER",
+        "imagem": "",
+        "codigo": "",
+        "embalagem": "",
+        "url": "https://www.gamatintas.com.br/tintas--vernizes--complementos/vernizes"
+      },
+      {
+        "nome": "AUTOMOTIVO",
+        "imagem": "",
+        "codigo": "",
+        "embalagem": "",
+        "url": "https://www.gamatintas.com.br/tintas--vernizes--complementos/vernizes"
+      },
+      {
+        "nome": "AUTOMOTIVO",
+        "imagem": "",
+        "codigo": "",
+        "embalagem": "",
+        "url": "https://www.gamatintas.com.br/tintas--vernizes--complementos/vernizes"
+      },
+      {
+        "nome": "MAXI RUBBER",
+        "imagem": "",
+        "codigo": "",
+        "embalagem": "",
+        "url": "https://www.gamatintas.com.br/tintas--vernizes--complementos/vernizes"
+      },
+      {
+        "nome": "MAXI RUBBER",
+        "imagem": "",
+        "codigo": "",
+        "embalagem": "",
+        "url": "https://www.gamatintas.com.br/tintas--vernizes--complementos/vernizes"
+      },
+      {
+        "nome": "MAXI RUBBER",
+        "imagem": "",
+        "codigo": "",
+        "embalagem": "",
+        "url": "https://www.gamatintas.com.br/tintas--vernizes--complementos/vernizes"
+      },
+      {
+        "nome": "MAXI RUBBER",
+        "imagem": "",
+        "codigo": "",
+        "embalagem": "",
+        "url": "https://www.gamatintas.com.br/tintas--vernizes--complementos/vernizes"
+      },
+      {
+        "nome": "AUTOMOTIVOS MASSA DE POLIR MAXI RUBBER",
+        "imagem": "",
+        "codigo": "",
+        "embalagem": "",
+        "url": "https://www.gamatintas.com.br/tintas--vernizes--complementos/vernizes"
+      },
+      {
+        "nome": "AUTOMOTIVOS",
+        "imagem": "",
+        "codigo": "",
+        "embalagem": "",
+        "url": "https://www.gamatintas.com.br/tintas--vernizes--complementos/vernizes"
+      },
+      {
+        "nome": "AUTOMOTIVOS",
+        "imagem": "",
+        "codigo": "",
+        "embalagem": "",
+        "url": "https://www.gamatintas.com.br/tintas--vernizes--complementos/vernizes"
+      }
+    ],
+    "TEXTURAS": [
+      {
+        "nome": "Entrar",
+        "imagem": "",
+        "codigo": "",
+        "embalagem": "",
+        "url": "https://www.gamatintas.com.br/tintas--vernizes--complementos/texturas"
+      },
+      {
+        "nome": "Entrar",
+        "imagem": "",
+        "codigo": "",
+        "embalagem": "",
+        "url": "https://www.gamatintas.com.br/tintas--vernizes--complementos/texturas"
+      },
+      {
+        "nome": "Entrar",
+        "imagem": "",
+        "codigo": "",
+        "embalagem": "",
+        "url": "https://www.gamatintas.com.br/tintas--vernizes--complementos/texturas"
+      },
+      {
+        "nome": "Cadastrar",
+        "imagem": "",
+        "codigo": "",
+        "embalagem": "",
+        "url": "https://www.gamatintas.com.br/tintas--vernizes--complementos/texturas"
+      },
+      {
+        "nome": "Cadastrar",
+        "imagem": "",
+        "codigo": "",
+        "embalagem": "",
+        "url": "https://www.gamatintas.com.br/tintas--vernizes--complementos/texturas"
+      },
+      {
+        "nome": "Cadastrar",
+        "imagem": "",
+        "codigo": "",
+        "embalagem": "",
+        "url": "https://www.gamatintas.com.br/tintas--vernizes--complementos/texturas"
+      },
+      {
+        "nome": "ADESIVOS HENKEL",
+        "imagem": "",
+        "codigo": "",
+        "embalagem": "",
+        "url": "https://www.gamatintas.com.br/tintas--vernizes--complementos/texturas"
+      },
+      {
+        "nome": "ADESIVOS",
+        "imagem": "",
+        "codigo": "",
+        "embalagem": "",
+        "url": "https://www.gamatintas.com.br/tintas--vernizes--complementos/texturas"
+      },
+      {
+        "nome": "ADESIVOS",
+        "imagem": "",
+        "codigo": "",
+        "embalagem": "",
+        "url": "https://www.gamatintas.com.br/tintas--vernizes--complementos/texturas"
+      },
+      {
+        "nome": "HENKEL",
+        "imagem": "",
+        "codigo": "",
+        "embalagem": "",
+        "url": "https://www.gamatintas.com.br/tintas--vernizes--complementos/texturas"
+      },
+      {
+        "nome": "HENKEL",
+        "imagem": "",
+        "codigo": "",
+        "embalagem": "",
+        "url": "https://www.gamatintas.com.br/tintas--vernizes--complementos/texturas"
+      },
+      {
+        "nome": "HENKEL",
+        "imagem": "",
+        "codigo": "",
+        "embalagem": "",
+        "url": "https://www.gamatintas.com.br/tintas--vernizes--complementos/texturas"
+      },
+      {
+        "nome": "HENKEL",
+        "imagem": "",
+        "codigo": "",
+        "embalagem": "",
+        "url": "https://www.gamatintas.com.br/tintas--vernizes--complementos/texturas"
+      },
+      {
+        "nome": "AUTOMOTIVO MAXI RUBBER",
+        "imagem": "",
+        "codigo": "",
+        "embalagem": "",
+        "url": "https://www.gamatintas.com.br/tintas--vernizes--complementos/texturas"
+      },
+      {
+        "nome": "AUTOMOTIVO",
+        "imagem": "",
+        "codigo": "",
+        "embalagem": "",
+        "url": "https://www.gamatintas.com.br/tintas--vernizes--complementos/texturas"
+      },
+      {
+        "nome": "AUTOMOTIVO",
+        "imagem": "",
+        "codigo": "",
+        "embalagem": "",
+        "url": "https://www.gamatintas.com.br/tintas--vernizes--complementos/texturas"
+      },
+      {
+        "nome": "MAXI RUBBER",
+        "imagem": "",
+        "codigo": "",
+        "embalagem": "",
+        "url": "https://www.gamatintas.com.br/tintas--vernizes--complementos/texturas"
+      },
+      {
+        "nome": "MAXI RUBBER",
+        "imagem": "",
+        "codigo": "",
+        "embalagem": "",
+        "url": "https://www.gamatintas.com.br/tintas--vernizes--complementos/texturas"
+      },
+      {
+        "nome": "MAXI RUBBER",
+        "imagem": "",
+        "codigo": "",
+        "embalagem": "",
+        "url": "https://www.gamatintas.com.br/tintas--vernizes--complementos/texturas"
+      },
+      {
+        "nome": "MAXI RUBBER",
+        "imagem": "",
+        "codigo": "",
+        "embalagem": "",
+        "url": "https://www.gamatintas.com.br/tintas--vernizes--complementos/texturas"
+      },
+      {
+        "nome": "AUTOMOTIVOS MASSA DE POLIR MAXI RUBBER",
+        "imagem": "",
+        "codigo": "",
+        "embalagem": "",
+        "url": "https://www.gamatintas.com.br/tintas--vernizes--complementos/texturas"
+      },
+      {
+        "nome": "AUTOMOTIVOS",
+        "imagem": "",
+        "codigo": "",
+        "embalagem": "",
+        "url": "https://www.gamatintas.com.br/tintas--vernizes--complementos/texturas"
+      },
+      {
+        "nome": "AUTOMOTIVOS",
+        "imagem": "",
+        "codigo": "",
+        "embalagem": "",
+        "url": "https://www.gamatintas.com.br/tintas--vernizes--complementos/texturas"
+      }
+    ],
+    "CORALAR DUO": [
+      {
+        "nome": "Entrar",
+        "imagem": "",
+        "codigo": "",
+        "embalagem": "",
+        "url": "https://www.gamatintas.com.br/standart/coralar-duo"
+      },
+      {
+        "nome": "Entrar",
+        "imagem": "",
+        "codigo": "",
+        "embalagem": "",
+        "url": "https://www.gamatintas.com.br/standart/coralar-duo"
+      },
+      {
+        "nome": "Entrar",
+        "imagem": "",
+        "codigo": "",
+        "embalagem": "",
+        "url": "https://www.gamatintas.com.br/standart/coralar-duo"
+      },
+      {
+        "nome": "Cadastrar",
+        "imagem": "",
+        "codigo": "",
+        "embalagem": "",
+        "url": "https://www.gamatintas.com.br/standart/coralar-duo"
+      },
+      {
+        "nome": "Cadastrar",
+        "imagem": "",
+        "codigo": "",
+        "embalagem": "",
+        "url": "https://www.gamatintas.com.br/standart/coralar-duo"
+      },
+      {
+        "nome": "Cadastrar",
+        "imagem": "",
+        "codigo": "",
+        "embalagem": "",
+        "url": "https://www.gamatintas.com.br/standart/coralar-duo"
+      },
+      {
+        "nome": "ADESIVOS HENKEL",
+        "imagem": "",
+        "codigo": "",
+        "embalagem": "",
+        "url": "https://www.gamatintas.com.br/standart/coralar-duo"
+      },
+      {
+        "nome": "ADESIVOS",
+        "imagem": "",
+        "codigo": "",
+        "embalagem": "",
+        "url": "https://www.gamatintas.com.br/standart/coralar-duo"
+      },
+      {
+        "nome": "ADESIVOS",
+        "imagem": "",
+        "codigo": "",
+        "embalagem": "",
+        "url": "https://www.gamatintas.com.br/standart/coralar-duo"
+      },
+      {
+        "nome": "HENKEL",
+        "imagem": "",
+        "codigo": "",
+        "embalagem": "",
+        "url": "https://www.gamatintas.com.br/standart/coralar-duo"
+      },
+      {
+        "nome": "HENKEL",
+        "imagem": "",
+        "codigo": "",
+        "embalagem": "",
+        "url": "https://www.gamatintas.com.br/standart/coralar-duo"
+      },
+      {
+        "nome": "HENKEL",
+        "imagem": "",
+        "codigo": "",
+        "embalagem": "",
+        "url": "https://www.gamatintas.com.br/standart/coralar-duo"
+      },
+      {
+        "nome": "HENKEL",
+        "imagem": "",
+        "codigo": "",
+        "embalagem": "",
+        "url": "https://www.gamatintas.com.br/standart/coralar-duo"
+      },
+      {
+        "nome": "AUTOMOTIVO MAXI RUBBER",
+        "imagem": "",
+        "codigo": "",
+        "embalagem": "",
+        "url": "https://www.gamatintas.com.br/standart/coralar-duo"
+      },
+      {
+        "nome": "AUTOMOTIVO",
+        "imagem": "",
+        "codigo": "",
+        "embalagem": "",
+        "url": "https://www.gamatintas.com.br/standart/coralar-duo"
+      },
+      {
+        "nome": "AUTOMOTIVO",
+        "imagem": "",
+        "codigo": "",
+        "embalagem": "",
+        "url": "https://www.gamatintas.com.br/standart/coralar-duo"
+      },
+      {
+        "nome": "MAXI RUBBER",
+        "imagem": "",
+        "codigo": "",
+        "embalagem": "",
+        "url": "https://www.gamatintas.com.br/standart/coralar-duo"
+      },
+      {
+        "nome": "MAXI RUBBER",
+        "imagem": "",
+        "codigo": "",
+        "embalagem": "",
+        "url": "https://www.gamatintas.com.br/standart/coralar-duo"
+      },
+      {
+        "nome": "MAXI RUBBER",
+        "imagem": "",
+        "codigo": "",
+        "embalagem": "",
+        "url": "https://www.gamatintas.com.br/standart/coralar-duo"
+      },
+      {
+        "nome": "MAXI RUBBER",
+        "imagem": "",
+        "codigo": "",
+        "embalagem": "",
+        "url": "https://www.gamatintas.com.br/standart/coralar-duo"
+      },
+      {
+        "nome": "AUTOMOTIVOS MASSA DE POLIR MAXI RUBBER",
+        "imagem": "",
+        "codigo": "",
+        "embalagem": "",
+        "url": "https://www.gamatintas.com.br/standart/coralar-duo"
+      },
+      {
+        "nome": "AUTOMOTIVOS",
+        "imagem": "",
+        "codigo": "",
+        "embalagem": "",
+        "url": "https://www.gamatintas.com.br/standart/coralar-duo"
+      },
+      {
+        "nome": "AUTOMOTIVOS",
+        "imagem": "",
+        "codigo": "",
+        "embalagem": "",
+        "url": "https://www.gamatintas.com.br/standart/coralar-duo"
+      }
+    ],
+    "RENDE MUITO LOC": [
+      {
+        "nome": "Entrar",
+        "imagem": "",
+        "codigo": "",
+        "embalagem": "",
+        "url": "https://www.gamatintas.com.br/standart/rende-muito-loc"
+      },
+      {
+        "nome": "Entrar",
+        "imagem": "",
+        "codigo": "",
+        "embalagem": "",
+        "url": "https://www.gamatintas.com.br/standart/rende-muito-loc"
+      },
+      {
+        "nome": "Entrar",
+        "imagem": "",
+        "codigo": "",
+        "embalagem": "",
+        "url": "https://www.gamatintas.com.br/standart/rende-muito-loc"
+      },
+      {
+        "nome": "Cadastrar",
+        "imagem": "",
+        "codigo": "",
+        "embalagem": "",
+        "url": "https://www.gamatintas.com.br/standart/rende-muito-loc"
+      },
+      {
+        "nome": "Cadastrar",
+        "imagem": "",
+        "codigo": "",
+        "embalagem": "",
+        "url": "https://www.gamatintas.com.br/standart/rende-muito-loc"
+      },
+      {
+        "nome": "Cadastrar",
+        "imagem": "",
+        "codigo": "",
+        "embalagem": "",
+        "url": "https://www.gamatintas.com.br/standart/rende-muito-loc"
+      },
+      {
+        "nome": "ADESIVOS HENKEL",
+        "imagem": "",
+        "codigo": "",
+        "embalagem": "",
+        "url": "https://www.gamatintas.com.br/standart/rende-muito-loc"
+      },
+      {
+        "nome": "ADESIVOS",
+        "imagem": "",
+        "codigo": "",
+        "embalagem": "",
+        "url": "https://www.gamatintas.com.br/standart/rende-muito-loc"
+      },
+      {
+        "nome": "ADESIVOS",
+        "imagem": "",
+        "codigo": "",
+        "embalagem": "",
+        "url": "https://www.gamatintas.com.br/standart/rende-muito-loc"
+      },
+      {
+        "nome": "HENKEL",
+        "imagem": "",
+        "codigo": "",
+        "embalagem": "",
+        "url": "https://www.gamatintas.com.br/standart/rende-muito-loc"
+      },
+      {
+        "nome": "HENKEL",
+        "imagem": "",
+        "codigo": "",
+        "embalagem": "",
+        "url": "https://www.gamatintas.com.br/standart/rende-muito-loc"
+      },
+      {
+        "nome": "HENKEL",
+        "imagem": "",
+        "codigo": "",
+        "embalagem": "",
+        "url": "https://www.gamatintas.com.br/standart/rende-muito-loc"
+      },
+      {
+        "nome": "HENKEL",
+        "imagem": "",
+        "codigo": "",
+        "embalagem": "",
+        "url": "https://www.gamatintas.com.br/standart/rende-muito-loc"
+      },
+      {
+        "nome": "AUTOMOTIVO MAXI RUBBER",
+        "imagem": "",
+        "codigo": "",
+        "embalagem": "",
+        "url": "https://www.gamatintas.com.br/standart/rende-muito-loc"
+      },
+      {
+        "nome": "AUTOMOTIVO",
+        "imagem": "",
+        "codigo": "",
+        "embalagem": "",
+        "url": "https://www.gamatintas.com.br/standart/rende-muito-loc"
+      },
+      {
+        "nome": "AUTOMOTIVO",
+        "imagem": "",
+        "codigo": "",
+        "embalagem": "",
+        "url": "https://www.gamatintas.com.br/standart/rende-muito-loc"
+      },
+      {
+        "nome": "MAXI RUBBER",
+        "imagem": "",
+        "codigo": "",
+        "embalagem": "",
+        "url": "https://www.gamatintas.com.br/standart/rende-muito-loc"
+      },
+      {
+        "nome": "MAXI RUBBER",
+        "imagem": "",
+        "codigo": "",
+        "embalagem": "",
+        "url": "https://www.gamatintas.com.br/standart/rende-muito-loc"
+      },
+      {
+        "nome": "MAXI RUBBER",
+        "imagem": "",
+        "codigo": "",
+        "embalagem": "",
+        "url": "https://www.gamatintas.com.br/standart/rende-muito-loc"
+      },
+      {
+        "nome": "MAXI RUBBER",
+        "imagem": "",
+        "codigo": "",
+        "embalagem": "",
+        "url": "https://www.gamatintas.com.br/standart/rende-muito-loc"
+      },
+      {
+        "nome": "AUTOMOTIVOS MASSA DE POLIR MAXI RUBBER",
+        "imagem": "",
+        "codigo": "",
+        "embalagem": "",
+        "url": "https://www.gamatintas.com.br/standart/rende-muito-loc"
+      },
+      {
+        "nome": "AUTOMOTIVOS",
+        "imagem": "",
+        "codigo": "",
+        "embalagem": "",
+        "url": "https://www.gamatintas.com.br/standart/rende-muito-loc"
+      },
+      {
+        "nome": "AUTOMOTIVOS",
+        "imagem": "",
+        "codigo": "",
+        "embalagem": "",
+        "url": "https://www.gamatintas.com.br/standart/rende-muito-loc"
+      }
+    ],
+    "PINTA PISO": [
+      {
+        "nome": "Entrar",
+        "imagem": "",
+        "codigo": "",
+        "embalagem": "",
+        "url": "https://www.gamatintas.com.br/standart/pinta-piso"
+      },
+      {
+        "nome": "Entrar",
+        "imagem": "",
+        "codigo": "",
+        "embalagem": "",
+        "url": "https://www.gamatintas.com.br/standart/pinta-piso"
+      },
+      {
+        "nome": "Entrar",
+        "imagem": "",
+        "codigo": "",
+        "embalagem": "",
+        "url": "https://www.gamatintas.com.br/standart/pinta-piso"
+      },
+      {
+        "nome": "Cadastrar",
+        "imagem": "",
+        "codigo": "",
+        "embalagem": "",
+        "url": "https://www.gamatintas.com.br/standart/pinta-piso"
+      },
+      {
+        "nome": "Cadastrar",
+        "imagem": "",
+        "codigo": "",
+        "embalagem": "",
+        "url": "https://www.gamatintas.com.br/standart/pinta-piso"
+      },
+      {
+        "nome": "Cadastrar",
+        "imagem": "",
+        "codigo": "",
+        "embalagem": "",
+        "url": "https://www.gamatintas.com.br/standart/pinta-piso"
+      },
+      {
+        "nome": "ADESIVOS HENKEL",
+        "imagem": "",
+        "codigo": "",
+        "embalagem": "",
+        "url": "https://www.gamatintas.com.br/standart/pinta-piso"
+      },
+      {
+        "nome": "ADESIVOS",
+        "imagem": "",
+        "codigo": "",
+        "embalagem": "",
+        "url": "https://www.gamatintas.com.br/standart/pinta-piso"
+      },
+      {
+        "nome": "ADESIVOS",
+        "imagem": "",
+        "codigo": "",
+        "embalagem": "",
+        "url": "https://www.gamatintas.com.br/standart/pinta-piso"
+      },
+      {
+        "nome": "HENKEL",
+        "imagem": "",
+        "codigo": "",
+        "embalagem": "",
+        "url": "https://www.gamatintas.com.br/standart/pinta-piso"
+      },
+      {
+        "nome": "HENKEL",
+        "imagem": "",
+        "codigo": "",
+        "embalagem": "",
+        "url": "https://www.gamatintas.com.br/standart/pinta-piso"
+      },
+      {
+        "nome": "HENKEL",
+        "imagem": "",
+        "codigo": "",
+        "embalagem": "",
+        "url": "https://www.gamatintas.com.br/standart/pinta-piso"
+      },
+      {
+        "nome": "HENKEL",
+        "imagem": "",
+        "codigo": "",
+        "embalagem": "",
+        "url": "https://www.gamatintas.com.br/standart/pinta-piso"
+      },
+      {
+        "nome": "AUTOMOTIVO MAXI RUBBER",
+        "imagem": "",
+        "codigo": "",
+        "embalagem": "",
+        "url": "https://www.gamatintas.com.br/standart/pinta-piso"
+      },
+      {
+        "nome": "AUTOMOTIVO",
+        "imagem": "",
+        "codigo": "",
+        "embalagem": "",
+        "url": "https://www.gamatintas.com.br/standart/pinta-piso"
+      },
+      {
+        "nome": "AUTOMOTIVO",
+        "imagem": "",
+        "codigo": "",
+        "embalagem": "",
+        "url": "https://www.gamatintas.com.br/standart/pinta-piso"
+      },
+      {
+        "nome": "MAXI RUBBER",
+        "imagem": "",
+        "codigo": "",
+        "embalagem": "",
+        "url": "https://www.gamatintas.com.br/standart/pinta-piso"
+      },
+      {
+        "nome": "MAXI RUBBER",
+        "imagem": "",
+        "codigo": "",
+        "embalagem": "",
+        "url": "https://www.gamatintas.com.br/standart/pinta-piso"
+      },
+      {
+        "nome": "MAXI RUBBER",
+        "imagem": "",
+        "codigo": "",
+        "embalagem": "",
+        "url": "https://www.gamatintas.com.br/standart/pinta-piso"
+      },
+      {
+        "nome": "MAXI RUBBER",
+        "imagem": "",
+        "codigo": "",
+        "embalagem": "",
+        "url": "https://www.gamatintas.com.br/standart/pinta-piso"
+      },
+      {
+        "nome": "AUTOMOTIVOS MASSA DE POLIR MAXI RUBBER",
+        "imagem": "",
+        "codigo": "",
+        "embalagem": "",
+        "url": "https://www.gamatintas.com.br/standart/pinta-piso"
+      },
+      {
+        "nome": "AUTOMOTIVOS",
+        "imagem": "",
+        "codigo": "",
+        "embalagem": "",
+        "url": "https://www.gamatintas.com.br/standart/pinta-piso"
+      },
+      {
+        "nome": "AUTOMOTIVOS",
+        "imagem": "",
+        "codigo": "",
+        "embalagem": "",
+        "url": "https://www.gamatintas.com.br/standart/pinta-piso"
+      }
+    ]
+  }
+}
