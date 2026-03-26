@@ -11,10 +11,10 @@ import { CategoryExpert } from '../logic/marketing/CategoryExpert.js';
 const uid = () => Date.now().toString(36) + Math.random().toString(36).slice(2, 8);
 
 export const GEMINI_MODELS = [
-  { id: 'gemini-2.0-flash', label: 'Flash', description: 'Rápido e gratuito' },
-  { id: 'gemini-2.5-pro-preview-06-05', label: 'Pro', description: 'Mais elaborado, mais lento' },
+  { id: 'gemini-2.5-flash', label: 'Flash', description: 'Rápido e gratuito' },
+  { id: 'gemini-2.5-pro', label: 'Pro', description: 'Mais elaborado, mais lento' },
 ];
-export const DEFAULT_GEMINI_MODEL = 'gemini-2.0-flash';
+export const DEFAULT_GEMINI_MODEL = 'gemini-2.5-flash';
 
 const FORMAT_LABELS = {
   reels: 'Reels / TikTok (vídeo vertical 15-30s)',
