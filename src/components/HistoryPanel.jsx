@@ -1,119 +1,93 @@
 import React, { useState } from 'react';
 import { ContentDisplay } from './ContentDisplay.jsx';
 import { QualityPanel } from './QualityPanel.jsx';
+import { cn } from '@/lib/utils';
+import { Button } from '@/components/ui/button';
+import { Badge } from '@/components/ui/badge';
+import { ChevronDown, ChevronUp, Trash2 } from 'lucide-react';
 
 const FORMAT_ICONS = {
-  reels: '🎬',
-  carrossel: '📸',
-  stories: '📱',
-  post_estatico: '📌',
-  banner_site: '🖥️',
-  whatsapp: '💬',
+  reels: '🎬', carrossel: '📸', stories: '📱',
+  post_estatico: '📌', banner_site: '🖥️', whatsapp: '💬',
+};
+
+const GRADE_STYLES = {
+  A: 'bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-400',
+  B: 'bg-blue-100 text-blue-700 dark:bg-blue-900/30 dark:text-blue-400',
+  C: 'bg-amber-100 text-amber-700 dark:bg-amber-900/30 dark:text-amber-400',
+  D: 'bg-red-100 text-red-700 dark:bg-red-900/30 dark:text-red-400',
 };
 
 export function HistoryPanel({ history, onRemove, onClear }) {
   const [expandedId, setExpandedId] = useState(null);
   const [filterFormat, setFilterFormat] = useState('');
 
-  const filteredHistory = filterFormat
-    ? history.filter(h => h.format === filterFormat)
-    : history;
-
-  // Get unique formats in history
+  const filteredHistory = filterFormat ? history.filter(h => h.format === filterFormat) : history;
   const formats = [...new Set(history.map(h => h.format).filter(Boolean))];
 
   if (history.length === 0) {
     return (
-      <div className="empty-state fade-in" style={{ minHeight: '300px' }}>
-        <div className="empty-state-icon">📋</div>
-        <h3>Nenhum conteúdo no histórico</h3>
-        <p>Conteúdos gerados aparecerão aqui automaticamente.</p>
+      <div className="fade-in text-center py-20">
+        <div className="text-4xl mb-3">📋</div>
+        <h3 className="text-lg font-semibold text-text-primary">Nenhum conteúdo no histórico</h3>
+        <p className="text-sm text-text-muted mt-1">Conteúdos gerados aparecerão aqui automaticamente.</p>
       </div>
     );
   }
 
   return (
     <div className="fade-in">
-      {/* Header */}
-      <div style={{
-        display: 'flex',
-        justifyContent: 'space-between',
-        alignItems: 'center',
-        marginBottom: 'var(--space-4)',
-      }}>
+      <div className="flex justify-between items-center mb-4 flex-wrap gap-3">
         <div>
-          <h3 style={{ margin: 0 }}>Histórico</h3>
-          <p style={{ fontSize: 'var(--text-sm)', color: 'var(--text-muted)', margin: 0 }}>
-            {history.length} conteúdos gerados
-          </p>
+          <h3 className="text-lg font-bold text-text-primary">Histórico</h3>
+          <p className="text-sm text-text-muted">{history.length} conteúdos gerados</p>
         </div>
-        <div style={{ display: 'flex', gap: 'var(--space-2)' }}>
-          {/* Filter */}
-          <select
-            value={filterFormat}
-            onChange={e => setFilterFormat(e.target.value)}
-            style={{ width: 'auto', fontSize: 'var(--text-xs)' }}
-          >
+        <div className="flex gap-2">
+          <select value={filterFormat} onChange={e => setFilterFormat(e.target.value)} className="h-8 px-2 text-xs border border-border rounded-md bg-surface-card text-text-primary">
             <option value="">Todos os formatos</option>
-            {formats.map(f => (
-              <option key={f} value={f}>{FORMAT_ICONS[f] || ''} {f}</option>
-            ))}
+            {formats.map(f => <option key={f} value={f}>{FORMAT_ICONS[f] || ''} {f}</option>)}
           </select>
-          <button
-            className="btn btn-secondary"
-            onClick={onClear}
-            style={{ fontSize: 'var(--text-xs)', color: 'var(--color-error)' }}
-          >
-            Limpar Tudo
-          </button>
+          <Button variant="outline" size="sm" onClick={onClear} className="text-xs text-error hover:text-error">
+            <Trash2 size={13} className="mr-1" /> Limpar Tudo
+          </Button>
         </div>
       </div>
 
-      {/* List */}
-      <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--space-3)' }}>
+      <div className="flex flex-col gap-3">
         {filteredHistory.map(item => (
-          <div key={item.id} className="card">
+          <div key={item.id} className="bg-surface-card border border-border rounded-lg overflow-hidden">
             <div
-              className="card-header"
-              style={{ cursor: 'pointer' }}
+              className="flex items-start justify-between gap-3 px-4 py-3 cursor-pointer hover:bg-muted/30 transition-colors"
               onClick={() => setExpandedId(expandedId === item.id ? null : item.id)}
             >
-              <div style={{ flex: 1, minWidth: 0 }}>
-                <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--space-2)' }}>
+              <div className="flex-1 min-w-0">
+                <div className="flex items-center gap-2 flex-wrap">
                   <span>{FORMAT_ICONS[item.format] || '📄'}</span>
-                  <strong style={{ fontSize: 'var(--text-sm)' }}>{item.title || 'Sem título'}</strong>
+                  <strong className="text-sm text-text-primary">{item.title || 'Sem título'}</strong>
                   {item.quality && (
-                    <span className={`quality-badge quality-${item.quality.grade}`}>
+                    <span className={cn('text-xs font-bold px-1.5 py-0.5 rounded', GRADE_STYLES[item.quality.grade])}>
                       {item.quality.grade}
                     </span>
                   )}
+                  {item.feedback && (
+                    <span className="text-xs">{item.feedback === 'up' ? '👍' : '👎'}</span>
+                  )}
                 </div>
-                <div style={{
-                  fontSize: 'var(--text-xs)',
-                  color: 'var(--text-muted)',
-                  marginTop: 'var(--space-1)',
-                }}>
+                <div className="text-xs text-text-muted mt-1">
                   {item.strategy_focus}
                   {item.savedAt && ` | ${new Date(item.savedAt).toLocaleString('pt-BR')}`}
                 </div>
               </div>
-              <div style={{ display: 'flex', gap: 'var(--space-2)', alignItems: 'center' }}>
-                <button
-                  className="btn btn-ghost"
-                  onClick={(e) => { e.stopPropagation(); onRemove(item.id); }}
-                  title="Remover"
-                  style={{ fontSize: 'var(--text-xs)', color: 'var(--color-error)' }}
-                >
-                  ✕
-                </button>
-                <span style={{ fontSize: 'var(--text-xs)', color: 'var(--text-muted)' }}>
-                  {expandedId === item.id ? '▲' : '▼'}
-                </span>
+              <div className="flex gap-1.5 items-center shrink-0">
+                <Button variant="ghost" size="sm" onClick={(e) => { e.stopPropagation(); onRemove(item.id); }} className="h-7 w-7 p-0 text-text-muted hover:text-error">
+                  <Trash2 size={14} />
+                </Button>
+                {expandedId === item.id ? <ChevronUp size={14} className="text-text-muted" /> : <ChevronDown size={14} className="text-text-muted" />}
               </div>
             </div>
 
             {expandedId === item.id && (
-              <div className="card-body fade-in">
+              <div className="p-4 border-t border-border fade-in">
                 <ContentDisplay content={item} />
                 {item.quality && <QualityPanel quality={item.quality} />}
               </div>

@@ -3,10 +3,6 @@ import { useState, useCallback, useEffect } from 'react';
 const STORAGE_KEY = 'labor_content_history';
 const MAX_HISTORY = 50;
 
-/**
- * Hook para gerenciar histórico de conteúdos gerados.
- * Persiste em localStorage.
- */
 export function useContentHistory() {
   const [history, setHistory] = useState(() => {
     try {
@@ -17,7 +13,6 @@ export function useContentHistory() {
     }
   });
 
-  // Persist ao mudar
   useEffect(() => {
     try {
       localStorage.setItem(STORAGE_KEY, JSON.stringify(history));
@@ -28,13 +23,7 @@ export function useContentHistory() {
 
   const addToHistory = useCallback((content) => {
     setHistory(prev => {
-      const updated = [
-        {
-          ...content,
-          savedAt: Date.now(),
-        },
-        ...prev,
-      ].slice(0, MAX_HISTORY);
+      const updated = [{ ...content, savedAt: Date.now() }, ...prev].slice(0, MAX_HISTORY);
       return updated;
     });
   }, []);
@@ -47,11 +36,18 @@ export function useContentHistory() {
     setHistory([]);
   }, []);
 
+  const setFeedback = useCallback((id, value) => {
+    setHistory(prev => prev.map(item =>
+      item.id === id ? { ...item, feedback: value } : item
+    ));
+  }, []);
+
   return {
     history,
     addToHistory,
     removeFromHistory,
     clearHistory,
+    setFeedback,
     historyCount: history.length,
   };
 }

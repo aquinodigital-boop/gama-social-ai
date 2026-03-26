@@ -1,6 +1,9 @@
 import React, { useState } from 'react';
-import { useToast } from '../hooks/useToast.js';
 import { copyToClipboard, downloadFile } from '../utils/export.js';
+import { cn } from '@/lib/utils';
+import { Button } from '@/components/ui/button';
+import { toast } from 'sonner';
+import { Copy, Download } from 'lucide-react';
 
 const FORMAT_LABELS = {
   reels: 'Reels / TikTok (9:16)',
@@ -12,9 +15,8 @@ const FORMAT_LABELS = {
 };
 
 export function PromptPackView({ pack }) {
-  const { addToast } = useToast();
   const [selectedFormat, setSelectedFormat] = useState('reels');
-  const [lang, setLang] = useState('en'); // en or pt
+  const [lang, setLang] = useState('en');
 
   if (!pack || !pack.packs) return null;
 
@@ -23,122 +25,75 @@ export function PromptPackView({ pack }) {
 
   const handleCopy = async (text, label) => {
     const ok = await copyToClipboard(text);
-    if (ok) addToast(`${label} copiado!`, 'success', 1500);
+    if (ok) toast.success(`${label} copiado!`);
   };
 
   const handleExportAll = () => {
     const lines = [`# Prompt Pack - ${pack.name}\n`, `Categoria: ${pack.category}`, `Keywords: ${pack.keywords.join(', ')}\n`];
-
     Object.entries(pack.packs).forEach(([fmt, fmtPack]) => {
       lines.push(`\n## ${FORMAT_LABELS[fmt] || fmt}\n`);
       lines.push(`Spec: ${fmtPack.spec.aspect} | ${fmtPack.spec.resolution}\n`);
-
       Object.entries(fmtPack.prompts).forEach(([_style, prompts]) => {
         lines.push(`### ${prompts.label}\n`);
         if (prompts.prompt_en) lines.push(`**EN:** ${prompts.prompt_en}\n`);
         if (prompts.prompt_pt) lines.push(`**PT:** ${prompts.prompt_pt}\n`);
       });
     });
-
-    downloadFile(lines.join('\n'), `labor-prompts-${pack.name}-${Date.now()}.md`, 'text/plain');
-    addToast('Pack completo exportado!', 'success');
+    downloadFile(lines.join('\n'), `gama-prompts-${pack.name}-${Date.now()}.md`, 'text/plain');
+    toast.success('Pack completo exportado!');
   };
 
   return (
     <div className="fade-in">
-      {/* Header */}
-      <div className="card" style={{ marginBottom: 'var(--space-4)' }}>
-        <div className="card-header">
+      <div className="bg-surface-card border border-border rounded-lg overflow-hidden mb-4">
+        <div className="flex items-center justify-between px-4 lg:px-6 py-4 border-b border-border">
           <div>
-            <h3 style={{ margin: 0 }}>Prompts: {pack.name}</h3>
-            <div style={{ fontSize: 'var(--text-sm)', color: 'var(--text-secondary)', marginTop: 'var(--space-1)' }}>
-              {pack.category} | {pack.keywords.join(', ')}
-            </div>
+            <h3 className="text-lg font-bold text-text-primary">Prompts: {pack.name}</h3>
+            <div className="text-sm text-text-secondary mt-1">{pack.category} | {pack.keywords.join(', ')}</div>
           </div>
-          <button className="btn btn-secondary" onClick={handleExportAll}>
-            Exportar Tudo (.md)
-          </button>
+          <Button variant="outline" size="sm" onClick={handleExportAll}>
+            <Download size={14} className="mr-1" /> Exportar Tudo
+          </Button>
         </div>
       </div>
 
-      {/* Format selector */}
-      <div style={{
-        display: 'flex',
-        gap: 'var(--space-2)',
-        marginBottom: 'var(--space-4)',
-        flexWrap: 'wrap',
-      }}>
+      <div className="flex gap-2 mb-4 flex-wrap">
         {Object.keys(pack.packs).map(fmt => (
-          <button
-            key={fmt}
-            className={selectedFormat === fmt ? 'btn btn-navy' : 'btn btn-secondary'}
-            onClick={() => setSelectedFormat(fmt)}
-            style={{ fontSize: 'var(--text-xs)' }}
-          >
+          <Button key={fmt} variant={selectedFormat === fmt ? 'default' : 'outline'} size="sm" onClick={() => setSelectedFormat(fmt)} className={cn('text-xs', selectedFormat === fmt && 'bg-navy dark:bg-coral')}>
             {FORMAT_LABELS[fmt] || fmt}
-          </button>
+          </Button>
         ))}
       </div>
 
-      {/* Language toggle */}
-      <div style={{
-        display: 'flex',
-        gap: 'var(--space-2)',
-        marginBottom: 'var(--space-4)',
-      }}>
-        <button
-          className={lang === 'en' ? 'btn btn-navy' : 'btn btn-secondary'}
-          onClick={() => setLang('en')}
-          style={{ fontSize: 'var(--text-xs)' }}
-        >
+      <div className="flex gap-2 mb-4">
+        <Button variant={lang === 'en' ? 'default' : 'outline'} size="sm" onClick={() => setLang('en')} className={cn('text-xs', lang === 'en' && 'bg-navy dark:bg-coral')}>
           English (para IA)
-        </button>
-        <button
-          className={lang === 'pt' ? 'btn btn-navy' : 'btn btn-secondary'}
-          onClick={() => setLang('pt')}
-          style={{ fontSize: 'var(--text-xs)' }}
-        >
+        </Button>
+        <Button variant={lang === 'pt' ? 'default' : 'outline'} size="sm" onClick={() => setLang('pt')} className={cn('text-xs', lang === 'pt' && 'bg-navy dark:bg-coral')}>
           Português
-        </button>
+        </Button>
       </div>
 
-      {/* Spec info */}
-      <div style={{
-        fontSize: 'var(--text-xs)',
-        color: 'var(--text-muted)',
-        marginBottom: 'var(--space-4)',
-        display: 'flex',
-        gap: 'var(--space-4)',
-      }}>
+      <div className="text-xs text-text-muted mb-4 flex gap-4">
         <span>Aspect Ratio: <strong>{currentPack.spec.aspect}</strong></span>
         <span>Resolução: <strong>{currentPack.spec.resolution}</strong></span>
-        <span>{currentPack.spec.notes}</span>
+        {currentPack.spec.notes && <span>{currentPack.spec.notes}</span>}
       </div>
 
-      {/* Prompts */}
-      <div className="dark-box">
+      <div className="bg-navy-dark dark:bg-surface-dark rounded-lg p-4 lg:p-6 text-white">
         {Object.entries(currentPack.prompts).map(([style, prompts]) => {
           const promptText = lang === 'en' ? prompts.prompt_en : prompts.prompt_pt;
           if (!promptText) return null;
 
           return (
-            <div key={style} style={{ marginBottom: 'var(--space-4)' }}>
-              <div style={{
-                display: 'flex',
-                justifyContent: 'space-between',
-                alignItems: 'center',
-                marginBottom: 'var(--space-2)',
-              }}>
-                <span className="section-label" style={{ margin: 0 }}>{prompts.label}</span>
-                <button
-                  className="btn btn-ghost"
-                  onClick={() => handleCopy(promptText, prompts.label)}
-                  style={{ color: 'var(--gray-400)', fontSize: 'var(--text-xs)' }}
-                >
-                  Copiar
-                </button>
+            <div key={style} className="mb-4">
+              <div className="flex justify-between items-center mb-2">
+                <span className="text-xs text-coral font-semibold uppercase tracking-wider">{prompts.label}</span>
+                <Button variant="ghost" size="sm" onClick={() => handleCopy(promptText, prompts.label)} className="text-gray-400 hover:text-white text-xs h-7">
+                  <Copy size={12} className="mr-1" /> Copiar
+                </Button>
               </div>
-              <div className="prompt-block">
+              <div className="bg-white/[0.08] border border-white/10 p-3 rounded-md text-sm leading-relaxed">
                 {promptText}
               </div>
             </div>

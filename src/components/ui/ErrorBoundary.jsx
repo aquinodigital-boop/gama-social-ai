@@ -1,4 +1,5 @@
 import React from 'react';
+import { Button } from '@/components/ui/button';
 
 export class ErrorBoundary extends React.Component {
   constructor(props) {
@@ -12,32 +13,22 @@ export class ErrorBoundary extends React.Component {
 
   componentDidCatch(error, errorInfo) {
     console.error('[ErrorBoundary] Erro capturado:', error, errorInfo);
-    // Futura integração com serviço de monitoramento
   }
 
   render() {
     if (this.state.hasError) {
       return (
-        <div style={{
-          padding: 'var(--space-8, 2rem)',
-          textAlign: 'center',
-          background: 'var(--color-error-bg, #FEF2F2)',
-          borderRadius: 'var(--radius-lg, 8px)',
-          border: '1px solid var(--color-error, #EF4444)',
-          margin: '1rem',
-        }}>
-          <h3 style={{ color: 'var(--color-error, #EF4444)', marginBottom: '0.5rem' }}>
-            Algo deu errado
-          </h3>
-          <p style={{ color: 'var(--text-secondary, #666)', fontSize: '0.9rem', marginBottom: '1rem' }}>
+        <div className="p-8 text-center bg-red-50 dark:bg-red-900/20 rounded-lg border border-error m-4">
+          <h3 className="text-error font-semibold mb-2">Algo deu errado</h3>
+          <p className="text-text-secondary text-sm mb-4">
             {this.state.error?.message || 'Erro inesperado'}
           </p>
-          <button
+          <Button
+            variant="outline"
             onClick={() => this.setState({ hasError: false, error: null })}
-            className="btn btn-secondary"
           >
             Tentar novamente
-          </button>
+          </Button>
         </div>
       );
     }

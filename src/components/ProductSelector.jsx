@@ -2,12 +2,18 @@ import React, { useState, useMemo, useCallback } from 'react';
 import { useDebounce } from '../hooks/useDebounce';
 import { BrandService } from '../logic/BrandService';
 import { LaborDataService } from '../logic/LaborDataService';
+import { cn } from '@/lib/utils';
+import { Input } from '@/components/ui/input';
+import { Badge } from '@/components/ui/badge';
+import { ScrollArea } from '@/components/ui/scroll-area';
+import { Search } from 'lucide-react';
 
 const TIER_STYLES = {
-  premium: { bg: '#FEF3C7', color: '#92400E', label: 'Premium' },
-  mainstream: { bg: '#DBEAFE', color: '#1E40AF', label: 'Popular' },
-  value: { bg: '#DCFCE7', color: '#166534', label: 'Custo-benef.' },
+  premium: 'bg-amber-100 text-amber-800 dark:bg-amber-900/30 dark:text-amber-300',
+  mainstream: 'bg-blue-100 text-blue-800 dark:bg-blue-900/30 dark:text-blue-300',
+  value: 'bg-green-100 text-green-800 dark:bg-green-900/30 dark:text-green-300',
 };
+const TIER_LABELS = { premium: 'Premium', mainstream: 'Popular', value: 'Custo-benef.' };
 
 export function ProductSelector({ onSelect, onCategorySelect, onBrandSelect, selectedItem }) {
   const [activeTab, setActiveTab] = useState('brands');
@@ -41,88 +47,123 @@ export function ProductSelector({ onSelect, onCategorySelect, onBrandSelect, sel
     }
   }, [onBrandSelect]);
 
+  const tabs = [
+    { id: 'brands', label: 'Marcas' },
+    { id: 'categories', label: 'Categorias' },
+    { id: 'products', label: 'Produtos' },
+  ];
+
   return (
-    <div className="sidebar">
-      <div className="tabs">
-        <button className={`tab ${activeTab === 'brands' ? 'active' : ''}`} onClick={() => setActiveTab('brands')}>Marcas</button>
-        <button className={`tab ${activeTab === 'categories' ? 'active' : ''}`} onClick={() => setActiveTab('categories')}>Categorias</button>
-        <button className={`tab ${activeTab === 'products' ? 'active' : ''}`} onClick={() => setActiveTab('products')}>Produtos</button>
+    <div className="h-full bg-surface-card border-r border-border flex flex-col overflow-hidden">
+      <div className="rainbow-gradient h-[3px] shrink-0" />
+
+      <div className="flex border-b border-border">
+        {tabs.map(t => (
+          <button
+            key={t.id}
+            className={cn(
+              'flex-1 py-3 px-2 text-sm font-semibold border-b-2 transition-all',
+              activeTab === t.id
+                ? 'text-navy dark:text-coral border-navy dark:border-coral'
+                : 'text-text-muted border-transparent hover:text-text-primary hover:bg-muted/50'
+            )}
+            onClick={() => setActiveTab(t.id)}
+          >
+            {t.label}
+          </button>
+        ))}
       </div>
 
-      {/* MARCAS */}
       {activeTab === 'brands' && (
         <>
-          <div style={{ padding: 'var(--space-3) var(--space-4)', borderBottom: '1px solid var(--border-default)' }}>
-            <input type="text" placeholder="Buscar marca..." value={brandSearch} onChange={(e) => setBrandSearch(e.target.value)} />
-            <div style={{ fontSize: 'var(--text-xs)', color: 'var(--text-muted)', marginTop: 'var(--space-1)' }}>{filteredBrands.length} marcas parceiras</div>
+          <div className="p-3 px-4 border-b border-border">
+            <div className="relative">
+              <Search size={14} className="absolute left-2.5 top-1/2 -translate-y-1/2 text-text-muted" />
+              <Input placeholder="Buscar marca..." value={brandSearch} onChange={(e) => setBrandSearch(e.target.value)} className="pl-8 h-8 text-sm" />
+            </div>
+            <div className="text-xs text-text-muted mt-1.5">{filteredBrands.length} marcas parceiras</div>
           </div>
-          <div className="sidebar-content" style={{ flex: 1, overflowY: 'auto', padding: 'var(--space-2) 0' }}>
-            {filteredBrands.map(brand => {
-              const ctx = BrandService.getBrandContext(brand.name);
-              const tierStyle = TIER_STYLES[ctx.tier] || TIER_STYLES.mainstream;
-              const isSelected = selectedItem?.type === 'brand' && selectedItem?.name === brand.name;
-              return (
-                <div key={brand.name} className={`product-item ${isSelected ? 'selected' : ''}`} onClick={() => handleBrandClick(brand)} style={{ padding: 'var(--space-3) var(--space-4)' }}>
-                  <div style={{ flex: 1, minWidth: 0 }}>
-                    <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--space-2)', marginBottom: '2px' }}>
-                      <span className="product-name" style={{ fontWeight: 700 }}>{brand.name}</span>
-                      {brand.isMain && <span style={{ fontSize: '9px', padding: '2px 6px', borderRadius: 'var(--radius-full)', background: 'var(--color-secondary)', color: 'white', fontWeight: 700, flexShrink: 0 }}>CORAL</span>}
-                      <span style={{ fontSize: '10px', fontWeight: 600, padding: '1px 6px', borderRadius: 'var(--radius-full)', background: tierStyle.bg, color: tierStyle.color, flexShrink: 0 }}>{tierStyle.label}</span>
+          <ScrollArea className="flex-1">
+            <div className="py-1">
+              {filteredBrands.map(brand => {
+                const ctx = BrandService.getBrandContext(brand.name);
+                const isSelected = selectedItem?.type === 'brand' && selectedItem?.name === brand.name;
+                return (
+                  <div
+                    key={brand.name}
+                    className={cn(
+                      'flex items-center gap-3 px-4 py-3 cursor-pointer transition-colors border-l-[3px]',
+                      isSelected
+                        ? 'bg-navy/[0.06] dark:bg-coral/10 border-l-navy dark:border-l-coral'
+                        : 'border-l-transparent hover:bg-muted/50'
+                    )}
+                    onClick={() => handleBrandClick(brand)}
+                  >
+                    <div className="flex-1 min-w-0">
+                      <div className="flex items-center gap-2 mb-0.5">
+                        <span className="text-sm font-bold text-text-primary">{brand.name}</span>
+                        {brand.isMain && <span className="text-[9px] px-1.5 py-0.5 rounded-full bg-coral text-white font-bold shrink-0">CORAL</span>}
+                        <span className={cn('text-[10px] font-semibold px-1.5 py-0.5 rounded-full shrink-0', TIER_STYLES[ctx.tier])}>
+                          {TIER_LABELS[ctx.tier] || 'Popular'}
+                        </span>
+                      </div>
+                      <div className="text-xs text-text-muted">{ctx.segment}</div>
                     </div>
-                    <div style={{ fontSize: 'var(--text-xs)', color: 'var(--text-muted)' }}>{ctx.segment}</div>
+                    <Badge variant="outline" className="shrink-0">{brand.productCount}</Badge>
                   </div>
-                  <span className="badge badge-primary" style={{ flexShrink: 0 }}>{brand.productCount}</span>
-                </div>
-              );
-            })}
-          </div>
+                );
+              })}
+            </div>
+          </ScrollArea>
         </>
       )}
 
-      {/* CATEGORIAS */}
       {activeTab === 'categories' && (
-        <div className="sidebar-content" style={{ padding: 'var(--space-4)', overflowY: 'auto', flex: 1 }}>
-          <div onClick={() => onCategorySelect({ type: 'institutional', name: 'Gama Distribuidora' })} style={{ padding: 'var(--space-4)', background: 'linear-gradient(135deg, rgba(30,58,95,0.08) 0%, rgba(30,58,95,0.04) 100%)', border: '1px solid rgba(30,58,95,0.2)', borderRadius: 'var(--radius-lg)', cursor: 'pointer', marginBottom: 'var(--space-4)', transition: 'all var(--transition-fast)' }}>
-            <div style={{ fontWeight: 700, color: 'var(--color-primary)', marginBottom: 'var(--space-1)' }}>🏢 Institucional (Gama)</div>
-            <div style={{ fontSize: 'var(--text-sm)', color: 'var(--text-secondary)' }}>Programa CL, Reconquista Santos, Parceria Coral</div>
+        <ScrollArea className="flex-1">
+          <div className="p-4">
+            <div
+              onClick={() => onCategorySelect({ type: 'institutional', name: 'Gama Distribuidora' })}
+              className="p-4 bg-navy/5 dark:bg-coral/5 border border-navy/20 dark:border-coral/20 rounded-lg cursor-pointer mb-4 hover:bg-navy/10 dark:hover:bg-coral/10 transition-colors"
+            >
+              <div className="font-bold text-navy dark:text-coral mb-1">🏢 Institucional (Gama)</div>
+              <div className="text-sm text-text-secondary">Programa CL, Reconquista Santos, Parceria Coral</div>
+            </div>
+            <div className="text-xs font-semibold uppercase tracking-wider text-text-muted mb-3">Categorias de Produto</div>
+            <div className="flex flex-col gap-0.5">
+              {categories.map(c => (
+                <div key={c} onClick={() => onCategorySelect({ type: 'category', name: c })} className="px-4 py-3 cursor-pointer hover:bg-muted/50 transition-colors border-b border-border/50 border-l-[3px] border-l-transparent hover:border-l-navy dark:hover:border-l-coral">
+                  <span className="text-sm font-medium text-text-primary">{c}</span>
+                </div>
+              ))}
+            </div>
           </div>
-          <div style={{ fontSize: 'var(--text-xs)', fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.5px', color: 'var(--text-muted)', marginBottom: 'var(--space-3)' }}>Categorias de Produto</div>
-          <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--space-1)' }}>
-            {categories.map(c => (
-              <div key={c} onClick={() => onCategorySelect({ type: 'category', name: c })} className="product-item" style={{ borderBottom: '1px solid var(--gray-100)' }}>
-                <div className="product-name" style={{ fontWeight: 500 }}>{c}</div>
-              </div>
-            ))}
-          </div>
-        </div>
+        </ScrollArea>
       )}
 
-      {/* PRODUTOS */}
       {activeTab === 'products' && (
         <>
-          <div style={{ padding: 'var(--space-3) var(--space-4)', borderBottom: '1px solid var(--border-default)' }}>
-            <select value={selectedCategory} onChange={(e) => setSelectedCategory(e.target.value)} style={{ marginBottom: 'var(--space-2)' }}>
+          <div className="p-3 px-4 border-b border-border space-y-2">
+            <select value={selectedCategory} onChange={(e) => setSelectedCategory(e.target.value)} className="w-full h-8 px-2 text-sm border border-border rounded-md bg-surface-card text-text-primary focus:outline-none focus:ring-2 focus:ring-navy/20">
               <option value="">Todas as Categorias ({allProducts.length})</option>
               {categories.map(c => <option key={c} value={c}>{c}</option>)}
             </select>
-            <input type="text" placeholder="Buscar produto..." value={searchTerm} onChange={(e) => setSearchTerm(e.target.value)} />
+            <div className="relative">
+              <Search size={14} className="absolute left-2.5 top-1/2 -translate-y-1/2 text-text-muted" />
+              <Input placeholder="Buscar produto..." value={searchTerm} onChange={(e) => setSearchTerm(e.target.value)} className="pl-8 h-8 text-sm" />
+            </div>
           </div>
-          <div style={{ padding: 'var(--space-2) var(--space-4)', fontSize: 'var(--text-xs)', color: 'var(--text-muted)', borderBottom: '1px solid var(--gray-100)' }}>
-            {filteredProducts.length} produtos
-          </div>
-          <div className="sidebar-content" style={{ flex: 1, overflowY: 'auto' }}>
+          <div className="px-4 py-2 text-xs text-text-muted border-b border-border/50">{filteredProducts.length} produtos</div>
+          <ScrollArea className="flex-1">
             {filteredProducts.map((p, i) => {
               const isSelected = selectedItem?.name === p.name;
               return (
-                <div key={i} className={`product-item ${isSelected ? 'selected' : ''}`} onClick={() => onSelect(p)} style={{ padding: 'var(--space-3) var(--space-4)', borderBottom: '1px solid var(--gray-100)' }}>
-                  <div style={{ flex: 1, minWidth: 0 }}>
-                    <div className="product-name">{p.name}</div>
-                    <div className="product-category">{p.category}</div>
-                  </div>
+                <div key={`${p.name}-${i}`} className={cn('px-4 py-3 cursor-pointer transition-colors border-l-[3px] border-b border-border/50', isSelected ? 'bg-navy/[0.06] dark:bg-coral/10 border-l-navy dark:border-l-coral' : 'border-l-transparent hover:bg-muted/50')} onClick={() => onSelect(p)}>
+                  <div className="text-sm font-semibold text-text-primary">{p.name}</div>
+                  <div className="text-xs text-text-muted mt-0.5">{p.category}</div>
                 </div>
               );
             })}
-          </div>
+          </ScrollArea>
         </>
       )}
     </div>

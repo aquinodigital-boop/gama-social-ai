@@ -12,6 +12,10 @@ dist
 dist-ssr
 *.local
 
+# Environment variables
+.env
+.env.local
+
 # Editor directories and files
 .vscode/*
 !.vscode/extensions.json
@@ -22,3 +26,14 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+# Dados e arquivos grandes
+files.zip
+files_extracted/
+imagens_produtos/
+JANELA_DE_CONTEXTO/
+gama_scraping/
+produtos_SEM_imagem.csv
+relatorio_imagens.csv
+*.zip
+.vite/

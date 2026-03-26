@@ -11,11 +11,10 @@ import { CategoryExpert } from '../logic/marketing/CategoryExpert.js';
 const uid = () => Date.now().toString(36) + Math.random().toString(36).slice(2, 8);
 
 export const GEMINI_MODELS = [
-  { id: 'gemini-2.5-flash-lite', label: '⚡ Flash', description: 'Rápido e gratuito' },
-  { id: 'gemini-2.5-flash',   label: '🧠 Pro',   description: 'Mais elaborado, mais lento' },
+  { id: 'gemini-2.0-flash', label: 'Flash', description: 'Rápido e gratuito' },
+  { id: 'gemini-2.5-pro-preview-06-05', label: 'Pro', description: 'Mais elaborado, mais lento' },
 ];
-
-export const DEFAULT_GEMINI_MODEL = 'gemini-2.5-flash-lite';
+export const DEFAULT_GEMINI_MODEL = 'gemini-2.0-flash';
 
 const FORMAT_LABELS = {
   reels: 'Reels / TikTok (vídeo vertical 15-30s)',
@@ -125,18 +124,19 @@ ${jsonStructure}`;
 }
 
 export class GeminiProvider extends ContentProviderInterface {
-  constructor(apiKey, model) {
+  constructor(apiKey) {
     super('Gemini AI');
     this.apiKey = apiKey || import.meta.env.VITE_GEMINI_API_KEY || '';
-    this.model = model || DEFAULT_GEMINI_MODEL;
+    this.model = DEFAULT_GEMINI_MODEL;
   }
 
   setModel(modelId) {
-    this.model = modelId;
+    const valid = GEMINI_MODELS.find(m => m.id === modelId);
+    if (valid) this.model = modelId;
   }
 
   async generate(request) {
-    if (!this.apiKey) throw new Error('API Key do Gemini não configurada. Crie um arquivo .env com VITE_GEMINI_API_KEY=sua_chave');
+    if (!this.apiKey) throw new Error('API Key do Gemini não configurada. Vá em Configurações para inserir sua chave.');
 
     const url = `https://generativelanguage.googleapis.com/v1beta/models/${this.model}:generateContent?key=${this.apiKey}`;
     const response = await fetch(url, {

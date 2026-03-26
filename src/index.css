@@ -1,0 +1,157 @@
+@import "tailwindcss";
+
+@layer base {
+  @font-face {
+    font-family: 'Inter';
+    font-display: swap;
+    src: url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+  }
+}
+
+@theme {
+  /* ─── Brand Colors — Gama (do logo real) ─── */
+  --color-navy: #2D2D6B;
+  --color-navy-light: #3D3D8B;
+  --color-navy-dark: #1E1E4A;
+  --color-coral: #E85D3B;
+  --color-coral-light: #F4A68C;
+  --color-coral-dark: #C04020;
+
+  /* ─── Arco-íris Gama ─── */
+  --color-gama-azul: #4AB8D8;
+  --color-gama-verde: #7CBF44;
+  --color-gama-amarelo: #F5C800;
+  --color-gama-laranja: #F08020;
+  --color-gama-vermelho: #D93020;
+
+  /* ─── Semantic ─── */
+  --color-success: #22C55E;
+  --color-warning: #F59E0B;
+  --color-error: #EF4444;
+  --color-info: #3B82F6;
+
+  /* ─── Surfaces (light mode defaults) ─── */
+  --color-surface-bg: #F0F2F8;
+  --color-surface-card: #FFFFFF;
+  --color-surface-elevated: #FFFFFF;
+  --color-surface-dark: #2D2D6B;
+
+  /* ─── Text ─── */
+  --color-text-primary: #111827;
+  --color-text-secondary: #4B5563;
+  --color-text-muted: #9CA3AF;
+  --color-text-on-dark: #F9FAFB;
+
+  /* ─── Borders ─── */
+  --color-border: #E5E7EB;
+  --color-border-hover: #D1D5DB;
+
+  /* ─── Radius ─── */
+  --radius-sm: 4px;
+  --radius-md: 6px;
+  --radius-lg: 8px;
+  --radius-xl: 12px;
+
+  /* ─── Format tag colors ─── */
+  --color-format-reels: #DC2626;
+  --color-format-carrossel: #7C3AED;
+  --color-format-stories: #D97706;
+  --color-format-post: #2563EB;
+  --color-format-banner: #059669;
+  --color-format-whatsapp: #16A34A;
+}
+
+/* ─── shadcn/ui CSS variables (light mode) ─── */
+:root {
+  --background: 240 6% 96%;
+  --foreground: 222 47% 11%;
+  --card: 0 0% 100%;
+  --card-foreground: 222 47% 11%;
+  --popover: 0 0% 100%;
+  --popover-foreground: 222 47% 11%;
+  --primary: 243 42% 30%;
+  --primary-foreground: 210 40% 98%;
+  --secondary: 14 78% 57%;
+  --secondary-foreground: 0 0% 100%;
+  --muted: 210 40% 96%;
+  --muted-foreground: 215 16% 47%;
+  --accent: 210 40% 96%;
+  --accent-foreground: 222 47% 11%;
+  --destructive: 0 84% 60%;
+  --destructive-foreground: 210 40% 98%;
+  --border: 214 20% 90%;
+  --input: 214 20% 90%;
+  --ring: 243 42% 30%;
+  --radius: 0.5rem;
+}
+
+/* ─── Dark mode ─── */
+.dark {
+  --background: 222 47% 8%;
+  --foreground: 210 40% 98%;
+  --card: 222 35% 13%;
+  --card-foreground: 210 40% 98%;
+  --popover: 222 35% 13%;
+  --popover-foreground: 210 40% 98%;
+  --primary: 14 78% 57%;
+  --primary-foreground: 0 0% 100%;
+  --secondary: 243 42% 30%;
+  --secondary-foreground: 210 40% 98%;
+  --muted: 222 30% 18%;
+  --muted-foreground: 215 20% 65%;
+  --accent: 222 30% 18%;
+  --accent-foreground: 210 40% 98%;
+  --destructive: 0 63% 31%;
+  --destructive-foreground: 210 40% 98%;
+  --border: 222 25% 22%;
+  --input: 222 25% 22%;
+  --ring: 14 78% 57%;
+
+  /* Override surface colors for dark */
+  --color-surface-bg: #0B1929;
+  --color-surface-card: #1a2744;
+  --color-surface-elevated: #213352;
+  --color-text-primary: #e2e8f0;
+  --color-text-secondary: #94a3b8;
+  --color-text-muted: #64748b;
+  --color-border: #2d3748;
+  --color-border-hover: #4a5568;
+}
+
+/* ─── Base styles ─── */
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  html {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  body {
+    @apply bg-surface-bg text-text-primary font-sans;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  }
+}
+
+/* ─── Rainbow gradient (reusable) ─── */
+.rainbow-gradient {
+  background: linear-gradient(90deg, #4AB8D8, #7CBF44, #F5C800, #F08020, #D93020);
+}
+
+/* ─── Spinner animation ─── */
+@keyframes spin { to { transform: rotate(360deg); } }
+.spinner {
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+  border: 2px solid rgba(255,255,255,0.3);
+  border-top-color: white;
+  border-radius: 50%;
+  animation: spin 0.7s linear infinite;
+}
+
+/* ─── Fade in animation ─── */
+@keyframes fadeIn { from { opacity: 0; transform: translateY(4px); } to { opacity: 1; transform: translateY(0); } }
+.fade-in { animation: fadeIn 0.25s ease; }

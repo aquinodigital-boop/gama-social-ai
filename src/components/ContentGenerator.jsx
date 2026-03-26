@@ -2,14 +2,18 @@ import React, { useState, useCallback } from 'react';
 import { providerRegistry, GEMINI_MODELS } from '../providers/index.js';
 import { LaborDataService } from '../logic/LaborDataService.js';
 import { BrandExpert } from '../logic/marketing/BrandExpert.js';
-import { useToast } from '../hooks/useToast.js';
 import { useContentHistory } from '../hooks/useContentHistory.js';
-import { featureFlags } from '../utils/featureFlags.js';
 import { ContentDisplay } from './ContentDisplay.jsx';
 import { WeeklyPlan } from './WeeklyPlan.jsx';
 import { PromptPackView } from './PromptPackView.jsx';
 import { HistoryPanel } from './HistoryPanel.jsx';
 import { QualityPanel } from './QualityPanel.jsx';
+import { SettingsPanel } from './SettingsPanel.jsx';
+import { cn } from '@/lib/utils';
+import { Button } from '@/components/ui/button';
+import { Badge } from '@/components/ui/badge';
+import { toast } from 'sonner';
+import { Sparkles, Calendar, Palette, Clock, Settings, Loader2 } from 'lucide-react';
 
 const FORMATS = [
   { id: 'reels', label: 'Reels / TikTok', icon: '🎬' },
@@ -41,9 +45,16 @@ const OBJECTIVES = [
   { id: 'programa_cl', label: 'Programa CL' },
 ];
 
+const VIEWS = [
+  { id: 'generate', label: 'Gerar Conteúdo', Icon: Sparkles },
+  { id: 'weekly', label: 'Plano Semanal', Icon: Calendar },
+  { id: 'prompts', label: 'Prompt Pack', Icon: Palette },
+  { id: 'history', label: 'Histórico', Icon: Clock },
+  { id: 'settings', label: 'Configurações', Icon: Settings },
+];
+
 export function ContentGenerator({ item }) {
-  const { addToast } = useToast();
-  const { history, addToHistory, removeFromHistory, clearHistory } = useContentHistory();
+  const { history, addToHistory, removeFromHistory, clearHistory, setFeedback } = useContentHistory();
 
   const [activeProviderId, setActiveProviderId] = useState(providerRegistry.getActiveId());
   const [activeModel, setActiveModel] = useState(providerRegistry.getGeminiModel());
@@ -52,14 +63,14 @@ export function ContentGenerator({ item }) {
   const handleProviderChange = (id) => {
     providerRegistry.setActive(id);
     setActiveProviderId(id);
-    addToast(`Motor: ${providerRegistry.getProviderName()}`, 'info', 2000);
+    toast.info(`Motor: ${providerRegistry.getProviderName()}`);
   };
 
   const handleModelChange = (modelId) => {
     providerRegistry.setGeminiModel(modelId);
     setActiveModel(modelId);
     const m = GEMINI_MODELS.find(m => m.id === modelId);
-    addToast(`Modelo: ${m?.label || modelId}`, 'info', 2000);
+    toast.info(`Modelo: ${m?.label || modelId}`);
   };
 
   const [activeView, setActiveView] = useState('generate');
@@ -107,169 +118,209 @@ export function ContentGenerator({ item }) {
 
   const handleGenerate = useCallback(async () => {
     const request = buildRequest();
-    if (!request) { addToast('Selecione um produto ou categoria primeiro', 'error'); return; }
+    if (!request) { toast.error('Selecione um produto ou categoria primeiro'); return; }
     setIsGenerating(true); setGeneratedContent(null);
     try {
       const start = performance.now();
-      const provider = providerRegistry.current;
-      const content = await provider.generate(request);
+      const content = await providerRegistry.current.generate(request);
       setGeneratedContent(content); addToHistory(content);
-      addToast(`Conteúdo gerado em ${Math.round(performance.now() - start)}ms`, 'success');
+      toast.success(`Conteúdo gerado em ${Math.round(performance.now() - start)}ms`);
     } catch (err) {
-      addToast(`Erro ao gerar: ${err.message}`, 'error');
+      toast.error(`Erro ao gerar: ${err.message}`);
     } finally { setIsGenerating(false); }
-  }, [buildRequest, addToast, addToHistory]);
+  }, [buildRequest, addToHistory]);
 
   const handleGenerateWeekly = useCallback(async () => {
     const request = buildRequest();
-    if (!request) { addToast('Selecione um produto ou categoria primeiro', 'error'); return; }
+    if (!request) { toast.error('Selecione um produto ou categoria primeiro'); return; }
     setIsGenerating(true); setWeeklyPlan(null);
     try {
       const start = performance.now();
       const plan = await providerRegistry.current.generateWeeklyPlan({ ...request, objective: selectedObjective });
       setWeeklyPlan(plan);
-      addToast(`Plano semanal gerado em ${Math.round(performance.now() - start)}ms`, 'success');
-    } catch (err) { addToast(`Erro: ${err.message}`, 'error'); }
+      toast.success(`Plano semanal gerado em ${Math.round(performance.now() - start)}ms`);
+    } catch (err) { toast.error(`Erro: ${err.message}`); }
     finally { setIsGenerating(false); }
-  }, [buildRequest, selectedObjective, addToast]);
+  }, [buildRequest, selectedObjective]);
 
   const handleGeneratePrompts = useCallback(async () => {
     const request = buildRequest();
-    if (!request) { addToast('Selecione um produto primeiro', 'error'); return; }
+    if (!request) { toast.error('Selecione um produto primeiro'); return; }
     setIsGenerating(true); setPromptPack(null);
     try {
       const pack = await providerRegistry.current.generatePromptPack({ name: request.name, category: request.category, catContext: null });
-      setPromptPack(pack); addToast('Pack de prompts gerado!', 'success');
-    } catch (err) { addToast(`Erro: ${err.message}`, 'error'); }
+      setPromptPack(pack); toast.success('Pack de prompts gerado!');
+    } catch (err) { toast.error(`Erro: ${err.message}`); }
     finally { setIsGenerating(false); }
-  }, [buildRequest, addToast]);
+  }, [buildRequest]);
+
+  const handleFeedback = useCallback((contentId, value) => {
+    if (setFeedback) setFeedback(contentId, value);
+  }, [setFeedback]);
 
   return (
-    <div className="main-content">
-      {/* Top bar */}
-      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 'var(--space-6)', flexWrap: 'wrap', gap: 'var(--space-3)' }}>
-        <div style={{ display: 'flex', gap: 'var(--space-2)', flexWrap: 'wrap' }}>
-          {[
-            { id: 'generate', label: 'Gerar Conteúdo', icon: '✨' },
-            { id: 'weekly', label: 'Plano Semanal', icon: '📅' },
-            { id: 'prompts', label: 'Prompt Pack', icon: '🎨' },
-            { id: 'history', label: `Histórico (${history.length})`, icon: '📋' },
-          ].map(v => (
-            <button key={v.id} className={activeView === v.id ? 'btn btn-navy' : 'btn btn-secondary'} onClick={() => setActiveView(v.id)}>
-              {v.icon} {v.label}
-            </button>
+    <div className="overflow-y-auto p-4 lg:p-6 bg-surface-bg">
+      {/* Top bar: View tabs + Provider/Model */}
+      <div className="flex flex-wrap justify-between items-center gap-3 mb-6">
+        <div className="flex gap-1.5 flex-wrap">
+          {VIEWS.map(v => (
+            <Button
+              key={v.id}
+              variant={activeView === v.id ? 'default' : 'outline'}
+              size="sm"
+              onClick={() => setActiveView(v.id)}
+              className={cn('text-xs h-8', activeView === v.id && 'bg-navy hover:bg-navy-light dark:bg-coral dark:hover:bg-coral-dark')}
+            >
+              <v.Icon size={14} className="mr-1" />
+              {v.label}
+              {v.id === 'history' && history.length > 0 && <Badge variant="secondary" className="ml-1.5 text-[10px] h-4 px-1">{history.length}</Badge>}
+            </Button>
           ))}
         </div>
 
-        <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--space-2)', background: 'var(--surface-card)', border: '1px solid var(--border-default)', borderRadius: 'var(--radius-full)', padding: '3px' }}>
-          {providers.filter(p => p.available).map(p => (
-            <button key={p.id} onClick={() => handleProviderChange(p.id)} style={{ padding: '4px 12px', fontSize: 'var(--text-xs)', fontWeight: 600, borderRadius: 'var(--radius-full)', border: 'none', cursor: 'pointer', transition: 'all var(--transition-fast)', background: activeProviderId === p.id ? (p.id === 'gemini' ? 'linear-gradient(135deg, #4285F4, #34A853)' : 'var(--color-primary)') : 'transparent', color: activeProviderId === p.id ? 'white' : 'var(--text-muted)' }} title={p.description}>
-              {p.id === 'gemini' ? '🤖' : '📝'} {p.name}
-            </button>
-          ))}
-        </div>
-
-        {/* Model selector — only when Gemini is active */}
-        {activeProviderId === 'gemini' && (
-          <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--space-2)', background: 'var(--surface-card)', border: '1px solid var(--border-default)', borderRadius: 'var(--radius-full)', padding: '3px' }}>
-            {GEMINI_MODELS.map(m => (
-              <button key={m.id} onClick={() => handleModelChange(m.id)} title={m.description} style={{ padding: '4px 14px', fontSize: 'var(--text-xs)', fontWeight: 600, borderRadius: 'var(--radius-full)', border: 'none', cursor: 'pointer', transition: 'all var(--transition-fast)', background: activeModel === m.id ? 'var(--color-secondary)' : 'transparent', color: activeModel === m.id ? 'white' : 'var(--text-muted)' }}>
-                {m.label}
+        <div className="flex items-center gap-2 flex-wrap">
+          {/* Provider toggle */}
+          <div className="flex bg-surface-card border border-border rounded-full p-0.5">
+            {providers.filter(p => p.available).map(p => (
+              <button
+                key={p.id}
+                onClick={() => handleProviderChange(p.id)}
+                className={cn(
+                  'px-3 py-1 text-xs font-semibold rounded-full transition-all',
+                  activeProviderId === p.id
+                    ? p.id === 'gemini' ? 'bg-gradient-to-r from-blue-500 to-green-500 text-white' : 'bg-navy text-white'
+                    : 'text-text-muted hover:text-text-primary'
+                )}
+              >
+                {p.id === 'gemini' ? '🤖' : '📝'} {p.name}
               </button>
             ))}
           </div>
-        )}
+
+          {/* Model selector */}
+          {activeProviderId === 'gemini' && (
+            <div className="flex bg-surface-card border border-border rounded-full p-0.5">
+              {GEMINI_MODELS.map(m => (
+                <button
+                  key={m.id}
+                  onClick={() => handleModelChange(m.id)}
+                  title={m.description}
+                  className={cn(
+                    'px-3 py-1 text-xs font-semibold rounded-full transition-all',
+                    activeModel === m.id ? 'bg-coral text-white' : 'text-text-muted hover:text-text-primary'
+                  )}
+                >
+                  {m.label}
+                </button>
+              ))}
+            </div>
+          )}
+        </div>
       </div>
+
+      {/* SETTINGS */}
+      {activeView === 'settings' && <SettingsPanel />}
 
       {/* GENERATE VIEW */}
       {activeView === 'generate' && (
         <div className="fade-in">
-          <div className="card" style={{ marginBottom: 'var(--space-4)' }}>
-            <div className="card-body" style={{ padding: 'var(--space-4) var(--space-6)' }}>
-              <div style={{ display: 'flex', gap: 'var(--space-2)', marginBottom: 'var(--space-4)', flexWrap: 'wrap' }}>
-                {[
-                  { id: 'product', label: 'Produto', disabled: !item || item.type === 'brand' },
-                  { id: 'category_mix', label: 'Categoria', disabled: false },
-                  { id: 'brand', label: 'Marca', disabled: !item || item.type !== 'brand' },
-                  { id: 'institutional', label: 'Institucional', disabled: false },
-                ].map(m => (
-                  <button key={m.id} className={mode === m.id ? 'btn btn-navy' : 'btn btn-secondary'} onClick={() => setMode(m.id)} disabled={m.disabled}>{m.label}</button>
+          {/* Mode selector */}
+          <div className="bg-surface-card border border-border rounded-lg p-4 lg:p-6 mb-4">
+            <div className="flex gap-2 mb-4 flex-wrap">
+              {[
+                { id: 'product', label: 'Produto', disabled: !item || item.type === 'brand' },
+                { id: 'category_mix', label: 'Categoria', disabled: false },
+                { id: 'brand', label: 'Marca', disabled: !item || item.type !== 'brand' },
+                { id: 'institutional', label: 'Institucional', disabled: false },
+              ].map(m => (
+                <Button key={m.id} variant={mode === m.id ? 'default' : 'outline'} size="sm" onClick={() => setMode(m.id)} disabled={m.disabled} className={cn(mode === m.id && 'bg-navy hover:bg-navy-light dark:bg-coral dark:hover:bg-coral-dark')}>
+                  {m.label}
+                </Button>
+              ))}
+            </div>
+
+            {mode === 'product' && item && item.type !== 'brand' && (
+              <div className="p-3 bg-muted/50 rounded-md text-sm">
+                <strong className="text-navy dark:text-coral">{item.name || item}</strong>
+                <span className="text-text-muted ml-2">{item.category || ''}</span>
+              </div>
+            )}
+            {mode === 'product' && !item && <div className="text-text-muted text-sm">Selecione um produto na lista ao lado</div>}
+
+            {mode === 'brand' && item?.type === 'brand' && (
+              <div className="p-3 bg-coral/5 border border-coral/20 rounded-md text-sm">
+                <div className="flex items-center gap-2 mb-1">
+                  <strong className="text-coral text-base">{item.name}</strong>
+                  <Badge variant="secondary">{item.productCount} produtos</Badge>
+                  {item.isMain && <Badge className="bg-navy text-white text-[10px]">CARRO-CHEFE</Badge>}
+                </div>
+                <div className="text-text-secondary text-xs">{item.segment} · {item.strength}</div>
+                {item.categories?.length > 0 && (
+                  <div className="mt-2 flex gap-1 flex-wrap">
+                    {item.categories.slice(0, 5).map(c => <Badge key={c} variant="outline" className="text-[10px]">{c}</Badge>)}
+                    {item.categories.length > 5 && <Badge variant="outline" className="text-[10px]">+{item.categories.length - 5}</Badge>}
+                  </div>
+                )}
+              </div>
+            )}
+            {mode === 'brand' && (!item || item.type !== 'brand') && <div className="text-text-muted text-sm">Selecione uma marca na aba "Marcas" ao lado</div>}
+
+            {mode === 'category_mix' && (
+              <select value={selectedCategory} onChange={(e) => setSelectedCategory(e.target.value)} className="w-full h-9 px-3 text-sm border border-border rounded-md bg-surface-card text-text-primary">
+                {LaborDataService.getUniqueCategories().map(c => <option key={c} value={c}>{c}</option>)}
+              </select>
+            )}
+
+            {mode === 'institutional' && (
+              <div className="flex gap-2 flex-wrap">
+                {BrandExpert.themes.map(t => (
+                  <Button key={t.id} variant={selectedThemeId === t.id ? 'default' : 'outline'} size="sm" onClick={() => setSelectedThemeId(t.id)} className={cn('text-left', selectedThemeId === t.id && 'bg-navy dark:bg-coral')}>
+                    <div>
+                      <strong>{t.label}</strong>
+                      <div className="text-xs opacity-70 mt-0.5">{t.context.slice(0, 50)}...</div>
+                    </div>
+                  </Button>
                 ))}
               </div>
-
-              {mode === 'product' && item && item.type !== 'brand' && (
-                <div style={{ padding: 'var(--space-3)', background: 'var(--gray-50)', borderRadius: 'var(--radius-md)', fontSize: 'var(--text-sm)' }}>
-                  <strong style={{ color: 'var(--color-primary)' }}>{item.name || item}</strong>
-                  <span style={{ color: 'var(--text-muted)', marginLeft: 'var(--space-2)' }}>{item.category || ''}</span>
-                </div>
-              )}
-              {mode === 'product' && !item && <div style={{ color: 'var(--text-muted)', fontSize: 'var(--text-sm)' }}>Selecione um produto na lista ao lado</div>}
-
-              {mode === 'brand' && item?.type === 'brand' && (
-                <div style={{ padding: 'var(--space-3)', background: 'rgba(232,93,59,0.06)', border: '1px solid rgba(232,93,59,0.2)', borderRadius: 'var(--radius-md)', fontSize: 'var(--text-sm)' }}>
-                  <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--space-2)', marginBottom: 'var(--space-1)' }}>
-                    <strong style={{ color: 'var(--color-secondary)', fontSize: 'var(--text-base)' }}>{item.name}</strong>
-                    <span className="badge badge-secondary">{item.productCount} produtos</span>
-                    {item.isMain && <span style={{ fontSize: '10px', padding: '2px 8px', borderRadius: 'var(--radius-full)', background: 'var(--color-primary)', color: 'white', fontWeight: 700 }}>CARRO-CHEFE</span>}
-                  </div>
-                  <div style={{ color: 'var(--text-secondary)', fontSize: 'var(--text-xs)' }}>{item.segment} · {item.strength}</div>
-                  {item.categories?.length > 0 && (
-                    <div style={{ marginTop: 'var(--space-2)', display: 'flex', gap: 'var(--space-1)', flexWrap: 'wrap' }}>
-                      {item.categories.slice(0, 5).map(c => <span key={c} className="badge badge-primary" style={{ fontSize: '10px' }}>{c}</span>)}
-                      {item.categories.length > 5 && <span className="badge" style={{ fontSize: '10px', background: 'var(--gray-100)', color: 'var(--text-muted)' }}>+{item.categories.length - 5}</span>}
-                    </div>
-                  )}
-                </div>
-              )}
-              {mode === 'brand' && (!item || item.type !== 'brand') && <div style={{ color: 'var(--text-muted)', fontSize: 'var(--text-sm)' }}>Selecione uma marca na aba "Marcas" ao lado</div>}
-
-              {mode === 'category_mix' && (
-                <select value={selectedCategory} onChange={(e) => setSelectedCategory(e.target.value)}>
-                  {LaborDataService.getUniqueCategories().map(c => <option key={c} value={c}>{c}</option>)}
-                </select>
-              )}
-
-              {mode === 'institutional' && (
-                <div style={{ display: 'flex', gap: 'var(--space-2)', flexWrap: 'wrap' }}>
-                  {BrandExpert.themes.map(t => (
-                    <button key={t.id} className={selectedThemeId === t.id ? 'btn btn-navy' : 'btn btn-secondary'} onClick={() => setSelectedThemeId(t.id)} style={{ textAlign: 'left' }}>
-                      <div><strong>{t.label}</strong><div style={{ fontSize: 'var(--text-xs)', opacity: 0.7, marginTop: '2px' }}>{t.context.slice(0, 50)}...</div></div>
-                    </button>
-                  ))}
-                </div>
-              )}
-            </div>
+            )}
           </div>
 
           {/* Format + Angle + Persona */}
-          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: 'var(--space-4)', marginBottom: 'var(--space-4)' }}>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
             {[
               { label: 'Formato', items: FORMATS, selected: selectedFormat, onSelect: setSelectedFormat },
               { label: 'Ângulo Estratégico', items: ANGLES, selected: selectedAngle, onSelect: setSelectedAngle },
               { label: 'Persona', items: PERSONAS, selected: selectedPersona, onSelect: setSelectedPersona },
             ].map(({ label, items, selected, onSelect }) => (
-              <div className="card" key={label}>
-                <div className="card-body" style={{ padding: 'var(--space-4)' }}>
-                  <div style={{ fontSize: 'var(--text-xs)', fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.5px', color: 'var(--text-muted)', marginBottom: 'var(--space-3)' }}>{label}</div>
-                  <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--space-1)' }}>
-                    {items.map(f => (
-                      <button key={f.id} className={selected === f.id ? 'btn btn-navy' : 'btn btn-ghost'} onClick={() => onSelect(f.id)} style={{ justifyContent: 'flex-start', width: '100%', fontSize: 'var(--text-sm)' }}>
-                        {f.icon} {f.label}
-                      </button>
-                    ))}
-                  </div>
+              <div className="bg-surface-card border border-border rounded-lg p-4" key={label}>
+                <div className="text-xs font-semibold uppercase tracking-wider text-text-muted mb-3">{label}</div>
+                <div className="flex flex-col gap-1">
+                  {items.map(f => (
+                    <button
+                      key={f.id}
+                      className={cn(
+                        'w-full flex items-center gap-2 px-3 py-2 rounded-md text-sm text-left transition-all',
+                        selected === f.id
+                          ? 'bg-navy text-white dark:bg-coral'
+                          : 'text-text-secondary hover:bg-muted/50'
+                      )}
+                      onClick={() => onSelect(f.id)}
+                    >
+                      <span>{f.icon}</span> {f.label}
+                    </button>
+                  ))}
                 </div>
               </div>
             ))}
           </div>
 
-          <button onClick={handleGenerate} className="btn btn-lg btn-primary" disabled={isGenerating || ((mode === 'product' || mode === 'brand') && !item)} style={{ width: '100%', marginBottom: 'var(--space-6)' }}>
-            {isGenerating ? <><span className="spinner" style={{ width: 18, height: 18, borderWidth: 2 }}></span>Gerando...</> : <>✨ Gerar Conteúdo</>}
-          </button>
+          <Button onClick={handleGenerate} disabled={isGenerating || ((mode === 'product' || mode === 'brand') && !item)} className="w-full h-12 text-base bg-gradient-to-r from-coral to-coral-dark hover:from-coral-light hover:to-coral text-white mb-6 shadow-md">
+            {isGenerating ? <><Loader2 size={18} className="animate-spin mr-2" />Gerando...</> : <><Sparkles size={18} className="mr-2" />Gerar Conteúdo</>}
+          </Button>
 
           {generatedContent && !isGenerating && (
             <div className="fade-in">
-              <ContentDisplay content={generatedContent} selectedItem={item} />
+              <ContentDisplay content={generatedContent} selectedItem={item} onFeedback={handleFeedback} />
               {generatedContent.quality && <QualityPanel quality={generatedContent.quality} />}
             </div>
           )}
@@ -279,27 +330,25 @@ export function ContentGenerator({ item }) {
       {/* WEEKLY VIEW */}
       {activeView === 'weekly' && (
         <div className="fade-in">
-          <div className="card" style={{ marginBottom: 'var(--space-4)' }}>
-            <div className="card-body" style={{ padding: 'var(--space-4) var(--space-6)' }}>
-              <div className="section-title" style={{ marginBottom: 'var(--space-4)' }}>Plano Semanal de Conteúdo</div>
-              <div style={{ display: 'flex', gap: 'var(--space-3)', flexWrap: 'wrap', marginBottom: 'var(--space-4)' }}>
-                {[
-                  { label: 'Objetivo', value: selectedObjective, setter: setSelectedObjective, options: OBJECTIVES },
-                  { label: 'Ângulo Principal', value: selectedAngle, setter: setSelectedAngle, options: ANGLES },
-                  { label: 'Persona', value: selectedPersona, setter: setSelectedPersona, options: PERSONAS },
-                ].map(({ label, value, setter, options }) => (
-                  <div key={label}>
-                    <label style={{ fontSize: 'var(--text-xs)', color: 'var(--text-muted)', display: 'block', marginBottom: 'var(--space-1)' }}>{label}</label>
-                    <select value={value} onChange={e => setter(e.target.value)} style={{ width: 'auto' }}>
-                      {options.map(o => <option key={o.id} value={o.id}>{o.label}</option>)}
-                    </select>
-                  </div>
-                ))}
-              </div>
-              <button onClick={handleGenerateWeekly} className="btn btn-lg btn-primary" disabled={isGenerating || ((mode === 'product' || mode === 'brand') && !item)} style={{ width: '100%' }}>
-                {isGenerating ? <><span className="spinner" style={{ width: 18, height: 18, borderWidth: 2 }}></span>Gerando plano...</> : <>📅 Gerar Plano Semanal (7 dias)</>}
-              </button>
+          <div className="bg-surface-card border border-border rounded-lg p-4 lg:p-6 mb-4">
+            <h3 className="text-lg font-bold text-text-primary mb-4">Plano Semanal de Conteúdo</h3>
+            <div className="flex gap-3 flex-wrap mb-4">
+              {[
+                { label: 'Objetivo', value: selectedObjective, setter: setSelectedObjective, options: OBJECTIVES },
+                { label: 'Ângulo Principal', value: selectedAngle, setter: setSelectedAngle, options: ANGLES },
+                { label: 'Persona', value: selectedPersona, setter: setSelectedPersona, options: PERSONAS },
+              ].map(({ label, value, setter, options }) => (
+                <div key={label}>
+                  <label className="text-xs text-text-muted block mb-1">{label}</label>
+                  <select value={value} onChange={e => setter(e.target.value)} className="h-8 px-2 text-sm border border-border rounded-md bg-surface-card text-text-primary">
+                    {options.map(o => <option key={o.id} value={o.id}>{o.label}</option>)}
+                  </select>
+                </div>
+              ))}
             </div>
+            <Button onClick={handleGenerateWeekly} disabled={isGenerating || ((mode === 'product' || mode === 'brand') && !item)} className="w-full h-11 bg-gradient-to-r from-coral to-coral-dark hover:from-coral-light hover:to-coral text-white">
+              {isGenerating ? <><Loader2 size={18} className="animate-spin mr-2" />Gerando plano...</> : <><Calendar size={18} className="mr-2" />Gerar Plano Semanal (7 dias)</>}
+            </Button>
           </div>
           {weeklyPlan && !isGenerating && <WeeklyPlan plan={weeklyPlan} onSaveToHistory={addToHistory} />}
         </div>
@@ -308,14 +357,12 @@ export function ContentGenerator({ item }) {
       {/* PROMPTS VIEW */}
       {activeView === 'prompts' && (
         <div className="fade-in">
-          <div className="card" style={{ marginBottom: 'var(--space-4)' }}>
-            <div className="card-body" style={{ padding: 'var(--space-4) var(--space-6)' }}>
-              <div className="section-title">Pack de Prompts para IA</div>
-              <p className="section-subtitle">Prompts prontos para Midjourney, DALL-E, Runway, Kling AI, etc.</p>
-              <button onClick={handleGeneratePrompts} className="btn btn-lg btn-primary" disabled={isGenerating || ((mode === 'product' || mode === 'brand') && !item)} style={{ width: '100%' }}>
-                {isGenerating ? 'Gerando...' : '🎨 Gerar Pack de Prompts'}
-              </button>
-            </div>
+          <div className="bg-surface-card border border-border rounded-lg p-4 lg:p-6 mb-4">
+            <h3 className="text-lg font-bold text-text-primary">Pack de Prompts para IA</h3>
+            <p className="text-sm text-text-muted mt-1 mb-4">Prompts prontos para Midjourney, DALL-E, Runway, Kling AI, etc.</p>
+            <Button onClick={handleGeneratePrompts} disabled={isGenerating || ((mode === 'product' || mode === 'brand') && !item)} className="w-full h-11 bg-gradient-to-r from-coral to-coral-dark hover:from-coral-light hover:to-coral text-white">
+              {isGenerating ? 'Gerando...' : <><Palette size={18} className="mr-2" />Gerar Pack de Prompts</>}
+            </Button>
           </div>
           {promptPack && !isGenerating && <PromptPackView pack={promptPack} />}
         </div>

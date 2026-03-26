@@ -5,17 +5,17 @@
 import { LocalProvider } from './LocalProvider.js';
 import { GeminiProvider, GEMINI_MODELS, DEFAULT_GEMINI_MODEL } from './GeminiProvider.js';
 
-const GEMINI_KEY = import.meta.env.VITE_GEMINI_API_KEY || '';
-export const getGeminiApiKey = () => GEMINI_KEY;
+let geminiKey = localStorage.getItem('gama_gemini_api_key') || import.meta.env.VITE_GEMINI_API_KEY || '';
+export const getGeminiApiKey = () => geminiKey;
 export { GEMINI_MODELS, DEFAULT_GEMINI_MODEL };
 
 class ProviderRegistry {
   constructor() {
     this.providers = {
       local: new LocalProvider(),
-      gemini: new GeminiProvider(GEMINI_KEY),
+      gemini: new GeminiProvider(geminiKey),
     };
-    this.activeProvider = GEMINI_KEY ? 'gemini' : 'local';
+    this.activeProvider = geminiKey ? 'gemini' : 'local';
   }
 
   get current() {
@@ -25,6 +25,14 @@ class ProviderRegistry {
   setActive(name) {
     if (!this.providers[name]) return;
     this.activeProvider = name;
+  }
+
+  updateGeminiKey(key) {
+    geminiKey = key;
+    this.providers.gemini = new GeminiProvider(key);
+    if (key) {
+      this.activeProvider = 'gemini';
+    }
   }
 
   setGeminiModel(modelId) {
@@ -45,9 +53,13 @@ class ProviderRegistry {
     return this.activeProvider;
   }
 
+  hasGeminiKey() {
+    return !!geminiKey;
+  }
+
   listProviders() {
     return [
-      { id: 'gemini', name: 'Gemini AI', description: 'IA generativa (conteúdo original)', available: !!GEMINI_KEY },
+      { id: 'gemini', name: 'Gemini AI', description: 'IA generativa (conteúdo original)', available: !!geminiKey },
       { id: 'local', name: 'Templates', description: 'Templates inteligentes (offline)', available: true },
     ];
   }
