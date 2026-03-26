@@ -145,7 +145,7 @@ export class GeminiProvider extends ContentProviderInterface {
       body: JSON.stringify({
         system_instruction: { parts: [{ text: buildSystemPrompt() }] },
         contents: [{ parts: [{ text: buildUserPrompt(request) }] }],
-        generationConfig: { temperature: 0.85, maxOutputTokens: 2048, responseMimeType: 'application/json' },
+        generationConfig: { temperature: 0.85, maxOutputTokens: 4096, responseMimeType: 'application/json' },
       }),
     });
 
@@ -155,14 +155,23 @@ export class GeminiProvider extends ContentProviderInterface {
     }
 
     const data = await response.json();
-    const rawText = data?.candidates?.[0]?.content?.parts?.[0]?.text;
+    // Gemini 2.5 models may return thinking parts — find the actual text part
+    const parts = data?.candidates?.[0]?.content?.parts || [];
+    const textPart = parts.filter(p => !p.thought).pop();
+    const rawText = textPart?.text;
     if (!rawText) throw new Error('Gemini retornou resposta vazia.');
 
     let content;
     try {
       content = JSON.parse(rawText);
     } catch {
-      const cleaned = rawText.replace(/^```json\s*/i, '').replace(/```\s*$/i, '').trim();
+      // Clean common JSON issues from LLM output
+      let cleaned = rawText
+        .replace(/^```json\s*/i, '').replace(/```\s*$/i, '')  // markdown blocks
+        .replace(/\/\/[^\n]*/g, '')                            // single-line comments
+        .replace(/\/\*[\s\S]*?\*\//g, '')                      // multi-line comments
+        .replace(/,\s*([}\]])/g, '$1')                         // trailing commas
+        .trim();
       content = JSON.parse(cleaned);
     }
 
