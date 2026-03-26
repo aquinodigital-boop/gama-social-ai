@@ -9,7 +9,7 @@ export const BrandBrain = {
         tone: ["Técnico", "Confiável", "Parceiro", "Direto"],
         emojis: ["🎨", "🏗️", "🤝", "🏢", "✅", "🚛"],
         mainBrand: "Coral / AkzoNobel",
-        partnerBrands: ["Coral", "Tigre", "Henkel", "Tramontina", "Norton", "Viapol"],
+        partnerBrands: ["Coral", "Tigre", "Henkel", "Tramontina", "Norton"],
         coralLines: ["Coralar", "Decora", "Proteção Sol & Chuva", "Rende Muito", "Pinta Piso", "Tinting", "Sparlack", "Mactra"],
     },
     regionalContext: {

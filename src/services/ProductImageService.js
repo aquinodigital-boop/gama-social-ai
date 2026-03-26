@@ -1,6 +1,6 @@
 /**
  * ProductImageService.js
- * Busca imagens reais dos produtos no catálogo Labor (labor_atacadista_data.json).
+ * Busca imagens reais dos produtos no catálogo Gama (labor_atacadista_data.json).
  *
  * Fontes:
  * - image_url: CDN do site (laboratacadista.agilecdn.com.br)

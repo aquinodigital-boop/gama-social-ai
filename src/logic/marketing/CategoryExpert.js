@@ -77,7 +77,7 @@ const CATEGORY_CONTEXTS = {
     b2b_angle: "Item de recompra frequente — o lojista que tem não perde venda.",
   },
   "Argamassas e Rejuntes": {
-    hook: "Rejunte errado é reclamação certa. Viapol Flex não arranha.",
+    hook: "Rejunte errado é reclamação certa. Rejunte flexível não arranha.",
     keywords: ["rejunte", "argamassa", "assentamento", "flexível", "porcelana"],
     visual_cue: "Rejuntamento de porcelanato, linhas perfeitas, acabamento impecável.",
     b2b_angle: "Venda natural no combo azulejo + rejunte + argamassa.",

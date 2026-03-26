@@ -72,7 +72,7 @@ export class LLMProvider extends ContentProviderInterface {
   }
 
   _buildSystemPrompt() {
-    return `Você é o assistente de marketing da Labor Atacadista, um atacadista B2B de materiais de construção no ABC Paulista.
+    return `Você é o assistente de marketing da Gama Distribuidora, um atacadista B2B de materiais de construção no ABC Paulista.
 
 REGRAS OBRIGATÓRIAS:
 - Tom: objetivo, direto, parceiro, confiável

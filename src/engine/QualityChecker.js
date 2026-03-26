@@ -28,7 +28,7 @@ const BRAND_TONE_POSITIVE = [
 
 const BRAND_TONE_NEGATIVE = [
   'barato', 'promoção imperdível', 'últimas unidades', 'compre já',
-  'oferta relâmpago', 'grátis', 'sorteio', 'viral', 'labor atacadista',
+  'oferta relâmpago', 'grátis', 'sorteio', 'viral', 'gama distribuidora',
 ];
 
 export const QualityChecker = {

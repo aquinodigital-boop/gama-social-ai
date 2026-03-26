@@ -6,8 +6,8 @@ console.log("--- Testing Institutional/Category Input ---");
 
 // Mock an Institutional Item (as passed from UI)
 const mockInstitutionalItem = {
-    name: "Marca Labor Atacadista",
-    category: "Marca Labor Atacadista", // Adapter logic does this
+    name: "Marca Gama Distribuidora",
+    category: "Marca Gama Distribuidora", // Adapter logic does this
     is_generic: true
 };
 

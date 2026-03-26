@@ -58,7 +58,7 @@ const ANGLES = {
     label: 'Logística Ágil ABC',
     hooks: [
       (name) => `Precisa de ${name} com urgência no ABC?`,
-      (name) => `Sem ${name} no estoque? A Labor resolve hoje.`,
+      (name) => `Sem ${name} no estoque? A Gama resolve hoje.`,
       (name) => `Entrega ágil de ${name} em todo o ABC Paulista.`,
     ],
     focus: 'Velocidade de entrega, estoque local, não perder venda.',
@@ -75,9 +75,9 @@ const ANGLES = {
   partnership: {
     label: 'Parceria & Confiança',
     hooks: [
-      () => `Labor: mais que fornecedor, parceiro do seu negócio.`,
-      () => `Conte com a Labor para abastecer sua loja com confiança.`,
-      (name) => `${name} com atendimento que resolve. Isso é Labor.`,
+      () => `Gama: mais que fornecedor, parceiro do seu negócio.`,
+      () => `Conte com a Gama para abastecer sua loja com confiança.`,
+      (name) => `${name} com atendimento que resolve. Isso é Gama.`,
     ],
     focus: 'Atendimento humano, resolução, confiança.',
   },
@@ -86,7 +86,7 @@ const ANGLES = {
     hooks: [
       (name) => `Seu cliente pediu ${name} e você não tinha?`,
       (name) => `Não perca venda por falta de ${name}.`,
-      (name) => `Estoque de ${name} sempre em dia com a Labor.`,
+      (name) => `Estoque de ${name} sempre em dia com a Gama.`,
     ],
     focus: 'Soluções que atendem bem essa necessidade, não deixar o cliente na mão.',
   },
@@ -223,11 +223,11 @@ export class LocalProvider extends ContentProviderInterface {
     const segment = ctx?.segment || 'materiais de construção';
     const strength = ctx?.strength || 'opções que trabalhamos';
     return [
-      `Procurando ${brandName}? Na Labor tem opções que atendem sua necessidade.`,
-      `${brandName}: ${strength}. Disponível na Labor Atacadista.`,
+      `Procurando ${brandName}? Na Gama tem opções que atendem sua necessidade.`,
+      `${brandName}: ${strength}. Disponível na Gama Distribuidora.`,
       `Sua loja precisa de ${brandName}? Temos produtos que trabalhamos e costumamos indicar.`,
-      `${brandName} no atacado, com entrega ágil. Só na Labor.`,
-      `Referência em ${segment}: ${brandName} na Labor.`,
+      `${brandName} no atacado, com entrega ágil. Só na Gama.`,
+      `Referência em ${segment}: ${brandName} na Gama.`,
     ];
   }
 
@@ -254,7 +254,7 @@ export class LocalProvider extends ContentProviderInterface {
           time: '3-8s',
           visual: isBrand ? 'Autoridade da Marca' : 'Problema / Contexto',
           text: isBrand
-            ? `${name}: ${brandStrength}. Na Labor você encontra opções que trabalhamos de ${brandSegment}.`
+            ? `${name}: ${brandStrength}. Na Gama você encontra opções que trabalhamos de ${brandSegment}.`
             : isGeneric
               ? `Sua seção de ${name} precisa estar completa pra não perder venda.`
               : `O ${name} é item de giro certo. ${personaData.label}: ${personaData.desire}.`,
@@ -266,21 +266,21 @@ export class LocalProvider extends ContentProviderInterface {
         },
         {
           time: '8-13s',
-          visual: 'Solução Labor',
+          visual: 'Solução Gama',
           text: isBrand
-            ? `Labor Atacadista: distribuidor ${name} no ${region}. Estoque disponível, entrega ágil, atendimento B2B.`
-            : `Na Labor, ${name} com entrega ágil em todo o ${region}. Opções que atendem sua necessidade, atendimento B2B.`,
-          visual_prompt: `(Motion Graphics) Caminhão Labor em movimento. Mapa do ABC com pinos de entrega.`,
+            ? `Gama Distribuidora: distribuidor ${name} no ${region}. Estoque disponível, entrega ágil, atendimento B2B.`
+            : `Na Gama, ${name} com entrega ágil em todo o ${region}. Opções que atendem sua necessidade, atendimento B2B.`,
+          visual_prompt: `(Motion Graphics) Caminhão Gama em movimento. Mapa do ABC com pinos de entrega.`,
         },
         {
           time: '13-15s',
           visual: 'CTA Final',
           text: `${BrandBrain.getCTA()} Link na bio!`,
-          visual_prompt: `(Texto 3D) Logo Labor sobre fundo azul marinho. Botão WhatsApp pulsando.`,
+          visual_prompt: `(Texto 3D) Logo Gama sobre fundo azul marinho. Botão WhatsApp pulsando.`,
         },
       ],
       assets: {
-        narration_text: `"${hook}" Na Labor você encontra ${isBrand ? `opções ${name} que trabalhamos` : name} com atendimento B2B e entrega ágil no ${region}. ${BrandBrain.getCTA()}`,
+        narration_text: `"${hook}" Na Gama você encontra ${isBrand ? `opções ${name} que trabalhamos` : name} com atendimento B2B e entrega ágil no ${region}. ${BrandBrain.getCTA()}`,
         image_prompts: [
           isBrand
             ? `[Capa] Composição de produtos ${name} (${brandSegment}) em fundo profissional. Logo da marca visível.`
@@ -294,8 +294,8 @@ export class LocalProvider extends ContentProviderInterface {
         ],
       },
       caption: isBrand
-        ? `🏷️ **${name}** na Labor Atacadista\n\n${hook}\n\n${brandStrength}. Opções que trabalhamos disponíveis no atacado.\n\nEntrega ágil no ${region} | Atendimento B2B\n\n📍 ${catContext.keywords.join(' • ')}\n\n👉 Peça sua tabela no WhatsApp\n\n#LaborAtacadista #${name.replace(/[\s-]+/g, '')} #B2B #Lojista #ABC`
-        : `🎬 **${name}**\n\n${hook}\n\n${isGeneric ? `Temos opções de ${name} que costumamos indicar.` : `Garanta ${name} para sua loja.`}\n\nEntrega ágil no ${region} | Atendimento B2B\n\n📍 ${catContext.keywords.join(' • ')}\n\n👉 Link na bio ou chame no WhatsApp\n\n#LaborAtacadista #B2B #${category.replace(/\s+/g, '')} #Lojista #ABC`,
+        ? `🏷️ **${name}** na Gama Distribuidora\n\n${hook}\n\n${brandStrength}. Opções que trabalhamos disponíveis no atacado.\n\nEntrega ágil no ${region} | Atendimento B2B\n\n📍 ${catContext.keywords.join(' • ')}\n\n👉 Peça sua tabela no WhatsApp\n\n#GamaDistribuidora #${name.replace(/[\s-]+/g, '')} #B2B #Lojista #ABC`
+        : `🎬 **${name}**\n\n${hook}\n\n${isGeneric ? `Temos opções de ${name} que costumamos indicar.` : `Garanta ${name} para sua loja.`}\n\nEntrega ágil no ${region} | Atendimento B2B\n\n📍 ${catContext.keywords.join(' • ')}\n\n👉 Link na bio ou chame no WhatsApp\n\n#GamaDistribuidora #B2B #${category.replace(/\s+/g, '')} #Lojista #ABC`,
     };
   }
 
@@ -321,8 +321,8 @@ export class LocalProvider extends ContentProviderInterface {
         },
         {
           slide: 3,
-          text: `A solução: Labor Atacadista tem ${name} com entrega ágil no ${region}.`,
-          visual: `Foto do produto + logo Labor. Ambiente organizado de estoque.`,
+          text: `A solução: Gama Distribuidora tem ${name} com entrega ágil no ${region}.`,
+          visual: `Foto do produto + logo Gama. Ambiente organizado de estoque.`,
           note: 'Apresentar a solução',
         },
         {
@@ -334,24 +334,24 @@ export class LocalProvider extends ContentProviderInterface {
         {
           slide: 5,
           text: `${BrandBrain.getCTA()}\n📱 Chame no WhatsApp e peça sua tabela.`,
-          visual: `Logo Labor + QR code para WhatsApp. Fundo azul marinho.`,
+          visual: `Logo Gama + QR code para WhatsApp. Fundo azul marinho.`,
           note: 'CTA claro e direto',
         },
       ],
       assets: {
-        narration_text: `${hook} A Labor tem ${name} com entrega ágil no ${region}. ${BrandBrain.getCTA()}`,
+        narration_text: `${hook} A Gama tem ${name} com entrega ágil no ${region}. ${BrandBrain.getCTA()}`,
         image_prompts: [
           `[Slide 1] Foto de ${name} em fundo clean, tipografia bold sobreposta.`,
           `[Slide 2] Balcão de loja vazio, cliente decepcionado (estilo editorial).`,
-          `[Slide 3] Produto chegando em caixa Labor. Lojista satisfeito.`,
+          `[Slide 3] Produto chegando em caixa Gama. Lojista satisfeito.`,
           `[Slide 4] Grid com 4-6 produtos de ${category}, fundo neutro.`,
-          `[Slide 5] Logo Labor em fundo azul, botão WhatsApp.`,
+          `[Slide 5] Logo Gama em fundo azul, botão WhatsApp.`,
         ],
         video_prompts: [],
       },
       caption: isBrand
-        ? `📸 Deslize e conheça a seleção *${name}* na Labor →\n\n${hook}\n\n${brandStrength}. Atacado com entrega ágil no ${region}.\n\n👉 Peça sua tabela no WhatsApp\n\n#LaborAtacadista #${name.replace(/[\s-]+/g, '')} #B2B #Lojista`
-        : `📸 Deslize pra ver como a Labor resolve o estoque de ${name} →\n\n${hook}\n\nEntrega ágil no ${region} | Atendimento B2B | Opções que atendem sua necessidade\n\n👉 Peça sua tabela no WhatsApp\n\n#LaborAtacadista #Carrossel #${category.replace(/\s+/g, '')} #Lojista`,
+        ? `📸 Deslize e conheça a seleção *${name}* na Gama →\n\n${hook}\n\n${brandStrength}. Atacado com entrega ágil no ${region}.\n\n👉 Peça sua tabela no WhatsApp\n\n#GamaDistribuidora #${name.replace(/[\s-]+/g, '')} #B2B #Lojista`
+        : `📸 Deslize pra ver como a Gama resolve o estoque de ${name} →\n\n${hook}\n\nEntrega ágil no ${region} | Atendimento B2B | Opções que atendem sua necessidade\n\n👉 Peça sua tabela no WhatsApp\n\n#GamaDistribuidora #Carrossel #${category.replace(/\s+/g, '')} #Lojista`,
     };
   }
 
@@ -363,7 +363,7 @@ export class LocalProvider extends ContentProviderInterface {
         description: 'Enquete interativa comparando dois cenários',
         storySequence: [
           { type: 'text_poll', text: `Estoque de ${name}: compra na hora da necessidade OU mantém preventivo?`, poll: ['Na hora', 'Preventivo'], visual: `Fundo com produto ${name} de um lado, prateleira vazia do outro.` },
-          { type: 'reveal', text: `Lojista esperto compra preventivo. E com a Labor, chega rápido no ${region}!`, visual: `Produto chegando. Logo Labor.` },
+          { type: 'reveal', text: `Lojista esperto compra preventivo. E com a Gama, chega rápido no ${region}!`, visual: `Produto chegando. Logo Gama.` },
         ],
       },
       {
@@ -371,15 +371,15 @@ export class LocalProvider extends ContentProviderInterface {
         description: 'Simular situação do dia a dia do lojista',
         storySequence: [
           { type: 'video_pov', text: `POV: seu cliente pede ${name} e você tem no estoque 😎`, visual: `Câmera subjetiva: mão pegando produto na prateleira, entregando ao cliente.` },
-          { type: 'cta', text: `Quer ter sempre? Chame a Labor no Zap!`, visual: `Botão WhatsApp animado. Logo Labor.` },
+          { type: 'cta', text: `Quer ter sempre? Chame a Gama no Zap!`, visual: `Botão WhatsApp animado. Logo Gama.` },
         ],
       },
       {
         trend: 'Checklist do Dia',
         description: 'Lista de tarefas com checkmark animado',
         storySequence: [
-          { type: 'checklist', text: `Checklist do lojista:\n✅ Conferir estoque de ${category}\n✅ Pedir reposição na Labor\n✅ Preço competitivo\n✅ Entrega ágil no ${region}`, visual: `Fundo com textura de papelão/estoque. Itens aparecendo um a um.` },
-          { type: 'cta', text: `Falta completar? A Labor resolve. Link no perfil!`, visual: `Logo Labor + link.` },
+          { type: 'checklist', text: `Checklist do lojista:\n✅ Conferir estoque de ${category}\n✅ Pedir reposição na Gama\n✅ Preço competitivo\n✅ Entrega ágil no ${region}`, visual: `Fundo com textura de papelão/estoque. Itens aparecendo um a um.` },
+          { type: 'cta', text: `Falta completar? A Gama resolve. Link no perfil!`, visual: `Logo Gama + link.` },
         ],
       },
       {
@@ -387,7 +387,7 @@ export class LocalProvider extends ContentProviderInterface {
         description: 'Prateleira vazia vs. abastecida',
         storySequence: [
           { type: 'before_after', text: `ANTES: Prateleira vazia de ${name}`, visual: `Foto de prateleira vazia, iluminação triste.` },
-          { type: 'before_after', text: `DEPOIS: Abastecida pela Labor!`, visual: `Mesma prateleira cheia, iluminação vibrante. Logo Labor no canto.` },
+          { type: 'before_after', text: `DEPOIS: Abastecida pela Gama!`, visual: `Mesma prateleira cheia, iluminação vibrante. Logo Gama no canto.` },
           { type: 'cta', text: `Quer esse resultado? ${BrandBrain.getCTA()}`, visual: `Botão de ação.` },
         ],
       },
@@ -396,7 +396,7 @@ export class LocalProvider extends ContentProviderInterface {
         description: 'Desfazer objeções comuns do lojista',
         storySequence: [
           { type: 'myth', text: `MITO: "Atacadista só vende em grande quantidade"`, visual: `Texto com X vermelho. Fundo escuro.` },
-          { type: 'truth', text: `VERDADE: A Labor atende pedidos adequados ao seu porte. Atendimento personalizado B2B!`, visual: `Texto com ✅ verde. Foto de loja pequena abastecida.` },
+          { type: 'truth', text: `VERDADE: A Gama atende pedidos adequados ao seu porte. Atendimento personalizado B2B!`, visual: `Texto com ✅ verde. Foto de loja pequena abastecida.` },
           { type: 'cta', text: `Peça sua tabela sem compromisso!`, visual: `WhatsApp link.` },
         ],
       },
@@ -434,19 +434,19 @@ export class LocalProvider extends ContentProviderInterface {
       layout: {
         headline: hook,
         subheadline: `${angleData.focus}`,
-        bodyText: `${name} disponível na Labor Atacadista. Atendimento B2B, opções que trabalhamos e entrega ágil no ${region}.`,
+        bodyText: `${name} disponível na Gama Distribuidora. Atendimento B2B, opções que trabalhamos e entrega ágil no ${region}.`,
         cta: BrandBrain.getCTA(),
-        hashtags: `#LaborAtacadista #${category.replace(/\s+/g, '')} #B2B #ABC #Lojista`,
+        hashtags: `#GamaDistribuidora #${category.replace(/\s+/g, '')} #B2B #ABC #Lojista`,
       },
       assets: {
-        narration_text: `${hook} ${name} na Labor. ${BrandBrain.getCTA()}`,
+        narration_text: `${hook} ${name} na Gama. ${BrandBrain.getCTA()}`,
         image_prompts: [
-          `[Post Feed 1:1] Foto de ${name} em fundo clean. Logo Labor no canto. Texto: "${hook}" em tipografia bold.`,
+          `[Post Feed 1:1] Foto de ${name} em fundo clean. Logo Gama no canto. Texto: "${hook}" em tipografia bold.`,
           `[Alternativo] Composição flat lay de produtos ${category} com paleta azul marinho e laranja.`,
         ],
         video_prompts: [],
       },
-      caption: `📌 **${name}**\n\n${hook}\n\n${catContext.keywords.join(' | ')}\n\nEntrega ágil no ${region} | Atendimento B2B\n\n👉 ${BrandBrain.getCTA()}\n\n#LaborAtacadista #${category.replace(/\s+/g, '')} #Lojista`,
+      caption: `📌 **${name}**\n\n${hook}\n\n${catContext.keywords.join(' | ')}\n\nEntrega ágil no ${region} | Atendimento B2B\n\n👉 ${BrandBrain.getCTA()}\n\n#GamaDistribuidora #${category.replace(/\s+/g, '')} #Lojista`,
     };
   }
 
@@ -464,9 +464,9 @@ export class LocalProvider extends ContentProviderInterface {
         cta_link: 'WhatsApp ou página de contato',
       },
       assets: {
-        narration_text: `${hook} ${name} na Labor. Peça sua tabela.`,
+        narration_text: `${hook} ${name} na Gama. Peça sua tabela.`,
         image_prompts: [
-          `[Banner Desktop 1200x400] Foto de ${name} à esquerda, texto "${hook}" à direita. Fundo gradient azul marinho para branco. Logo Labor. Botão laranja "Pedir Tabela".`,
+          `[Banner Desktop 1200x400] Foto de ${name} à esquerda, texto "${hook}" à direita. Fundo gradient azul marinho para branco. Logo Gama. Botão laranja "Pedir Tabela".`,
           `[Banner Mobile 600x600] ${name} centralizado. Texto curto. Botão CTA grande.`,
         ],
         video_prompts: [],
@@ -478,15 +478,15 @@ export class LocalProvider extends ContentProviderInterface {
   _generateWhatsApp({ name, category, hook, region, angleData, personaData, isBrand, brandContext }) {
     const brandStrength = isBrand && brandContext ? brandContext.strength : '';
     const messages = isBrand ? {
-      abertura: `Olá! 👋\n\nAqui é da *Labor Atacadista*.\n\nTrabalha com *${name}*? Temos opções que trabalhamos no atacado!\n\n${brandStrength}.`,
+      abertura: `Olá! 👋\n\nAqui é da *Gama Distribuidora*.\n\nTrabalha com *${name}*? Temos opções que trabalhamos no atacado!\n\n${brandStrength}.`,
       proposta: `🏷️ *Marca ${name}*\n\n✅ Opções que trabalhamos no atacado\n✅ Entrega ágil no ${region}\n✅ Atendimento B2B personalizado\n✅ Preço competitivo\n\nQuer receber a tabela ${name}?`,
       followup: `Oi! Tudo certo? 😊\n\nPassando para lembrar que temos *${name}* disponível para pronta-entrega.\n\nPrecisa de reposição? A gente resolve rápido!\n\n📱 Responda aqui que enviamos a tabela.`,
-      reativacao: `Faz tempo que não nos falamos! 🤝\n\nA Labor continua sendo distribuidor *${name}* no ${region}.\n\nEntrega ágil, atendimento que resolve.\n\nBora conversar? 💬`,
+      reativacao: `Faz tempo que não nos falamos! 🤝\n\nA Gama continua sendo distribuidor *${name}* no ${region}.\n\nEntrega ágil, atendimento que resolve.\n\nBora conversar? 💬`,
     } : {
-      abertura: `Olá! 👋\n\nAqui é da *Labor Atacadista*.\n\n${hook}\n\nVocê já conferiu as opções que temos de *${category}*?`,
+      abertura: `Olá! 👋\n\nAqui é da *Gama Distribuidora*.\n\n${hook}\n\nVocê já conferiu as opções que temos de *${category}*?`,
       proposta: `📦 *${name}*\n\n✅ Opções que trabalhamos\n✅ Entrega ágil no ${region}\n✅ Atendimento B2B personalizado\n✅ Preço de atacado\n\nQuer receber a tabela atualizada?`,
       followup: `Oi! Tudo certo? 😊\n\nPassando para lembrar que temos *${name}* disponível para pronta-entrega.\n\nPrecisa de reposição? A gente resolve rápido!\n\n📱 Responda aqui que enviamos a tabela.`,
-      reativacao: `Faz tempo que não nos falamos! 🤝\n\nA Labor continua com opções de *${category}* que atendem sua loja.\n\nEntrega ágil no ${region}, atendimento que resolve.\n\nBora conversar? 💬`,
+      reativacao: `Faz tempo que não nos falamos! 🤝\n\nA Gama continua com opções de *${category}* que atendem sua loja.\n\nEntrega ágil no ${region}, atendimento que resolve.\n\nBora conversar? 💬`,
     };
 
     return {

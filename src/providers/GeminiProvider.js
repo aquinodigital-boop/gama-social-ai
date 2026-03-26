@@ -47,7 +47,7 @@ PÚBLICOS-ALVO: pintores profissionais, donos de lojas de tintas e materiais de 
 CONTEXTO ESTRATÉGICO ATUAL:
 - Projeto Reconquista Santos: campanha de retomada de market share em Santos frente à Suvinil
 - Programa CL: sistema de níveis para lojistas — quanto mais o lojista investe no mix Coral (Tinting, Sparlack, Mactra), mais a Gama investe na loja dele (fachada, comunicação visual)
-- Marcas distribuídas: Coral (carro-chefe), Tigre, Henkel, Tramontina, Norton, Viapol
+- Marcas distribuídas: Coral (carro-chefe), Tigre, Henkel, Tramontina, Norton
 - Linhas Coral: Coralar, Decora, Proteção Sol & Chuva, Rende Muito, Pinta Piso, Tinting, Sparlack, Mactra
 
 REGRAS OBRIGATÓRIAS:

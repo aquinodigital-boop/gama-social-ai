@@ -84,16 +84,6 @@ const GAMA_BRANDS = [
     tier: "premium",
     isMain: false,
   },
-  {
-    name: "VIAPOL",
-    productCount: 20,
-    categories: ["Impermeabilizantes", "Argamassas", "Rejuntes"],
-    sampleProducts: ["Impermeabilizante Viapol", "Rejunte Flex", "Argamassa AC III"],
-    segment: "Impermeabilização",
-    strength: "Especialista em impermeabilização",
-    tier: "mainstream",
-    isMain: false,
-  },
 ];
 
 export const BrandService = {

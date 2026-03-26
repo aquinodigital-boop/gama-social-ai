@@ -6,7 +6,7 @@
  * - Flash (imagen-4.0-fast-generate-001): gratuito, mais rápido
  * - Pro (imagen-4.0-generate-001): pago, maior qualidade
  * 
- * Integra ImagePromptEnhancer para alinhar à identidade Labor (Grupo Gama).
+ * Integra ImagePromptEnhancer para alinhar à identidade Gama (Grupo Gama).
  */
 
 import { getGeminiApiKey } from '../providers/index.js';
@@ -40,7 +40,7 @@ export async function generateImage({
     throw new Error('API Key do Gemini não configurada. Configure VITE_GEMINI_API_KEY.');
   }
 
-  // Enriquece o prompt com identidade Labor (logo, produto real, embalagem, mascote)
+  // Enriquece o prompt com identidade Gama (logo, produto real, embalagem, mascote)
   const product = productName || (content && extractProductName(content, prompt));
   const enhancedPrompt = enhanceImagePrompt(prompt, {
     productName: product,

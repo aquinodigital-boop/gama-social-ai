@@ -1,25 +1,25 @@
 /**
  * ImagePromptEnhancer.js
- * Enriquece prompts de imagem para alinhar à identidade da marca Labor (Grupo Gama).
+ * Enriquece prompts de imagem para alinhar à identidade da marca Gama (Grupo Gama).
  *
  * Regras:
- * 1. Menção a Labor ou conteúdo do app → incluir logo oficial
+ * 1. Menção a Gama ou conteúdo do app → incluir logo oficial
  * 2. Produto específico → mostrar produto real, não genérico
  * 3. Embalagem/caixa → logo na embalagem
  * 4. Com Mascote → incluir mascote fiel ao design
  *
  * Nota: Imagen não aceita upload de imagens; usamos descrições textuais detalhadas.
- * Referências locais: public/mascote.png, assets/logo-labor.png (para futura integração).
+ * Referências locais: public/mascote.png, assets/logo-gama.png (para futura integração).
  */
 
-// Descrição do logo Labor para o Imagen gerar fielmente
-const LABOR_LOGO_DESC = `Logo oficial da Labor Atacadista visível e integrado: marca com tipografia corporativa em azul marinho (#1B2A4A) e laranja (#D4672C), design limpo e profissional, parte do Grupo Gama.`;
+// Descrição do logo Gama para o Imagen gerar fielmente
+const GAMA_LOGO_DESC = `Logo oficial da Gama Distribuidora visível e integrado: marca com tipografia corporativa em azul marinho (#1B2A4A) e laranja (#D4672C), design limpo e profissional, parte do Grupo Gama.`;
 
 // Descrição do mascote (ajustar conforme o mascote real)
-const MASCOTE_DESC = `Mascote oficial do Laboratório de Conteúdo: personagem cartoon amigável, estilo moderno e acessível, cores da marca Labor (azul marinho e laranja), expressão convidativa, proporções equilibradas, integrado naturalmente na cena.`;
+const MASCOTE_DESC = `Mascote oficial do Laboratório de Conteúdo: personagem cartoon amigável, estilo moderno e acessível, cores da marca Gama (azul marinho e laranja), expressão convidativa, proporções equilibradas, integrado naturalmente na cena.`;
 
-// Palavras que indicam menção à Labor
-const LABOR_KEYWORDS = /\b(labor|Labor|LABOR|marca labor|Labor Atacadista|Laboratório)\b/i;
+// Palavras que indicam menção à Gama
+const GAMA_KEYWORDS = /\b(gama|Gama|GAMA|marca gama|Gama Distribuidora|Laboratório)\b/i;
 
 // Palavras que indicam embalagem
 const PACKAGING_KEYWORDS = /\b(embalagem|caixa|pacote|packaging|envio|entrega|produto em caixa|caixa de produto)\b/i;
@@ -47,7 +47,7 @@ function extractProductName(content, promptText = null) {
 }
 
 /**
- * Enriquece o prompt com instruções de identidade Labor
+ * Enriquece o prompt com instruções de identidade Gama
  */
 export function enhanceImagePrompt(originalPrompt, options = {}) {
   const {
@@ -62,24 +62,24 @@ export function enhanceImagePrompt(originalPrompt, options = {}) {
   // Base: prompt original
   parts.push(originalPrompt?.trim() || '');
 
-  // 1. Logo Labor obrigatório: todo conteúdo do app é da Labor (Grupo Gama)
-  // Inclui quando: menção a Labor, ou quando temos produto/categoria (sempre no app)
-  const needsLogo = LABOR_KEYWORDS.test(fullText) ||
-    /institucional|marca|laboratório|Labor Atacadista/i.test(fullText) ||
+  // 1. Logo Gama obrigatório: todo conteúdo do app é da Gama (Grupo Gama)
+  // Inclui quando: menção a Gama, ou quando temos produto/categoria (sempre no app)
+  const needsLogo = GAMA_KEYWORDS.test(fullText) ||
+    /institucional|marca|laboratório|Gama Distribuidora/i.test(fullText) ||
     productName ||
     content;
   if (needsLogo) {
-    parts.push(`IMPORTANTE: ${LABOR_LOGO_DESC} Posicione o logo de forma visível (canto superior, embalagem, fundo discreto ou elemento central conforme a composição).`);
+    parts.push(`IMPORTANTE: ${GAMA_LOGO_DESC} Posicione o logo de forma visível (canto superior, embalagem, fundo discreto ou elemento central conforme a composição).`);
   }
 
   // 2. Produto específico → produto real, não genérico
   if (productName && productName.length > 2) {
-    parts.push(`Mostre o produto "${productName}" REAL da Labor, com design fiel ao original: embalagem autêntica, cores e formato típicos. Evite imagens stock genéricas. O logo da Labor deve estar visível na caixa ou no produto.`);
+    parts.push(`Mostre o produto "${productName}" REAL da Gama, com design fiel ao original: embalagem autêntica, cores e formato típicos. Evite imagens stock genéricas. O logo da Gama deve estar visível na caixa ou no produto.`);
   }
 
   // 3. Embalagem/caixa → logo na embalagem
   if (PACKAGING_KEYWORDS.test(fullText)) {
-    parts.push(`Na embalagem, caixa de envio ou pacote: coloque o logo oficial da Labor de forma proeminente e realista (impresso na frente, lateral ou tampa), usando o design real da marca.`);
+    parts.push(`Na embalagem, caixa de envio ou pacote: coloque o logo oficial da Gama de forma proeminente e realista (impresso na frente, lateral ou tampa), usando o design real da marca.`);
   }
 
   // 4. Com Mascote
@@ -104,12 +104,12 @@ export const EXAMPLE_PROMPTS = {
     withMascot: false,
   },
   embalagem: {
-    original: 'Caixa de envio da Labor com produto dentro, fundo neutro.',
+    original: 'Caixa de envio da Gama com produto dentro, fundo neutro.',
     content: { title: 'Post: Tinta Acrílica' },
     withMascot: false,
   },
   mascote: {
-    original: 'Cena institucional da Labor Atacadista, ambiente de loja B2B.',
+    original: 'Cena institucional da Gama Distribuidora, ambiente de loja B2B.',
     content: { title: 'Institucional: Parceria' },
     withMascot: true,
   },
@@ -128,4 +128,4 @@ export function getExampleEnhancedPrompts() {
   }));
 }
 
-export { LABOR_LOGO_DESC, MASCOTE_DESC, extractProductName };
+export { GAMA_LOGO_DESC, MASCOTE_DESC, extractProductName };

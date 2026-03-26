@@ -1,6 +1,6 @@
 import { useState, useCallback, useEffect } from 'react';
 
-const STORAGE_KEY = 'labor_content_history';
+const STORAGE_KEY = 'gama_content_history';
 const MAX_HISTORY = 50;
 
 export function useContentHistory() {

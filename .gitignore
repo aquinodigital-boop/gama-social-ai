@@ -37,3 +37,4 @@ produtos_SEM_imagem.csv
 relatorio_imagens.csv
 *.zip
 .vite/
+.vercel
