@@ -206,4 +206,95 @@ export class GeminiProvider extends ContentProviderInterface {
   async generatePromptPack(params) {
     return PromptGenerator.generateFull(params);
   }
+
+  /** Helper: call Gemini API and parse JSON response */
+  async _callGemini(userPrompt, { temperature = 0.85, maxOutputTokens = 4096 } = {}) {
+    if (!this.apiKey) throw new Error('API Key do Gemini não configurada. Vá em Configurações para inserir sua chave.');
+
+    const url = `https://generativelanguage.googleapis.com/v1beta/models/${this.model}:generateContent?key=${this.apiKey}`;
+    const response = await fetch(url, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        system_instruction: { parts: [{ text: buildSystemPrompt() }] },
+        contents: [{ parts: [{ text: userPrompt }] }],
+        generationConfig: { temperature, maxOutputTokens, responseMimeType: 'application/json' },
+      }),
+    });
+
+    if (!response.ok) {
+      const errorData = await response.json().catch(() => ({}));
+      throw new Error(`Gemini API: ${errorData?.error?.message || `HTTP ${response.status}`}`);
+    }
+
+    const data = await response.json();
+    const parts = data?.candidates?.[0]?.content?.parts || [];
+    const textPart = parts.filter(p => !p.thought).pop();
+    const rawText = textPart?.text;
+    if (!rawText) throw new Error('Gemini retornou resposta vazia.');
+
+    try {
+      return JSON.parse(rawText);
+    } catch {
+      let cleaned = rawText
+        .replace(/^```json\s*/i, '').replace(/```\s*$/i, '')
+        .replace(/\/\/[^\n]*/g, '')
+        .replace(/\/\*[\s\S]*?\*\//g, '')
+        .replace(/,\s*([}\]])/g, '$1')
+        .trim();
+      return JSON.parse(cleaned);
+    }
+  }
+
+  async generateQuickImage(request) {
+    const { name, category, angle, persona } = request;
+    const angleLabel = ANGLE_LABELS[angle] || angle;
+    const personaLabel = PERSONA_LABELS[persona] || persona;
+
+    const prompt = `Gere conteúdo RÁPIDO para uma IMAGEM de marketing B2B da Gama Distribuidora.
+
+PRODUTO/CONTEXTO: ${name}
+CATEGORIA: ${category}
+ÂNGULO: ${angleLabel}
+PERSONA: ${personaLabel}
+
+Retorne EXATAMENTE este JSON:
+{"type":"quick_image","title":"string (título curto)","product":"${name}","image_prompt":"string (prompt detalhado em PT-BR para gerar imagem no Midjourney/DALL-E, incluindo estilo visual, composição, cores da Gama azul marinho e laranja coral, contexto B2B)","caption":"string (legenda pronta para postar, max 150 caracteres, com CTA)","hashtags":"#GamaDistribuidora #DistribuidorCoral + 3-4 hashtags relevantes","format_hint":"stories ou feed"}`;
+
+    const content = await this._callGemini(prompt, { temperature: 0.9, maxOutputTokens: 1024 });
+    content.id = uid();
+    content.type = 'quick_image';
+    content.format = 'quick_image';
+    content.angle = angle;
+    content.persona = persona;
+    content.generatedAt = Date.now();
+    content.provider = this.name;
+    return content;
+  }
+
+  async generateQuickVideo(request) {
+    const { name, category, angle, persona } = request;
+    const angleLabel = ANGLE_LABELS[angle] || angle;
+    const personaLabel = PERSONA_LABELS[persona] || persona;
+
+    const prompt = `Gere uma IDEIA RÁPIDA para VÍDEO de marketing B2B da Gama Distribuidora.
+
+PRODUTO/CONTEXTO: ${name}
+CATEGORIA: ${category}
+ÂNGULO: ${angleLabel}
+PERSONA: ${personaLabel}
+
+Retorne EXATAMENTE este JSON:
+{"type":"quick_video","title":"string (título curto)","product":"${name}","video_idea":"string (conceito do vídeo em 1-2 frases)","visual_prompts":["string (prompt visual cena 1 em PT-BR)","string (prompt visual cena 2 em PT-BR)","string (prompt visual cena 3 em PT-BR)"],"duration_hint":"15s ou 30s ou 60s","format_hint":"reels ou stories","caption":"string (legenda curta com CTA)"}`;
+
+    const content = await this._callGemini(prompt, { temperature: 0.9, maxOutputTokens: 1024 });
+    content.id = uid();
+    content.type = 'quick_video';
+    content.format = 'quick_video';
+    content.angle = angle;
+    content.persona = persona;
+    content.generatedAt = Date.now();
+    content.provider = this.name;
+    return content;
+  }
 }

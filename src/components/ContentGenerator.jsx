@@ -1,6 +1,6 @@
 import React, { useState, useCallback } from 'react';
 import { providerRegistry, GEMINI_MODELS } from '../providers/index.js';
-import { LaborDataService } from '../logic/LaborDataService.js';
+import { GamaDataService } from '../logic/GamaDataService.js';
 import { BrandExpert } from '../logic/marketing/BrandExpert.js';
 import { useContentHistory } from '../hooks/useContentHistory.js';
 import { ContentDisplay } from './ContentDisplay.jsx';
@@ -9,11 +9,12 @@ import { PromptPackView } from './PromptPackView.jsx';
 import { HistoryPanel } from './HistoryPanel.jsx';
 import { QualityPanel } from './QualityPanel.jsx';
 import { SettingsPanel } from './SettingsPanel.jsx';
+import { SuggestionsPanel } from './SuggestionsPanel.jsx';
 import { cn } from '@/lib/utils';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { toast } from 'sonner';
-import { Sparkles, Calendar, Palette, Clock, Settings, Loader2 } from 'lucide-react';
+import { Sparkles, Lightbulb, Calendar, Palette, Clock, Settings, Loader2, Camera, Video } from 'lucide-react';
 
 const FORMATS = [
   { id: 'reels', label: 'Reels / TikTok', icon: '🎬' },
@@ -47,6 +48,7 @@ const OBJECTIVES = [
 
 const VIEWS = [
   { id: 'generate', label: 'Gerar Conteúdo', Icon: Sparkles },
+  { id: 'suggestions', label: 'Sugestões', Icon: Lightbulb },
   { id: 'weekly', label: 'Plano Semanal', Icon: Calendar },
   { id: 'prompts', label: 'Prompt Pack', Icon: Palette },
   { id: 'history', label: 'Histórico', Icon: Clock },
@@ -80,7 +82,7 @@ export function ContentGenerator({ item }) {
   const [selectedPersona, setSelectedPersona] = useState('lojista');
   const [selectedObjective, setSelectedObjective] = useState('gerar_demanda');
   const [selectedThemeId, setSelectedThemeId] = useState('coral_parceiro');
-  const [selectedCategory, setSelectedCategory] = useState(LaborDataService.getUniqueCategories()[0]);
+  const [selectedCategory, setSelectedCategory] = useState(GamaDataService.getUniqueCategories()[0]);
 
   const [generatedContent, setGeneratedContent] = useState(null);
   const [weeklyPlan, setWeeklyPlan] = useState(null);
@@ -110,7 +112,7 @@ export function ContentGenerator({ item }) {
     } else {
       if (!item) return null;
       name = item.name || item;
-      category = item.category || LaborDataService.identifyCategory(name);
+      category = item.category || GamaDataService.identifyCategory(name);
       requestMode = 'product';
     }
     return { mode: requestMode, name, category, angle: selectedAngle, persona: selectedPersona, format: selectedFormat, brandContext };
@@ -157,6 +159,45 @@ export function ContentGenerator({ item }) {
   const handleFeedback = useCallback((contentId, value) => {
     if (setFeedback) setFeedback(contentId, value);
   }, [setFeedback]);
+
+  // Quick Image handler
+  const handleQuickImage = useCallback(async () => {
+    const request = buildRequest();
+    if (!request) { toast.error('Selecione um produto ou categoria primeiro'); return; }
+    setIsGenerating(true); setGeneratedContent(null);
+    try {
+      const start = performance.now();
+      const content = await providerRegistry.current.generateQuickImage(request);
+      setGeneratedContent(content); addToHistory(content);
+      toast.success(`Quick Image gerado em ${Math.round(performance.now() - start)}ms`);
+    } catch (err) { toast.error(`Erro: ${err.message}`); }
+    finally { setIsGenerating(false); }
+  }, [buildRequest, addToHistory]);
+
+  // Quick Video handler
+  const handleQuickVideo = useCallback(async () => {
+    const request = buildRequest();
+    if (!request) { toast.error('Selecione um produto ou categoria primeiro'); return; }
+    setIsGenerating(true); setGeneratedContent(null);
+    try {
+      const start = performance.now();
+      const content = await providerRegistry.current.generateQuickVideo(request);
+      setGeneratedContent(content); addToHistory(content);
+      toast.success(`Quick Video gerado em ${Math.round(performance.now() - start)}ms`);
+    } catch (err) { toast.error(`Erro: ${err.message}`); }
+    finally { setIsGenerating(false); }
+  }, [buildRequest, addToHistory]);
+
+  // Navigate from suggestions panel to generate view
+  const handleSuggestionNavigate = useCallback((config) => {
+    if (config.format) setSelectedFormat(config.format);
+    if (config.angle) setSelectedAngle(config.angle);
+    if (config.persona) setSelectedPersona(config.persona);
+    if (config.mode) setMode(config.mode);
+    if (config.category) setSelectedCategory(config.category);
+    setActiveView('generate');
+    toast.info('Configuração aplicada — clique em Gerar Conteúdo');
+  }, []);
 
   return (
     <div className="overflow-y-auto p-4 lg:p-6 bg-surface-bg">
@@ -221,6 +262,9 @@ export function ContentGenerator({ item }) {
       {/* SETTINGS */}
       {activeView === 'settings' && <SettingsPanel />}
 
+      {/* SUGGESTIONS VIEW */}
+      {activeView === 'suggestions' && <SuggestionsPanel onNavigateToGenerate={handleSuggestionNavigate} />}
+
       {/* GENERATE VIEW */}
       {activeView === 'generate' && (
         <div className="fade-in">
@@ -267,7 +311,7 @@ export function ContentGenerator({ item }) {
 
             {mode === 'category_mix' && (
               <select value={selectedCategory} onChange={(e) => setSelectedCategory(e.target.value)} className="w-full h-9 px-3 text-sm border border-border rounded-md bg-surface-card text-text-primary">
-                {LaborDataService.getUniqueCategories().map(c => <option key={c} value={c}>{c}</option>)}
+                {GamaDataService.getUniqueCategories().map(c => <option key={c} value={c}>{c}</option>)}
               </select>
             )}
 
@@ -314,8 +358,32 @@ export function ContentGenerator({ item }) {
             ))}
           </div>
 
+          {/* Quick Content Buttons */}
+          <div className="flex gap-3 mb-3">
+            <Button
+              variant="outline"
+              onClick={handleQuickImage}
+              disabled={isGenerating || ((mode === 'product' || mode === 'brand') && !item)}
+              className="flex-1 h-10"
+            >
+              <Camera size={16} className="mr-2" />
+              Quick Image
+              <span className="text-[10px] text-text-muted ml-2 hidden sm:inline">1 prompt + legenda</span>
+            </Button>
+            <Button
+              variant="outline"
+              onClick={handleQuickVideo}
+              disabled={isGenerating || ((mode === 'product' || mode === 'brand') && !item)}
+              className="flex-1 h-10"
+            >
+              <Video size={16} className="mr-2" />
+              Quick Video
+              <span className="text-[10px] text-text-muted ml-2 hidden sm:inline">1 ideia + 3 prompts</span>
+            </Button>
+          </div>
+
           <Button onClick={handleGenerate} disabled={isGenerating || ((mode === 'product' || mode === 'brand') && !item)} className="w-full h-12 text-base bg-gradient-to-r from-coral to-coral-dark hover:from-coral-light hover:to-coral text-white mb-6 shadow-md">
-            {isGenerating ? <><Loader2 size={18} className="animate-spin mr-2" />Gerando...</> : <><Sparkles size={18} className="mr-2" />Gerar Conteúdo</>}
+            {isGenerating ? <><Loader2 size={18} className="animate-spin mr-2" />Gerando...</> : <><Sparkles size={18} className="mr-2" />Gerar Conteúdo Completo</>}
           </Button>
 
           {generatedContent && !isGenerating && (

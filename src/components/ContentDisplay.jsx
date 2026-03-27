@@ -3,6 +3,7 @@ import { toast } from 'sonner';
 import { copyToClipboard, contentToText, downloadFile } from '../utils/export.js';
 import { generateImage } from '../services/ImagenService.js';
 import { getImageFromContent } from '../services/ProductImageService.js';
+import { QuickImageDisplay, QuickVideoDisplay } from './QuickContentDisplay.jsx';
 import { cn } from '@/lib/utils';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
@@ -108,6 +109,10 @@ export function ContentDisplay({ content, selectedItem, onFeedback }) {
   const [withMascot, setWithMascot] = useState(false);
 
   if (!content) return null;
+
+  // Delegate to quick content displays
+  if (content.type === 'quick_image') return <QuickImageDisplay content={content} />;
+  if (content.type === 'quick_video') return <QuickVideoDisplay content={content} />;
 
   const productImageUrl = selectedItem?.image_url ?? getImageFromContent(content);
   const formatKey = content.format === 'post_estatico' ? 'post_estatico' : content.format === 'banner_site' ? 'banner_site' : content.format;

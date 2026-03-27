@@ -1,12 +1,13 @@
 import React, { useState, useMemo, useCallback } from 'react';
 import { useDebounce } from '../hooks/useDebounce';
 import { BrandService } from '../logic/BrandService';
-import { LaborDataService } from '../logic/LaborDataService';
+import { GamaDataService } from '../logic/GamaDataService';
 import { cn } from '@/lib/utils';
 import { Input } from '@/components/ui/input';
 import { Badge } from '@/components/ui/badge';
 import { ScrollArea } from '@/components/ui/scroll-area';
-import { Search } from 'lucide-react';
+import { Button } from '@/components/ui/button';
+import { Search, ChevronDown } from 'lucide-react';
 
 const TIER_STYLES = {
   premium: 'bg-amber-100 text-amber-800 dark:bg-amber-900/30 dark:text-amber-300',
@@ -15,18 +16,21 @@ const TIER_STYLES = {
 };
 const TIER_LABELS = { premium: 'Premium', mainstream: 'Popular', value: 'Custo-benef.' };
 
+const VISIBLE_LIMIT = 50;
+
 export function ProductSelector({ onSelect, onCategorySelect, onBrandSelect, selectedItem }) {
   const [activeTab, setActiveTab] = useState('brands');
   const [searchTerm, setSearchTerm] = useState('');
   const [brandSearch, setBrandSearch] = useState('');
   const [selectedCategory, setSelectedCategory] = useState('');
+  const [visibleCount, setVisibleCount] = useState(VISIBLE_LIMIT);
 
   const debouncedSearch = useDebounce(searchTerm, 300);
   const debouncedBrandSearch = useDebounce(brandSearch, 200);
 
-  const categories = useMemo(() => LaborDataService.getUniqueCategories(), []);
+  const categories = useMemo(() => GamaDataService.getUniqueCategories(), []);
   const allBrands = useMemo(() => BrandService.getBrands(), []);
-  const allProducts = useMemo(() => LaborDataService.getProducts(), []);
+  const allProducts = useMemo(() => GamaDataService.getProducts(), []);
 
   const filteredBrands = useMemo(() => {
     if (!debouncedBrandSearch) return allBrands;
@@ -37,20 +41,42 @@ export function ProductSelector({ onSelect, onCategorySelect, onBrandSelect, sel
   const filteredProducts = useMemo(() => {
     let prods = allProducts;
     if (selectedCategory) prods = prods.filter(p => p.category === selectedCategory);
-    if (debouncedSearch) { const l = debouncedSearch.toLowerCase(); prods = prods.filter(p => p.name.toLowerCase().includes(l)); }
+    if (debouncedSearch) {
+      const l = debouncedSearch.toLowerCase();
+      prods = prods.filter(p => p.name.toLowerCase().includes(l));
+    }
     return prods;
   }, [allProducts, selectedCategory, debouncedSearch]);
 
+  // Reset visible count when filters change
+  React.useEffect(() => { setVisibleCount(VISIBLE_LIMIT); }, [selectedCategory, debouncedSearch]);
+
+  const visibleProducts = useMemo(
+    () => filteredProducts.slice(0, visibleCount),
+    [filteredProducts, visibleCount]
+  );
+
   const handleBrandClick = useCallback((brand) => {
     if (onBrandSelect) {
-      onBrandSelect({ type: 'brand', name: brand.name, productCount: brand.productCount, categories: brand.categories, isMain: brand.isMain, ...BrandService.getBrandContext(brand.name) });
+      onBrandSelect({
+        type: 'brand',
+        name: brand.name,
+        productCount: brand.productCount,
+        categories: brand.categories,
+        isMain: brand.isMain,
+        ...BrandService.getBrandContext(brand.name),
+      });
     }
   }, [onBrandSelect]);
 
+  const handleShowMore = useCallback(() => {
+    setVisibleCount(prev => prev + VISIBLE_LIMIT);
+  }, []);
+
   const tabs = [
-    { id: 'brands', label: 'Marcas' },
+    { id: 'brands', label: `Marcas (${allBrands.length})` },
     { id: 'categories', label: 'Categorias' },
-    { id: 'products', label: 'Produtos' },
+    { id: 'products', label: `Produtos (${allProducts.length})` },
   ];
 
   return (
@@ -125,16 +151,20 @@ export function ProductSelector({ onSelect, onCategorySelect, onBrandSelect, sel
               onClick={() => onCategorySelect({ type: 'institutional', name: 'Gama Distribuidora' })}
               className="p-4 bg-navy/5 dark:bg-coral/5 border border-navy/20 dark:border-coral/20 rounded-lg cursor-pointer mb-4 hover:bg-navy/10 dark:hover:bg-coral/10 transition-colors"
             >
-              <div className="font-bold text-navy dark:text-coral mb-1">🏢 Institucional (Gama)</div>
+              <div className="font-bold text-navy dark:text-coral mb-1">Institucional (Gama)</div>
               <div className="text-sm text-text-secondary">Programa CL, Reconquista Santos, Parceria Coral</div>
             </div>
             <div className="text-xs font-semibold uppercase tracking-wider text-text-muted mb-3">Categorias de Produto</div>
             <div className="flex flex-col gap-0.5">
-              {categories.map(c => (
-                <div key={c} onClick={() => onCategorySelect({ type: 'category', name: c })} className="px-4 py-3 cursor-pointer hover:bg-muted/50 transition-colors border-b border-border/50 border-l-[3px] border-l-transparent hover:border-l-navy dark:hover:border-l-coral">
-                  <span className="text-sm font-medium text-text-primary">{c}</span>
-                </div>
-              ))}
+              {categories.map(c => {
+                const count = GamaDataService.getProductsByCategory(c).length;
+                return (
+                  <div key={c} onClick={() => onCategorySelect({ type: 'category', name: c })} className="flex items-center justify-between px-4 py-3 cursor-pointer hover:bg-muted/50 transition-colors border-b border-border/50 border-l-[3px] border-l-transparent hover:border-l-navy dark:hover:border-l-coral">
+                    <span className="text-sm font-medium text-text-primary">{c}</span>
+                    <span className="text-xs text-text-muted">{count}</span>
+                  </div>
+                );
+              })}
             </div>
           </div>
         </ScrollArea>
@@ -152,17 +182,30 @@ export function ProductSelector({ onSelect, onCategorySelect, onBrandSelect, sel
               <Input placeholder="Buscar produto..." value={searchTerm} onChange={(e) => setSearchTerm(e.target.value)} className="pl-8 h-8 text-sm" />
             </div>
           </div>
-          <div className="px-4 py-2 text-xs text-text-muted border-b border-border/50">{filteredProducts.length} produtos</div>
+          <div className="px-4 py-2 text-xs text-text-muted border-b border-border/50">
+            {filteredProducts.length} produtos{filteredProducts.length !== allProducts.length && ` (filtrado de ${allProducts.length})`}
+          </div>
           <ScrollArea className="flex-1">
-            {filteredProducts.map((p, i) => {
+            {visibleProducts.map((p, i) => {
               const isSelected = selectedItem?.name === p.name;
               return (
-                <div key={`${p.name}-${i}`} className={cn('px-4 py-3 cursor-pointer transition-colors border-l-[3px] border-b border-border/50', isSelected ? 'bg-navy/[0.06] dark:bg-coral/10 border-l-navy dark:border-l-coral' : 'border-l-transparent hover:bg-muted/50')} onClick={() => onSelect(p)}>
+                <div key={`${p.id}-${i}`} className={cn('px-4 py-3 cursor-pointer transition-colors border-l-[3px] border-b border-border/50', isSelected ? 'bg-navy/[0.06] dark:bg-coral/10 border-l-navy dark:border-l-coral' : 'border-l-transparent hover:bg-muted/50')} onClick={() => onSelect(p)}>
                   <div className="text-sm font-semibold text-text-primary">{p.name}</div>
-                  <div className="text-xs text-text-muted mt-0.5">{p.category}</div>
+                  <div className="flex items-center gap-2 mt-0.5">
+                    <span className="text-xs text-text-muted">{p.category}</span>
+                    {p.brand && <Badge variant="outline" className="text-[10px] h-4 px-1">{p.brand}</Badge>}
+                  </div>
                 </div>
               );
             })}
+            {visibleCount < filteredProducts.length && (
+              <div className="p-4 text-center">
+                <Button variant="outline" size="sm" onClick={handleShowMore} className="text-xs">
+                  <ChevronDown size={14} className="mr-1" />
+                  Mostrar mais ({filteredProducts.length - visibleCount} restantes)
+                </Button>
+              </div>
+            )}
           </ScrollArea>
         </>
       )}

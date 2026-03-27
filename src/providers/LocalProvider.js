@@ -505,4 +505,49 @@ export class LocalProvider extends ContentProviderInterface {
       caption: '',
     };
   }
+
+  async generateQuickImage(request) {
+    const { name, category, angle, persona } = request;
+    const uid = Date.now().toString(36) + Math.random().toString(36).slice(2, 8);
+    return {
+      id: uid,
+      type: 'quick_image',
+      format: 'quick_image',
+      title: `Quick Image: ${name}`,
+      product: name,
+      image_prompt: `Fotografia profissional de ${name} (categoria ${category}) em ambiente de loja de tintas. Fundo gradiente azul marinho (#1E3A5F) para laranja coral (#E85D3B). Logo Gama Distribuidora no canto. Estilo B2B profissional, iluminação de estúdio, alta qualidade.`,
+      caption: `${name} disponível na Gama Distribuidora. Fale com nosso consultor!`,
+      hashtags: '#GamaDistribuidora #DistribuidorCoral #Tintas #B2B',
+      format_hint: 'stories',
+      angle,
+      persona,
+      generatedAt: Date.now(),
+      provider: this.name,
+    };
+  }
+
+  async generateQuickVideo(request) {
+    const { name, category, angle, persona } = request;
+    const uid = Date.now().toString(36) + Math.random().toString(36).slice(2, 8);
+    return {
+      id: uid,
+      type: 'quick_video',
+      format: 'quick_video',
+      title: `Quick Video: ${name}`,
+      product: name,
+      video_idea: `Vídeo rápido mostrando ${name} em uso profissional. Pintor aplicando o produto com resultado antes/depois. CTA para WhatsApp da Gama.`,
+      visual_prompts: [
+        `Cena 1: Close-up de ${name} sendo aberto/preparado. Ambiente de obra profissional. Cores azul marinho e laranja coral na identidade visual.`,
+        `Cena 2: Aplicação do produto por pintor profissional. Movimento fluido, textura sendo revelada. Ângulo que mostra técnica.`,
+        `Cena 3: Resultado final com logo Gama Distribuidora. Texto "Fale com nosso consultor" e QR code WhatsApp. Fundo azul marinho.`,
+      ],
+      duration_hint: '15s',
+      format_hint: 'reels',
+      caption: `${name} na Gama Distribuidora. 20+ anos como distribuidor oficial Coral!`,
+      angle,
+      persona,
+      generatedAt: Date.now(),
+      provider: this.name,
+    };
+  }
 }

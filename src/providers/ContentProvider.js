@@ -65,4 +65,22 @@ export class ContentProviderInterface {
   async generatePromptPack(_params) {
     throw new Error(`Provider "${this.name}" deve implementar generatePromptPack()`);
   }
+
+  /**
+   * Gera conteúdo rápido para imagem (1 prompt + legenda)
+   * @param {ContentRequest} request
+   * @returns {Promise<Object>} { type: 'quick_image', image_prompt, caption, hashtags }
+   */
+  async generateQuickImage(_request) {
+    throw new Error(`Provider "${this.name}" deve implementar generateQuickImage()`);
+  }
+
+  /**
+   * Gera conteúdo rápido para vídeo (1 ideia + 3 prompts visuais)
+   * @param {ContentRequest} request
+   * @returns {Promise<Object>} { type: 'quick_video', video_idea, visual_prompts[], caption }
+   */
+  async generateQuickVideo(_request) {
+    throw new Error(`Provider "${this.name}" deve implementar generateQuickVideo()`);
+  }
 }
