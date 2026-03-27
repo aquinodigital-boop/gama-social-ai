@@ -30,27 +30,10 @@ const FORMAT_MAP = {
   mix_completo: ['reels', 'stories', 'carrossel', 'post_estatico', 'banner_site', 'whatsapp'],
 };
 
-// Personas
-const PERSONAS = {
-  dono_loja: {
-    label: 'Dono de Loja',
-    pain: 'perder vendas por falta de estoque',
-    desire: 'lucrar mais com giro rápido',
-    tone: 'direto e objetivo',
-  },
-  balconista: {
-    label: 'Balconista',
-    pain: 'não ter o produto que o cliente pediu',
-    desire: 'atender rápido e bem',
-    tone: 'prático e amigável',
-  },
-  comprador: {
-    label: 'Comprador / Gestor de Compras',
-    pain: 'lidar com vários fornecedores',
-    desire: 'centralizar pedidos com preço bom',
-    tone: 'técnico e confiante',
-  },
-};
+// Personas — pull from BrandBrain
+const PERSONAS = Object.fromEntries(
+  Object.entries(BrandBrain.personas).map(([k, v]) => [k, v])
+);
 
 // Ângulos estratégicos
 const ANGLES = {
@@ -103,16 +86,16 @@ export class LocalProvider extends ContentProviderInterface {
       mode = 'product',
       name,
       category,
-      angle = 'logistics',
-      persona = 'dono_loja',
+      angle = 'parceria_confianca',
+      persona = 'lojista_carteira',
       format = 'reels',
       brandContext,
     } = request;
 
-    const angleData = ANGLES[angle] || ANGLES.logistics;
-    const personaData = PERSONAS[persona] || PERSONAS.dono_loja;
+    const angleData = ANGLES[angle] || ANGLES.parceria_confianca;
+    const personaData = PERSONAS[persona] || PERSONAS.lojista_carteira;
     const catContext = CategoryExpert.get(category);
-    const region = BrandBrain.regionalContext.region;
+    const region = BrandBrain.getRegionLabel('baixada_santista');
     const isBrand = mode === 'brand';
     const hook = isBrand
       ? pick(this._brandHooks(name, brandContext))
@@ -175,8 +158,8 @@ export class LocalProvider extends ContentProviderInterface {
       objective = 'gerar_demanda',
       category,
       name,
-      angle = 'logistics',
-      persona = 'dono_loja',
+      angle = 'parceria_confianca',
+      persona = 'lojista_carteira',
       mode = 'product',
     } = params;
 

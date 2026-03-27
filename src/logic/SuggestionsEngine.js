@@ -6,9 +6,9 @@
 import { GamaDataService } from './GamaDataService.js';
 import { getCurrentSeason, getUpcomingHolidays } from '../utils/seasonalData.js';
 
-const FORMATS = ['reels', 'carrossel', 'stories', 'post_estatico', 'banner_site', 'whatsapp'];
-const ANGLES = ['coral_expertise', 'profit', 'reconquista', 'partnership', 'technical'];
-const PERSONAS = ['pintor_profissional', 'lojista', 'engenheiro_arquiteto'];
+const FORMATS = ['reels', 'carrossel', 'stories', 'post_estatico'];
+const ANGLES = ['parceria_confianca', 'bastidores_operacao', 'case_lojista', 'produto_margem', 'reconquista_santos', 'programa_cl'];
+const PERSONAS = ['lojista_carteira', 'lojista_prospeccao', 'balconista'];
 
 const WEEKDAYS = ['Segunda', 'Terça', 'Quarta', 'Quinta', 'Sexta', 'Sábado', 'Domingo'];
 
