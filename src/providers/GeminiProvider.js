@@ -127,6 +127,7 @@ export class GeminiProvider extends ContentProviderInterface {
   constructor(apiKey) {
     super('Gemini AI');
     this.apiKey = apiKey || import.meta.env.VITE_GEMINI_API_KEY || '';
+    this.proxyUrl = import.meta.env.VITE_GEMINI_PROXY_URL || '';
     this.model = DEFAULT_GEMINI_MODEL;
   }
 
@@ -135,45 +136,69 @@ export class GeminiProvider extends ContentProviderInterface {
     if (valid) this.model = modelId;
   }
 
-  async generate(request) {
-    if (!this.apiKey) throw new Error('API Key do Gemini não configurada. Vá em Configurações para inserir sua chave.');
-
-    const url = `https://generativelanguage.googleapis.com/v1beta/models/${this.model}:generateContent?key=${this.apiKey}`;
-    const response = await fetch(url, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        system_instruction: { parts: [{ text: buildSystemPrompt() }] },
-        contents: [{ parts: [{ text: buildUserPrompt(request) }] }],
-        generationConfig: { temperature: 0.85, maxOutputTokens: 4096, responseMimeType: 'application/json' },
-      }),
-    });
-
-    if (!response.ok) {
-      const errorData = await response.json().catch(() => ({}));
-      throw new Error(`Gemini API: ${errorData?.error?.message || `HTTP ${response.status}`}`);
+  /**
+   * Chama Gemini — via chave direta (dev/power-user) ou via proxy serverless (produção).
+   * Prioridade: chave local do usuário > proxy configurado > erro.
+   * Mantém a chave fora do bundle quando o deploy usa `VITE_GEMINI_PROXY_URL=/api/gemini`.
+   */
+  async _request(payload) {
+    if (this.apiKey) {
+      const url = `https://generativelanguage.googleapis.com/v1beta/models/${this.model}:generateContent?key=${this.apiKey}`;
+      const response = await fetch(url, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload),
+      });
+      if (!response.ok) {
+        const errorData = await response.json().catch(() => ({}));
+        throw new Error(`Gemini API: ${errorData?.error?.message || `HTTP ${response.status}`}`);
+      }
+      return response.json();
     }
 
-    const data = await response.json();
-    // Gemini 2.5 models may return thinking parts — find the actual text part
+    if (this.proxyUrl) {
+      const response = await fetch(this.proxyUrl, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ model: this.model, payload }),
+      });
+      if (!response.ok) {
+        const errorData = await response.json().catch(() => ({}));
+        throw new Error(`Gemini proxy: ${errorData?.error || `HTTP ${response.status}`}`);
+      }
+      return response.json();
+    }
+
+    throw new Error('API Key do Gemini não configurada. Vá em Configurações para inserir sua chave.');
+  }
+
+  /** Extrai texto da resposta do Gemini 2.5 (ignora thinking parts) e parseia JSON tolerante. */
+  _parseJsonResponse(data) {
     const parts = data?.candidates?.[0]?.content?.parts || [];
     const textPart = parts.filter(p => !p.thought).pop();
     const rawText = textPart?.text;
     if (!rawText) throw new Error('Gemini retornou resposta vazia.');
 
-    let content;
     try {
-      content = JSON.parse(rawText);
+      return JSON.parse(rawText);
     } catch {
-      // Clean common JSON issues from LLM output
-      let cleaned = rawText
-        .replace(/^```json\s*/i, '').replace(/```\s*$/i, '')  // markdown blocks
-        .replace(/\/\/[^\n]*/g, '')                            // single-line comments
-        .replace(/\/\*[\s\S]*?\*\//g, '')                      // multi-line comments
-        .replace(/,\s*([}\]])/g, '$1')                         // trailing commas
+      const cleaned = rawText
+        .replace(/^```json\s*/i, '').replace(/```\s*$/i, '')
+        .replace(/\/\/[^\n]*/g, '')
+        .replace(/\/\*[\s\S]*?\*\//g, '')
+        .replace(/,\s*([}\]])/g, '$1')
         .trim();
-      content = JSON.parse(cleaned);
+      return JSON.parse(cleaned);
     }
+  }
+
+  async generate(request) {
+    const data = await this._request({
+      system_instruction: { parts: [{ text: buildSystemPrompt() }] },
+      contents: [{ parts: [{ text: buildUserPrompt(request) }] }],
+      generationConfig: { temperature: 0.85, maxOutputTokens: 4096, responseMimeType: 'application/json' },
+    });
+    const content = this._parseJsonResponse(data);
 
     const catContext = CategoryExpert.get(request.category);
     const promptPack = PromptGenerator.generate({ name: request.name, category: request.category, format: request.format, catContext });
@@ -207,43 +232,14 @@ export class GeminiProvider extends ContentProviderInterface {
     return PromptGenerator.generateFull(params);
   }
 
-  /** Helper: call Gemini API and parse JSON response */
+  /** Helper: call Gemini API (direct or via proxy) and parse JSON response. */
   async _callGemini(userPrompt, { temperature = 0.85, maxOutputTokens = 4096 } = {}) {
-    if (!this.apiKey) throw new Error('API Key do Gemini não configurada. Vá em Configurações para inserir sua chave.');
-
-    const url = `https://generativelanguage.googleapis.com/v1beta/models/${this.model}:generateContent?key=${this.apiKey}`;
-    const response = await fetch(url, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        system_instruction: { parts: [{ text: buildSystemPrompt() }] },
-        contents: [{ parts: [{ text: userPrompt }] }],
-        generationConfig: { temperature, maxOutputTokens, responseMimeType: 'application/json' },
-      }),
+    const data = await this._request({
+      system_instruction: { parts: [{ text: buildSystemPrompt() }] },
+      contents: [{ parts: [{ text: userPrompt }] }],
+      generationConfig: { temperature, maxOutputTokens, responseMimeType: 'application/json' },
     });
-
-    if (!response.ok) {
-      const errorData = await response.json().catch(() => ({}));
-      throw new Error(`Gemini API: ${errorData?.error?.message || `HTTP ${response.status}`}`);
-    }
-
-    const data = await response.json();
-    const parts = data?.candidates?.[0]?.content?.parts || [];
-    const textPart = parts.filter(p => !p.thought).pop();
-    const rawText = textPart?.text;
-    if (!rawText) throw new Error('Gemini retornou resposta vazia.');
-
-    try {
-      return JSON.parse(rawText);
-    } catch {
-      let cleaned = rawText
-        .replace(/^```json\s*/i, '').replace(/```\s*$/i, '')
-        .replace(/\/\/[^\n]*/g, '')
-        .replace(/\/\*[\s\S]*?\*\//g, '')
-        .replace(/,\s*([}\]])/g, '$1')
-        .trim();
-      return JSON.parse(cleaned);
-    }
+    return this._parseJsonResponse(data);
   }
 
   async generateQuickImage(request) {

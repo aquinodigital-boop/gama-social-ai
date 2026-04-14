@@ -43,3 +43,19 @@ npm run build
 
 ## Deploy
 Deploy automatico via Vercel conectado ao GitHub.
+
+### Modos de autenticação da API Gemini/Imagen
+
+O app suporta dois modos, escolhidos por variáveis de ambiente:
+
+**1. Chave client-side** (dev local / cada usuário configura a própria)
+- `VITE_GEMINI_API_KEY` — vai para o bundle do navegador.
+- Uso recomendado: desenvolvimento e cenários onde cada consultor usa a própria chave via tela de Configurações.
+
+**2. Proxy serverless** (produção recomendado — chave fora do bundle)
+- Setar no projeto Vercel:
+  - `GEMINI_API_KEY` (server-side, **sem** prefixo `VITE_`)
+  - `VITE_GEMINI_PROXY_URL=/api/gemini`
+  - `VITE_IMAGEN_PROXY_URL=/api/imagen`
+- `api/gemini.js` e `api/imagen.js` são serverless functions que proxiam a Google AI mantendo a chave no servidor.
+- Se o usuário informar chave própria no painel de Configurações, o app usa essa chave direto e ignora o proxy.
