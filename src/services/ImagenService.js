@@ -26,6 +26,8 @@ const ASPECT_RATIOS = {
   whatsapp: '1:1',
 };
 
+const PROXY_URL = import.meta.env.VITE_IMAGEN_PROXY_URL || '';
+
 export async function generateImage({
   prompt,
   model = 'flash',
@@ -36,8 +38,8 @@ export async function generateImage({
   content = null,
 }) {
   const key = apiKey || getGeminiApiKey();
-  if (!key) {
-    throw new Error('API Key do Gemini não configurada. Configure VITE_GEMINI_API_KEY.');
+  if (!key && !PROXY_URL) {
+    throw new Error('API Key do Gemini não configurada. Configure VITE_GEMINI_API_KEY ou VITE_IMAGEN_PROXY_URL.');
   }
 
   // Enriquece o prompt com identidade Gama (logo, produto real, embalagem, mascote)
@@ -51,9 +53,7 @@ export async function generateImage({
   const modelId = MODELS[model] || MODELS.flash;
   const aspectRatio = ASPECT_RATIOS[format] || '1:1';
 
-  const url = `https://generativelanguage.googleapis.com/v1beta/models/${modelId}:predict?key=${key}`;
-
-  const body = {
+  const payload = {
     instances: [{ prompt: enhancedPrompt }],
     parameters: {
       sampleCount: 1,
@@ -62,15 +62,26 @@ export async function generateImage({
     },
   };
 
-  const response = await fetch(url, {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify(body),
-  });
+  // Prioridade: chave local (dev/power-user) > proxy serverless (produção).
+  let response;
+  if (key) {
+    const url = `https://generativelanguage.googleapis.com/v1beta/models/${modelId}:predict?key=${key}`;
+    response = await fetch(url, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload),
+    });
+  } else {
+    response = await fetch(PROXY_URL, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ model: modelId, payload }),
+    });
+  }
 
   if (!response.ok) {
     const errData = await response.json().catch(() => ({}));
-    const msg = errData?.error?.message || `HTTP ${response.status}`;
+    const msg = errData?.error?.message || errData?.error || `HTTP ${response.status}`;
     throw new Error(`Imagen API: ${msg}`);
   }
 
