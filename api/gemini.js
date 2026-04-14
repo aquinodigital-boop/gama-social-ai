@@ -19,18 +19,59 @@ const ALLOWED_MODELS = new Set([
 
 const GEMINI_BASE = 'https://generativelanguage.googleapis.com/v1beta/models';
 
+const DEV_ORIGINS = [
+  'http://localhost:5173',
+  'http://localhost:3000',
+  'http://127.0.0.1:5173',
+];
+
+/**
+ * Retorna a origem permitida para este request, ou null se bloqueada.
+ * Regra: same-origin (mesmo host) + allowlist via `ALLOWED_ORIGINS` (CSV)
+ * + localhost em dev. Rejeita requests sem Origin (browsers sempre enviam em POST
+ * cross-origin e our app).
+ */
+function resolveAllowedOrigin(req) {
+  const origin = req.headers.origin || '';
+  if (!origin) return null;
+
+  const envAllowed = (process.env.ALLOWED_ORIGINS || '')
+    .split(',')
+    .map(s => s.trim())
+    .filter(Boolean);
+
+  const host = req.headers.host || '';
+  const sameOrigin = host ? [`https://${host}`, `http://${host}`] : [];
+
+  const allowed = new Set([
+    ...envAllowed,
+    ...sameOrigin,
+    ...(process.env.NODE_ENV !== 'production' ? DEV_ORIGINS : []),
+  ]);
+
+  return allowed.has(origin) ? origin : null;
+}
+
 export default async function handler(req, res) {
-  // CORS básico — mesmo origin em produção, mas libera preflight.
-  res.setHeader('Access-Control-Allow-Origin', '*');
+  const allowedOrigin = resolveAllowedOrigin(req);
+
+  if (allowedOrigin) {
+    res.setHeader('Access-Control-Allow-Origin', allowedOrigin);
+    res.setHeader('Vary', 'Origin');
+  }
   res.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS');
   res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
 
   if (req.method === 'OPTIONS') {
-    return res.status(204).end();
+    return res.status(allowedOrigin ? 204 : 403).end();
   }
 
   if (req.method !== 'POST') {
     return res.status(405).json({ error: 'Método não permitido. Use POST.' });
+  }
+
+  if (!allowedOrigin) {
+    return res.status(403).json({ error: 'Origem não permitida.' });
   }
 
   const apiKey = process.env.GEMINI_API_KEY;

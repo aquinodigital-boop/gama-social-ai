@@ -15,13 +15,48 @@ const ALLOWED_MODELS = new Set([
 
 const GEMINI_BASE = 'https://generativelanguage.googleapis.com/v1beta/models';
 
+const MAX_INSTANCES = 2;
+
+const DEV_ORIGINS = [
+  'http://localhost:5173',
+  'http://localhost:3000',
+  'http://127.0.0.1:5173',
+];
+
+function resolveAllowedOrigin(req) {
+  const origin = req.headers.origin || '';
+  if (!origin) return null;
+
+  const envAllowed = (process.env.ALLOWED_ORIGINS || '')
+    .split(',')
+    .map(s => s.trim())
+    .filter(Boolean);
+
+  const host = req.headers.host || '';
+  const sameOrigin = host ? [`https://${host}`, `http://${host}`] : [];
+
+  const allowed = new Set([
+    ...envAllowed,
+    ...sameOrigin,
+    ...(process.env.NODE_ENV !== 'production' ? DEV_ORIGINS : []),
+  ]);
+
+  return allowed.has(origin) ? origin : null;
+}
+
 export default async function handler(req, res) {
-  res.setHeader('Access-Control-Allow-Origin', '*');
+  const allowedOrigin = resolveAllowedOrigin(req);
+
+  if (allowedOrigin) {
+    res.setHeader('Access-Control-Allow-Origin', allowedOrigin);
+    res.setHeader('Vary', 'Origin');
+  }
   res.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS');
   res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
 
-  if (req.method === 'OPTIONS') return res.status(204).end();
+  if (req.method === 'OPTIONS') return res.status(allowedOrigin ? 204 : 403).end();
   if (req.method !== 'POST') return res.status(405).json({ error: 'Método não permitido. Use POST.' });
+  if (!allowedOrigin) return res.status(403).json({ error: 'Origem não permitida.' });
 
   const apiKey = process.env.GEMINI_API_KEY;
   if (!apiKey) {
@@ -40,11 +75,17 @@ export default async function handler(req, res) {
       error: `Modelo inválido. Aceitos: ${[...ALLOWED_MODELS].join(', ')}.`,
     });
   }
-  if (!payload || !Array.isArray(payload.instances)) {
-    return res.status(400).json({ error: 'Campo `payload.instances` ausente.' });
+  if (!payload || !Array.isArray(payload.instances) || payload.instances.length === 0) {
+    return res.status(400).json({ error: 'Campo `payload.instances` ausente ou vazio.' });
   }
 
-  // Hardening: limitar sampleCount pra evitar abuso.
+  // Hardening: tanto `instances.length` quanto `sampleCount` multiplicam o custo.
+  // Limitamos os dois para conter fan-out malicioso ou acidental.
+  if (payload.instances.length > MAX_INSTANCES) {
+    return res.status(400).json({
+      error: `Máximo de ${MAX_INSTANCES} instances por request.`,
+    });
+  }
   if (payload.parameters?.sampleCount && payload.parameters.sampleCount > 4) {
     payload.parameters.sampleCount = 4;
   }

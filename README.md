@@ -57,5 +57,7 @@ O app suporta dois modos, escolhidos por variáveis de ambiente:
   - `GEMINI_API_KEY` (server-side, **sem** prefixo `VITE_`)
   - `VITE_GEMINI_PROXY_URL=/api/gemini`
   - `VITE_IMAGEN_PROXY_URL=/api/imagen`
+  - `ALLOWED_ORIGINS` (opcional, CSV) — lista de origens externas que podem chamar o proxy. Por padrão o proxy só aceita same-origin (mesmo host) e `localhost` em dev.
 - `api/gemini.js` e `api/imagen.js` são serverless functions que proxiam a Google AI mantendo a chave no servidor.
+- Proteções dos proxies: allowlist de modelos, origin check (same-origin + `ALLOWED_ORIGINS`), teto de `maxOutputTokens=8192`, teto de `sampleCount=4` e teto de `instances[]=2` no Imagen, sanitização de mensagens de erro.
 - Se o usuário informar chave própria no painel de Configurações, o app usa essa chave direto e ignora o proxy.
