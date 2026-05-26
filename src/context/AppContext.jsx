@@ -15,13 +15,13 @@ const STORAGE_KEYS = {
   productConfig: 'gama_product_config',
 };
 
-const DEFAULT_TEAM_DATA = { consultorName: '', phone: '', region: 'baixada_santista' };
+const DEFAULT_TEAM_DATA = { consultorName: '', phone: '', region: 'grande_sp' };
 const DEFAULT_COMPETITORS = ['Suvinil', 'Lukscolor'];
-const DEFAULT_CAMPAIGNS = ['reconquista'];
+const DEFAULT_CAMPAIGNS = ['programa_cl'];
 const DEFAULT_PRODUCT_CONFIG = {
   marginFilter: 'todas',      // 'todas' | 'alta' | 'media' | 'baixa'
   seasonalOnly: false,
-  strategicFilter: 'todos',   // 'todos' | 'reconquista' | 'programa_cl'
+  strategicFilter: 'todos',   // 'todos' | 'programa_cl' | 'parceria_confianca'
 };
 
 function loadJSON(key, fallback) {
@@ -48,7 +48,7 @@ export function AppProvider({ children }) {
     () => localStorage.getItem(STORAGE_KEYS.activeModule) || 'trade'
   );
   const [region, setRegionState] = useState(
-    () => localStorage.getItem(STORAGE_KEYS.region) || 'baixada_santista'
+    () => localStorage.getItem(STORAGE_KEYS.region) || 'grande_sp'
   );
   const [activeCampaigns, setActiveCampaignsState] = useState(
     () => loadJSON(STORAGE_KEYS.activeCampaigns, DEFAULT_CAMPAIGNS)
@@ -143,13 +143,15 @@ export function useAppContext() {
   return ctx;
 }
 
+// Áreas de atuação Gama — APENAS Grande SP (regra HARD).
 export const REGIONS = [
-  { id: 'baixada_santista', label: 'Baixada Santista', cities: ['Santos', 'São Vicente', 'Guarujá', 'Cubatão', 'Praia Grande'] },
-  { id: 'grande_sp', label: 'Grande São Paulo', cities: ['São Paulo', 'Guarulhos', 'Osasco'] },
-  { id: 'abc', label: 'ABC Paulista', cities: ['São Bernardo', 'Santo André', 'São Caetano', 'Diadema'] },
+  { id: 'grande_sp', label: 'Grande São Paulo', cities: ['São Paulo', 'Guarulhos', 'Osasco', 'Barueri', 'Cotia', 'Taboão da Serra'] },
+  { id: 'abc', label: 'ABC Paulista', cities: ['São Bernardo', 'Santo André', 'São Caetano', 'Diadema', 'Mauá'] },
+  { id: 'zona_oeste', label: 'Zona Oeste / Alphaville', cities: ['Alphaville', 'Barueri', 'Osasco', 'Carapicuíba'] },
 ];
 
 export const CAMPAIGNS = [
-  { id: 'reconquista', label: 'Projeto Reconquista Santos', description: 'Retomada de market share vs Suvinil na Baixada Santista' },
-  { id: 'programa_cl', label: 'Programa CL', description: 'Programa de fidelização e transformação de fachada' },
+  { id: 'programa_cl', label: 'Programa CL', description: 'Programa de fidelização e transformação de fachada do lojista parceiro Coral' },
+  { id: 'parceria_confianca', label: 'Parceria & Confiança 20 anos', description: 'Histórico de relacionamento humano e suporte técnico contínuo' },
+  { id: 'expertise_coral', label: 'Expertise Coral', description: 'Posicionamento como distribuidor OFICIAL Coral com domínio técnico das linhas' },
 ];

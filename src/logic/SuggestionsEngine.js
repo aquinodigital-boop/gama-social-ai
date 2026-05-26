@@ -7,7 +7,7 @@ import { GamaDataService } from './GamaDataService.js';
 import { getCurrentSeason, getUpcomingHolidays } from '../utils/seasonalData.js';
 
 const FORMATS = ['reels', 'carrossel', 'stories', 'post_estatico'];
-const ANGLES = ['parceria_confianca', 'bastidores_operacao', 'case_lojista', 'produto_margem', 'reconquista_santos', 'programa_cl'];
+const ANGLES = ['parceria_confianca', 'bastidores_operacao', 'case_lojista', 'produto_margem', 'expertise_coral', 'programa_cl'];
 const PERSONAS = ['lojista_carteira', 'lojista_prospeccao', 'balconista'];
 
 const WEEKDAYS = ['Segunda', 'Terça', 'Quarta', 'Quinta', 'Sexta', 'Sábado', 'Domingo'];
@@ -231,12 +231,12 @@ export const SuggestionsEngine = {
     const seed = todaySeed();
 
     const templates = [
-      { text: `Você sabia? ${seededPick(season.highlights, seed)} é essencial no ${season.name.toLowerCase()} do litoral paulista.`, format: 'stories', persona: 'lojista' },
+      { text: `Você sabia? ${seededPick(season.highlights, seed)} é essencial no ${season.name.toLowerCase()} na Grande SP.`, format: 'stories', persona: 'lojista' },
       { text: `3 produtos ${seededPick(brands, seed).name} que não podem faltar no seu estoque`, format: 'carrossel', persona: 'lojista' },
       { text: `Tutorial rápido: como aplicar ${seededPick(categories, seed + 1)} corretamente`, format: 'reels', persona: 'pintor_profissional' },
       { text: `Antes e depois: transformação com ${seededPick(categories, seed + 2)}`, format: 'reels', persona: 'pintor_profissional' },
       { text: `Dica do consultor Gama: quando usar ${seededPick(categories, seed + 3)} vs ${seededPick(categories, seed + 4)}?`, format: 'carrossel', persona: 'engenheiro_arquiteto' },
-      { text: `Por que a Gama é o distribuidor oficial Coral #1 da Baixada Santista?`, format: 'post_estatico', persona: 'lojista' },
+      { text: `Por que escolher um distribuidor OFICIAL Coral pra abastecer sua loja na Grande SP?`, format: 'post_estatico', persona: 'lojista' },
       { text: `Top 5 ${seededPick(categories, seed + 5)} mais vendidos este mês`, format: 'stories', persona: 'lojista' },
       { text: `Como aumentar a margem da sua loja com ${seededPick(brands, seed + 1).name}`, format: 'carrossel', persona: 'lojista' },
     ];

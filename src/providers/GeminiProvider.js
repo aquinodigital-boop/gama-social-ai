@@ -21,7 +21,7 @@ const FORMAT_LABELS = {
   carrossel: 'Carrossel Instagram (5 slides quadrados)',
   stories: 'Stories Instagram (3-5 telas verticais)',
   post_estatico: 'Post estático para feed (imagem única)',
-  banner_site: 'Banner para site (1200x400 desktop)',
+  banner_site: 'Banner para site Gama (1920x400 desktop + 600x400 mobile, sem CTA pill amarelo)',
   whatsapp: 'Mensagens WhatsApp B2B (abertura, proposta, follow-up, reativação)',
 };
 
@@ -32,38 +32,57 @@ const PERSONA_LABELS = {
 };
 
 const ANGLE_LABELS = {
-  coral_expertise: 'Expertise Coral — distribuidor oficial, conhecimento técnico das linhas',
+  coral_expertise: 'Expertise Coral — distribuidor OFICIAL Coral, conhecimento técnico das linhas',
   profit: 'Margem & Resultado — rentabilidade, giro de estoque, competitividade',
-  reconquista: 'Projeto Reconquista Santos — retomada de mercado na Baixada Santista vs. Suvinil',
+  parceria_confianca: 'Parceria & Confiança — 20 anos de história, consultor dedicado, relação humana',
   partnership: 'Parceria & Programa CL — sistema de níveis, transformação de fachada',
   technical: 'Suporte Técnico — consultoria de aplicação, menos retrabalho',
+  bastidores_operacao: 'Bastidores da Operação — logística Grande SP, estoque, time Gama em ação',
+  case_lojista: 'Case de Lojista — depoimento e resultado real de parceiro Gama',
+  produto_margem: 'Produto & Margem — giro rápido, produto que vende e dá lucro',
+  expertise_coral: 'Expertise Coral — distribuidor OFICIAL Coral, dominio técnico das linhas',
+  programa_cl: 'Programa CL — sistema de níveis e investimento na fachada do lojista',
 };
 
 function buildSystemPrompt() {
-  return `Você é o estrategista de conteúdo da Gama Distribuidora — distribuidora oficial Coral/AkzoNobel com 20+ anos de mercado, atuando na Grande São Paulo e Baixada Santista.
+  return `Você é o estrategista de conteúdo da Gama Distribuidora — distribuidora oficial Coral/AkzoNobel com 20+ anos de mercado, atuando exclusivamente na GRANDE SÃO PAULO (capital + região metropolitana + ABC).
 
-PÚBLICOS-ALVO: pintores profissionais, donos de lojas de tintas e materiais de construção, engenheiros e arquitetos.
+PÚBLICOS-ALVO B2B: donos de lojas de tintas e materiais de construção, balconistas, pintores profissionais, engenheiros e arquitetos especificadores.
 
 CONTEXTO ESTRATÉGICO ATUAL:
-- Projeto Reconquista Santos: campanha de retomada de market share em Santos frente à Suvinil
-- Programa CL: sistema de níveis para lojistas — quanto mais o lojista investe no mix Coral (Tinting, Sparlack, Mactra), mais a Gama investe na loja dele (fachada, comunicação visual)
-- Marcas distribuídas: Coral (carro-chefe), Tigre, Henkel, Tramontina, Norton
+- Programa CL: sistema de níveis para lojistas — quanto mais o lojista investe no mix Coral (Tinting, Sparlack, Mactra), mais a Gama investe na loja dele (fachada, comunicação visual, material de PDV)
+- Parceria 20+ anos: histórico de relacionamento humano, consultor dedicado, atendimento próximo
+- Logística Grande SP: estoque reposto, entrega ágil para a região metropolitana
+- Marcas distribuídas: Coral (carro-chefe + ÚNICA marca pela qual somos distribuidor OFICIAL), Tigre, Henkel, Tramontina, Norton (parceiras)
 - Linhas Coral: Coralar, Decora, Proteção Sol & Chuva, Rende Muito, Pinta Piso, Tinting, Sparlack, Mactra
 
-REGRAS OBRIGATÓRIAS:
-1. Tom: técnico, confiável, parceiro, direto. NUNCA use tom de loja de varejo para consumidor final.
-2. NUNCA invente números específicos (preços, percentuais, prazos exatos).
-3. NUNCA use: "linha completa", "mix completo", "todo o portfólio", "todas as opções".
-4. Prefira: "linhas que trabalhamos", "produtos que recomendamos", "soluções que temos disponíveis".
-5. CTAs: WhatsApp, tabela de preços, consultor Gama, Programa CL, visita técnica.
-6. Mencione a região de forma natural (Baixada Santista, Santos, Grande SP).
-7. Use emojis com moderação (máx 3-4).
-8. Hashtags: #GamaDistribuidora #DistribuidorCoral + categoria/marca/região.
-9. Diferencial sempre presente: distribuidor OFICIAL Coral, 20 anos de história, suporte técnico.
-10. Para conteúdo sobre Santos: reforçar Projeto Reconquista, relacionamento com lojistas locais.
+🚨 REGRAS HARD (INVIOLÁVEIS — quebrar invalida a saída):
+
+1. ÁREA DE ATUAÇÃO: APENAS Grande São Paulo. NUNCA cite "Santos", "Baixada Santista", "litoral", "São Vicente", "Guarujá", "Cubatão", "Praia Grande". Se o usuário pedir conteúdo regional, use "Grande SP", "Capital", "ABC Paulista", "Zona Oeste", "Alphaville".
+
+2. DISTRIBUIDOR OFICIAL: o selo "Distribuidor Oficial" / "distribuidor oficial" pertence APENAS à Coral. Tigre, Tramontina, Norton, Henkel, Cascola etc são "parceiros" ou "marcas que trabalhamos" — NUNCA "oficiais".
+
+3. VIAPOL: nunca mencionar Viapol em peça da Gama (essa marca vendia-se apenas pela Labor, que foi encerrada).
+
+4. SEM CLAIMS INVENTADOS: NUNCA invente números específicos (preços, percentuais, prazos exatos), rankings ("líder", "maior"), volumes ("500 lojistas", "+10000 entregas"). Sem fonte verificável, não escreva.
+
+5. B2B SEMPRE: nunca posicione a Gama como varejo / consumidor final. Linguagem: "lojista", "revenda", "obra", "balcão". Proibido: "você que vai pintar sua casa", "transforme sua sala".
+
+6. PROIBIDO: "linha completa", "mix completo", "todo o portfólio", "todas as opções". Prefira: "linhas que trabalhamos", "produtos que recomendamos", "soluções que temos disponíveis".
+
+7. BANNER SITE GAMA: formato 1920x400 desktop OU 600x400 mobile, SEM CTA pill amarelo no banner (apenas título + subtítulo).
+
+8. TOM: técnico, confiável, parceiro, direto. Sem floreio, sem exclamação dupla, sem caps de impacto.
+
+REGRAS SOFT (recomendadas):
+- CTAs: WhatsApp, tabela de preços, consultor Gama, Programa CL, visita técnica.
+- Mencione a região naturalmente (Grande SP, ABC, Zona Oeste).
+- Use emojis com moderação (máx 3-4).
+- Hashtags: #GamaDistribuidora #DistribuidorCoral + categoria/marca/região.
+- Diferencial sempre presente: distribuidor OFICIAL Coral, 20 anos de história, suporte técnico, logística Grande SP.
 
 IDENTIDADE VISUAL DA GAMA:
-- Cores: Azul marinho (#1E3A5F), Laranja coral (#E85D3B), Rosa coral claro (#F4A68C)
+- Cores: Azul marinho (#1E3A5F), Laranja coral (#E85D3B), Amarelo Gama (#FFB800 — usar com parcimônia, NUNCA como CTA no banner)
 - Estética: profissional B2B, industrial sofisticada, não é "loja de bairro"
 
 IDIOMA OBRIGATÓRIO:
@@ -100,7 +119,7 @@ function buildUserPrompt(request) {
   } else if (format === 'post_estatico') {
     jsonStructure = `{"title":"string","type":"Post Estático (Feed)","strategy_focus":"string","persona_target":"string","layout":{"headline":"string","subheadline":"string","bodyText":"string","cta":"string","hashtags":"string"},"assets":{"narration_text":"string","image_prompts":["string","string"],"video_prompts":[]},"caption":"string"}`;
   } else if (format === 'banner_site') {
-    jsonStructure = `{"title":"string","type":"Banner de Site","strategy_focus":"string","persona_target":"string","bannerSpecs":{"dimensions":"1200x400px","headline":"string","subheadline":"string","cta_button":"string","cta_link":"Fale pelo WhatsApp"},"assets":{"narration_text":"string","image_prompts":["string"],"video_prompts":[]},"caption":""}`;
+    jsonStructure = `{"title":"string","type":"Banner de Site Gama","strategy_focus":"string","persona_target":"string","bannerSpecs":{"dimensions_desktop":"1920x400px","dimensions_mobile":"600x400px","headline":"string (max 7 palavras, sem exclamação)","subheadline":"string (max 12 palavras)","cta_observation":"NÃO desenhar CTA pill amarelo sobre o banner — regra HARD Gama"},"assets":{"narration_text":"","image_prompts":["string (prompt para imagem 1920x400 da Gama)","string (prompt para imagem 600x400 mobile)"],"video_prompts":[]},"caption":""}`;
   } else {
     jsonStructure = `{"title":"string","type":"Reels / TikTok","strategy_focus":"string","persona_target":"string","script":[{"time":"0-3s","visual":"string","text":"string","visual_prompt":"string"},{"time":"3-8s","visual":"string","text":"string","visual_prompt":"string"},{"time":"8-13s","visual":"string","text":"string","visual_prompt":"string"},{"time":"13-15s","visual":"string","text":"string","visual_prompt":"string"}],"assets":{"narration_text":"string","image_prompts":["string","string","string"],"video_prompts":["string","string"]},"caption":"string"}`;
   }
@@ -194,7 +213,7 @@ export class GeminiProvider extends ContentProviderInterface {
   async generateWeeklyPlan(params) {
     const DIAS = ['Segunda', 'Terça', 'Quarta', 'Quinta', 'Sexta', 'Sábado', 'Domingo'];
     const formats = ['reels', 'carrossel', 'stories', 'post_estatico', 'banner_site', 'whatsapp', 'reels'];
-    const angles = ['coral_expertise', 'profit', 'partnership', 'reconquista', 'technical'];
+    const angles = ['coral_expertise', 'profit', 'partnership', 'parceria_confianca', 'technical'];
     const plan = [];
     for (let day = 0; day < 7; day++) {
       const content = await this.generate({ ...params, format: formats[day % formats.length], angle: angles[day % angles.length] });

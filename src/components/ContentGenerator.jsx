@@ -28,7 +28,7 @@ const FORMATS = [
 const ANGLES = [
   { id: 'coral_expertise', label: 'Expertise Coral', icon: '🎨' },
   { id: 'profit', label: 'Margem & Resultado', icon: '💰' },
-  { id: 'reconquista', label: 'Reconquista Santos', icon: '🏆' },
+  { id: 'parceria_confianca', label: 'Parceria 20 anos', icon: '🤝' },
   { id: 'partnership', label: 'Programa CL', icon: '⭐' },
   { id: 'technical', label: 'Suporte Técnico', icon: '🔧' },
 ];
@@ -42,7 +42,7 @@ const PERSONAS = [
 const OBJECTIVES = [
   { id: 'gerar_demanda', label: 'Gerar Demanda' },
   { id: 'ativar_whatsapp', label: 'Ativar WhatsApp' },
-  { id: 'reconquista_santos', label: 'Reconquista Santos' },
+  { id: 'expertise_coral', label: 'Expertise Coral' },
   { id: 'programa_cl', label: 'Programa CL' },
 ];
 
@@ -56,7 +56,7 @@ const VIEWS = [
 ];
 
 export function ContentGenerator({ item }) {
-  const { history, addToHistory, removeFromHistory, clearHistory, setFeedback } = useContentHistory();
+  const { history, addToHistory, removeFromHistory, clearHistory, setFeedback, setStatus, getStatusCounts } = useContentHistory();
 
   const [activeProviderId, setActiveProviderId] = useState(providerRegistry.getActiveId());
   const [activeModel, setActiveModel] = useState(providerRegistry.getGeminiModel());
@@ -437,7 +437,15 @@ export function ContentGenerator({ item }) {
       )}
 
       {/* HISTORY VIEW */}
-      {activeView === 'history' && <HistoryPanel history={history} onRemove={removeFromHistory} onClear={clearHistory} />}
+      {activeView === 'history' && (
+        <HistoryPanel
+          history={history}
+          onRemove={removeFromHistory}
+          onClear={clearHistory}
+          onSetStatus={setStatus}
+          statusCounts={getStatusCounts()}
+        />
+      )}
     </div>
   );
 }

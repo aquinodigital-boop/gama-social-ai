@@ -39,7 +39,7 @@ const OBJECTIONS = [
     tipo: 'entrega',
     tipoLabel: 'Entrega',
     objecao: '"Outro distribuidor entrega mais rápido"',
-    resposta: 'A Gama entrega em até 24h na Baixada Santista e região do ABC. Temos estoque local e frota própria. Se outro promete mais rápido, pergunte se mantém no período de pico.',
+    resposta: 'A Gama atende toda a Grande SP — Capital, ABC, Zona Oeste, Alphaville — com frota e estoque próprios. Se outro promete mais rápido, pergunte se mantém o ritmo em mês de pico.',
     dados_apoio: 'Frota própria | Estoque local | Entrega em até 24h',
     pergunta_followup: 'Qual sua frequência de pedido? Posso sugerir uma rota fixa pro seu bairro.',
   },

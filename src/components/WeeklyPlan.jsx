@@ -19,9 +19,14 @@ const FORMAT_LABELS = {
 const ANGLE_LABELS = {
   coral_expertise: 'Expertise Coral',
   profit: 'Margem & Lucro',
-  reconquista: 'Reconquista',
-  partnership: 'Parceria',
+  parceria_confianca: 'Parceria 20 anos',
+  partnership: 'Programa CL',
   technical: 'Técnico',
+  bastidores_operacao: 'Bastidores',
+  case_lojista: 'Case Lojista',
+  produto_margem: 'Produto & Margem',
+  expertise_coral: 'Expertise Coral',
+  programa_cl: 'Programa CL',
 };
 
 export function WeeklyPlan({ plan, onSaveToHistory }) {

@@ -152,7 +152,7 @@ export function ProductSelector({ onSelect, onCategorySelect, onBrandSelect, sel
               className="p-4 bg-navy/5 dark:bg-coral/5 border border-navy/20 dark:border-coral/20 rounded-lg cursor-pointer mb-4 hover:bg-navy/10 dark:hover:bg-coral/10 transition-colors"
             >
               <div className="font-bold text-navy dark:text-coral mb-1">Institucional (Gama)</div>
-              <div className="text-sm text-text-secondary">Programa CL, Reconquista Santos, Parceria Coral</div>
+              <div className="text-sm text-text-secondary">Programa CL, Parceria Coral, Expertise técnica Grande SP</div>
             </div>
             <div className="text-xs font-semibold uppercase tracking-wider text-text-muted mb-3">Categorias de Produto</div>
             <div className="flex flex-col gap-0.5">

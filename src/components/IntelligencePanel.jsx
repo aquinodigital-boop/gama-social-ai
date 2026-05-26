@@ -143,16 +143,22 @@ function CampanhasTab() {
       {/* Active campaigns */}
       <Section title="Campanhas Ativas" icon={Megaphone}>
         <div className="space-y-2">
-          {activeCampaigns.includes('reconquista') && (
-            <div className="p-3 bg-coral/10 border border-coral/20 rounded-md">
-              <div className="text-sm font-bold text-coral">Projeto Reconquista Santos</div>
-              <div className="text-xs text-text-secondary mt-1">Retomada de market share na Baixada Santista vs Suvinil</div>
-            </div>
-          )}
           {activeCampaigns.includes('programa_cl') && (
             <div className="p-3 bg-blue-500/10 border border-blue-500/20 rounded-md">
               <div className="text-sm font-bold text-blue-500">Programa CL</div>
-              <div className="text-xs text-text-secondary mt-1">Fidelização e transformação de fachada</div>
+              <div className="text-xs text-text-secondary mt-1">Fidelização Coral + transformação da fachada do lojista</div>
+            </div>
+          )}
+          {activeCampaigns.includes('parceria_confianca') && (
+            <div className="p-3 bg-coral/10 border border-coral/20 rounded-md">
+              <div className="text-sm font-bold text-coral">Parceria &amp; Confiança 20 anos</div>
+              <div className="text-xs text-text-secondary mt-1">Relacionamento humano e suporte técnico contínuo</div>
+            </div>
+          )}
+          {activeCampaigns.includes('expertise_coral') && (
+            <div className="p-3 bg-purple-500/10 border border-purple-500/20 rounded-md">
+              <div className="text-sm font-bold text-purple-500">Expertise Coral</div>
+              <div className="text-xs text-text-secondary mt-1">Distribuidor OFICIAL Coral, domínio técnico das linhas</div>
             </div>
           )}
         </div>

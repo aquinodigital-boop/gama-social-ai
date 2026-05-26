@@ -95,7 +95,7 @@ export class LocalProvider extends ContentProviderInterface {
     const angleData = ANGLES[angle] || ANGLES.parceria_confianca;
     const personaData = PERSONAS[persona] || PERSONAS.lojista_carteira;
     const catContext = CategoryExpert.get(category);
-    const region = BrandBrain.getRegionLabel('baixada_santista');
+    const region = BrandBrain.getRegionLabel('grande_sp');
     const isBrand = mode === 'brand';
     const hook = isBrand
       ? pick(this._brandHooks(name, brandContext))

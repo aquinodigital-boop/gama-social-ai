@@ -9,12 +9,13 @@
 const MASCOTE_DESC = `mascote oficial da Gama Distribuidora: lata de tinta cilíndrica azul metálico brilhante, rosto 3D com expressão confiante, boné laranja com logo Gama, braços metálicos articulados com juntas laranja, botas de couro azul marinho com cadarço, logo "Gama Distribuidora | Coral" no corpo. Estilo render 3D Pixar, iluminação de estúdio profissional.`;
 
 const FORMAT_SPECS = {
-  reels:         { aspect: '9:16', resolution: '1080x1920', notes: 'vertical, mobile, texto em destaque' },
-  carrossel:     { aspect: '1:1',  resolution: '1080x1080', notes: 'quadrado, layout limpo, texto legível' },
-  stories:       { aspect: '9:16', resolution: '1080x1920', notes: 'vertical, tela cheia, elementos interativos' },
-  post_estatico: { aspect: '1:1',  resolution: '1080x1080', notes: 'quadrado, alto contraste, cores da marca' },
-  banner_site:   { aspect: '3:1',  resolution: '1200x400',  notes: 'horizontal, otimizado desktop, botão CTA' },
-  whatsapp:      { aspect: '1:1',  resolution: '600x600',   notes: 'compacto, mobile, carregamento rápido' },
+  reels:              { aspect: '9:16',   resolution: '1080x1920', notes: 'vertical, mobile, texto em destaque' },
+  carrossel:          { aspect: '1:1',    resolution: '1080x1080', notes: 'quadrado, layout limpo, texto legível' },
+  stories:            { aspect: '9:16',   resolution: '1080x1920', notes: 'vertical, tela cheia, elementos interativos' },
+  post_estatico:      { aspect: '1:1',    resolution: '1080x1080', notes: 'quadrado, alto contraste, cores da marca' },
+  banner_site:        { aspect: '24:5',   resolution: '1920x400',  notes: 'banner site Gama DESKTOP — sem CTA pill amarelo, só título + subtítulo' },
+  banner_site_mobile: { aspect: '3:2',    resolution: '600x400',   notes: 'banner site Gama MOBILE — sem CTA pill amarelo, só título + subtítulo' },
+  whatsapp:           { aspect: '1:1',    resolution: '600x600',   notes: 'compacto, mobile, carregamento rápido' },
 };
 
 export const PromptGenerator = {
@@ -27,7 +28,7 @@ export const PromptGenerator = {
     return {
       studio: `Fotografia profissional de produto: ${name}. Iluminação de estúdio, sombras suaves, fundo branco clean. Produto centralizado, formato ${spec.aspect}. Categoria: ${category}. Ultra detalhado, qualidade comercial.`,
       lifestyle: `Foto realista: ${name} em loja de tintas no Brasil. Lojista confiante no balcão. Prateleiras com latas Coral ao fundo. Iluminação natural, formato ${spec.aspect}.`,
-      institutional: `Fotografia corporativa Gama Distribuidora: armazém organizado com produtos ${category}. Paleta azul marinho e laranja da Gama. Grande SP e Baixada Santista. Formato ${spec.aspect}.`,
+      institutional: `Fotografia corporativa Gama Distribuidora: armazém organizado com produtos ${category}. Paleta azul marinho e laranja da Gama. Operação Grande São Paulo. Formato ${spec.aspect}.`,
       mascote: `${MASCOTE_DESC} Pose: segurando uma lata de ${name} com polegar para cima. Fundo gradiente azul marinho. Formato ${spec.aspect}.`,
       format_spec: spec,
     };
@@ -53,7 +54,7 @@ export const PromptGenerator = {
           },
           institutional: {
             label: '🏢 Institucional Gama',
-            prompt_pt: `Fotografia corporativa Gama Distribuidora — distribuidora oficial Coral/AkzoNobel. Armazém moderno com produtos ${category} organizados. Cores azul marinho e laranja. Baixada Santista / Grande SP. Iluminação profissional. Formato ${spec.aspect}.`,
+            prompt_pt: `Fotografia corporativa Gama Distribuidora — distribuidora oficial Coral/AkzoNobel. Armazém moderno com produtos ${category} organizados. Cores azul marinho e laranja. Operação Grande São Paulo. Iluminação profissional. Formato ${spec.aspect}.`,
           },
           mascote: {
             label: '🤖 Com Mascote Gama',
