@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import { useAppContext, REGIONS, CAMPAIGNS } from '../context/AppContext.jsx';
 import { GEMINI_MODELS } from '../providers/GeminiProvider.js';
+import { CLAUDE_MODELS, providerRegistry } from '../providers/index.js';
+import { ClaudeProvider } from '../providers/ClaudeProvider.js';
 import { cn } from '@/lib/utils';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
@@ -214,11 +216,16 @@ export function SettingsPanel() {
 
       <Separator />
 
-      {/* API Key */}
-      <div className="bg-surface-card border border-border rounded-xl p-5 space-y-4">
+      {/* Backend Claude (recomendado) */}
+      <ClaudeBackendBlock />
+
+      <Separator />
+
+      {/* API Key Gemini (legado) */}
+      <div className="bg-surface-card border border-border rounded-xl p-5 space-y-4 opacity-90">
         <div className="flex items-center gap-2">
           <Key size={16} className="text-coral" />
-          <h3 className="text-sm font-medium text-text-primary">API Key do Gemini</h3>
+          <h3 className="text-sm font-medium text-text-primary">API Key do Gemini <span className="text-xs text-text-muted font-normal">(legado client-side — não recomendado em prod)</span></h3>
         </div>
         <div className="space-y-2">
           <Label htmlFor="apikey" className="text-xs text-text-muted">Chave de API</Label>
@@ -284,6 +291,76 @@ export function SettingsPanel() {
         <p className="text-xs text-text-secondary"><strong>Gama Trade Hub</strong> v2.0.0</p>
         <p className="text-xs text-text-muted mt-1">Plataforma de Inteligência Comercial B2B</p>
         <p className="text-xs text-text-muted">Gama Distribuidora — Distribuidor Oficial Coral/AkzoNobel</p>
+      </div>
+    </div>
+  );
+}
+
+/** Bloco do backend Claude — healthcheck + chooser de modelo + link pro setup. */
+function ClaudeBackendBlock() {
+  const [health, setHealth] = useState(null);
+  const [model, setModelLocal] = useState(providerRegistry.getClaudeModel());
+
+  React.useEffect(() => {
+    let mounted = true;
+    ClaudeProvider.healthcheck().then((h) => mounted && setHealth(h));
+    return () => { mounted = false; };
+  }, []);
+
+  const onPickModel = (id) => {
+    providerRegistry.setClaudeModel(id);
+    setModelLocal(id);
+    toast.success(`Modelo Claude: ${CLAUDE_MODELS.find((m) => m.id === id)?.label}`);
+  };
+
+  const status = health == null
+    ? { color: 'text-amber-500', dot: 'bg-amber-500', label: 'Verificando…' }
+    : health.available
+      ? (health.status === 500
+          ? { color: 'text-amber-500', dot: 'bg-amber-500', label: 'Backend vivo mas ANTHROPIC_API_KEY não configurada' }
+          : { color: 'text-green-500', dot: 'bg-green-500', label: 'Backend Claude ativo' })
+      : { color: 'text-red-500', dot: 'bg-red-500', label: 'Backend indisponível (404)' };
+
+  return (
+    <div className="bg-surface-card border border-border rounded-xl p-5 space-y-4">
+      <div className="flex items-center gap-2">
+        <Brain size={16} className="text-purple-500" />
+        <h3 className="text-sm font-medium text-text-primary">Backend Claude (recomendado)</h3>
+      </div>
+
+      <div className="flex items-center gap-2 text-xs">
+        <span className={cn('inline-block w-2 h-2 rounded-full', status.dot)} />
+        <span className={cn('font-medium', status.color)}>{status.label}</span>
+      </div>
+
+      {health && !health.available && (
+        <div className="p-3 bg-amber-50 dark:bg-amber-900/20 border border-amber-200 dark:border-amber-700/50 rounded-md text-xs text-amber-900 dark:text-amber-200">
+          O backend <code>/api/generate</code> não respondeu. Em dev local rode <code>npm run dev:vercel</code>. Em produção, redeploy depois de adicionar a env var <code>ANTHROPIC_API_KEY</code> na Vercel. Veja <a href="https://github.com/aquinodigital-boop/gama-social-ai/blob/main/SETUP_BACKEND.md" target="_blank" rel="noreferrer" className="underline">SETUP_BACKEND.md</a>.
+        </div>
+      )}
+
+      <div>
+        <Label className="text-xs text-text-muted">Modelo Claude</Label>
+        <div className="grid grid-cols-3 gap-2 mt-2">
+          {CLAUDE_MODELS.map((m) => (
+            <button
+              key={m.id}
+              onClick={() => onPickModel(m.id)}
+              className={cn(
+                'p-2 rounded-md border text-left transition-all',
+                model === m.id
+                  ? 'bg-purple-500/10 border-purple-500/50'
+                  : 'bg-surface-card border-border hover:border-purple-500/30'
+              )}
+            >
+              <div className="text-xs font-semibold text-text-primary">{m.label}</div>
+              <div className="text-[10px] text-text-muted mt-0.5">{m.description}</div>
+            </button>
+          ))}
+        </div>
+        <p className="text-[10px] text-text-muted mt-2">
+          Default por tipo: Sonnet 4.6 (conteúdo completo), Haiku 4.5 (quick image/video). Você pode forçar o mesmo modelo pra tudo aqui.
+        </p>
       </div>
     </div>
   );
