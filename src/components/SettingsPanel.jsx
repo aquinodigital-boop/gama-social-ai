@@ -204,8 +204,9 @@ export function SettingsPanel() {
               className="w-full h-9 px-3 text-xs border border-border rounded-md bg-surface-card text-text-primary"
             >
               <option value="todos">Todos</option>
-              <option value="reconquista">Reconquista Santos</option>
               <option value="programa_cl">Programa CL</option>
+              <option value="parceria_confianca">Parceria 20 anos</option>
+              <option value="expertise_coral">Expertise Coral</option>
             </select>
           </div>
         </div>

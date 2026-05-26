@@ -28,7 +28,7 @@ const FORMATS = [
 const ANGLES = [
   { id: 'coral_expertise', label: 'Expertise Coral', icon: '🎨' },
   { id: 'profit', label: 'Margem & Resultado', icon: '💰' },
-  { id: 'reconquista', label: 'Reconquista Santos', icon: '🏆' },
+  { id: 'parceria_confianca', label: 'Parceria 20 anos', icon: '🤝' },
   { id: 'partnership', label: 'Programa CL', icon: '⭐' },
   { id: 'technical', label: 'Suporte Técnico', icon: '🔧' },
 ];
@@ -42,7 +42,7 @@ const PERSONAS = [
 const OBJECTIVES = [
   { id: 'gerar_demanda', label: 'Gerar Demanda' },
   { id: 'ativar_whatsapp', label: 'Ativar WhatsApp' },
-  { id: 'reconquista_santos', label: 'Reconquista Santos' },
+  { id: 'expertise_coral', label: 'Expertise Coral' },
   { id: 'programa_cl', label: 'Programa CL' },
 ];
 
