@@ -1,7 +1,10 @@
 /**
  * QualityChecker.js — Gama Distribuidora
  * 4 conjuntos de critérios: social, trade, whatsapp, promotor.
+ *
+ * Pipeline: HardRulesValidator (bloqueia/grade F) → checks heurísticos (A–D).
  */
+import { HardRulesValidator } from './HardRulesValidator.js';
 
 const CTA_KEYWORDS = [
   'whatsapp', 'zap', 'tabela', 'estoque', 'peça', 'pedir', 'consultor',
@@ -15,10 +18,12 @@ const B2B_KEYWORDS = [
   'comprador', 'pedido', 'tabela', 'distribuição', 'pintor', 'obra',
 ];
 
+// Removidos "baixada santista" e "santos" — viola HARD rule da Gama.
 const CREDIBILITY_KEYWORDS = [
   'gama', 'coral', 'akzonobel', 'distribuidor oficial', 'entrega ágil',
   'atendimento', 'qualidade', 'confiança', 'parceria', '20 anos',
-  'profissional', 'opções', 'trabalhamos', 'baixada santista', 'santos',
+  'profissional', 'opções', 'trabalhamos', 'grande sp', 'são paulo',
+  'abc paulista', 'capital', 'consultor',
 ];
 
 const BRAND_TONE_POSITIVE = [
@@ -31,13 +36,21 @@ const BRAND_TONE_NEGATIVE = [
   'oferta relâmpago', 'grátis', 'sorteio', 'viral',
 ];
 
+// Critério REGIÃO agora premia escopo correto (Grande SP) e PENALIZA Santos.
+// Manter penalização aqui é redundância de segurança — o HardRulesValidator já bloqueia.
+const REGIAO_VALIDA = (t) =>
+  (t.includes('grande sp') || t.includes('são paulo') || t.includes('capital') ||
+   t.includes('abc') || t.includes('zona oeste') || t.includes('alphaville') ||
+   t.includes('região metropolitana')) &&
+  !t.includes('santos') && !t.includes('baixada') && !t.includes('litoral');
+
 const SOCIAL_CHECKS = [
   { id: 'cta_claro', label: 'CTA claro', weight: 3, check: (t) => CTA_KEYWORDS.filter(k => t.includes(k)).length >= 2 },
   { id: 'promessa_b2b', label: 'B2B puro', weight: 3, check: (t) => B2B_KEYWORDS.filter(k => t.includes(k)).length >= 2 },
   { id: 'credibilidade', label: 'Credibilidade', weight: 2, check: (t) => CREDIBILITY_KEYWORDS.filter(k => t.includes(k)).length >= 2 },
   { id: 'tom_marca', label: 'Tom profissional', weight: 2, check: (t) => BRAND_TONE_POSITIVE.filter(k => t.includes(k)).length >= 2 && BRAND_TONE_NEGATIVE.filter(k => t.includes(k)).length === 0 },
   { id: 'substancia', label: 'Conteúdo substancial', weight: 1, check: (t) => t.length > 100 },
-  { id: 'regiao', label: 'Referência regional', weight: 1, check: (t) => t.includes('santos') || t.includes('baixada') || t.includes('grande sp') || t.includes('são paulo') || t.includes('abc') },
+  { id: 'regiao_valida', label: 'Região correta (Grande SP)', weight: 1, check: REGIAO_VALIDA },
 ];
 
 const TRADE_CHECKS = [
@@ -46,7 +59,7 @@ const TRADE_CHECKS = [
   { id: 'mensuravel', label: 'Mensurável', weight: 2, check: (t) => t.includes('meta') || t.includes('kpi') || t.includes('objetivo') || /\d+%/.test(t) },
   { id: 'viavel', label: 'Viável', weight: 2, check: (t) => t.includes('a4') || t.includes('a3') || t.includes('cm') || t.includes('px') || t.includes('whatsapp') },
   { id: 'diferencial', label: 'Diferencial Gama', weight: 1, check: (t) => t.includes('gama') || t.includes('coral') || t.includes('entrega') },
-  { id: 'regiao', label: 'Regionalizado', weight: 1, check: (t) => t.includes('santos') || t.includes('baixada') || t.includes('sp') || t.includes('abc') || t.includes('região') },
+  { id: 'regiao_valida', label: 'Região correta (Grande SP)', weight: 1, check: REGIAO_VALIDA },
 ];
 
 const WHATSAPP_CHECKS = [
@@ -72,8 +85,25 @@ const CHECK_SETS = { social: SOCIAL_CHECKS, trade: TRADE_CHECKS, whatsapp: WHATS
 export const QualityChecker = {
   check(content, module = 'social') {
     const allText = _extractAllText(content).toLowerCase();
-    const checkSet = CHECK_SETS[module] || CHECK_SETS.social;
 
+    // 1. HARD pass — qualquer violação derruba pra grade F e bloqueia publicação.
+    const hard = HardRulesValidator.validate(allText);
+    if (!hard.valid) {
+      return {
+        score: 0,
+        maxScore: 0,
+        percentage: 0,
+        grade: 'F',
+        passed: false,
+        blocked: true,
+        hardViolations: hard.violations,
+        checks: [],
+        module,
+      };
+    }
+
+    // 2. Soft heuristics — grade A-D.
+    const checkSet = CHECK_SETS[module] || CHECK_SETS.social;
     const checks = checkSet.map(c => ({
       id: c.id, label: c.label, weight: c.weight, passed: c.check(allText),
     }));
@@ -83,7 +113,15 @@ export const QualityChecker = {
     const percentage = Math.round((score / maxScore) * 100);
     const grade = percentage >= 90 ? 'A' : percentage >= 75 ? 'B' : percentage >= 50 ? 'C' : 'D';
 
-    return { score, maxScore, percentage, grade, passed: percentage >= 75, checks, module };
+    return {
+      score, maxScore, percentage, grade,
+      passed: percentage >= 75,
+      blocked: false,
+      hardViolations: [],
+      softWarnings: hard.warnings,
+      checks,
+      module,
+    };
   },
 };
 
