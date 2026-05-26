@@ -4,17 +4,14 @@ import { BrandService } from '../logic/BrandService';
 import { GamaDataService } from '../logic/GamaDataService';
 import { cn } from '@/lib/utils';
 import { Input } from '@/components/ui/input';
-import { Badge } from '@/components/ui/badge';
 import { ScrollArea } from '@/components/ui/scroll-area';
-import { Button } from '@/components/ui/button';
-import { Search, ChevronDown } from 'lucide-react';
+import { Search, ChevronDown, Package, Bookmark, Layers } from 'lucide-react';
 
-const TIER_STYLES = {
-  premium: 'bg-amber-100 text-amber-800 dark:bg-amber-900/30 dark:text-amber-300',
-  mainstream: 'bg-blue-100 text-blue-800 dark:bg-blue-900/30 dark:text-blue-300',
-  value: 'bg-green-100 text-green-800 dark:bg-green-900/30 dark:text-green-300',
+const TIER_META = {
+  premium:    { label: 'Premium',     color: 'var(--color-gama-amarelo)' },
+  mainstream: { label: 'Popular',     color: 'var(--color-format-post)' },
+  value:      { label: 'C/benefício', color: 'var(--color-status-aprovado)' },
 };
-const TIER_LABELS = { premium: 'Premium', mainstream: 'Popular', value: 'Custo-benef.' };
 
 const VISIBLE_LIMIT = 50;
 
@@ -35,20 +32,19 @@ export function ProductSelector({ onSelect, onCategorySelect, onBrandSelect, sel
   const filteredBrands = useMemo(() => {
     if (!debouncedBrandSearch) return allBrands;
     const lower = debouncedBrandSearch.toLowerCase();
-    return allBrands.filter(b => b.name.toLowerCase().includes(lower));
+    return allBrands.filter((b) => b.name.toLowerCase().includes(lower));
   }, [allBrands, debouncedBrandSearch]);
 
   const filteredProducts = useMemo(() => {
     let prods = allProducts;
-    if (selectedCategory) prods = prods.filter(p => p.category === selectedCategory);
+    if (selectedCategory) prods = prods.filter((p) => p.category === selectedCategory);
     if (debouncedSearch) {
       const l = debouncedSearch.toLowerCase();
-      prods = prods.filter(p => p.name.toLowerCase().includes(l));
+      prods = prods.filter((p) => p.name.toLowerCase().includes(l));
     }
     return prods;
   }, [allProducts, selectedCategory, debouncedSearch]);
 
-  // Reset visible count when filters change
   React.useEffect(() => { setVisibleCount(VISIBLE_LIMIT); }, [selectedCategory, debouncedSearch]);
 
   const visibleProducts = useMemo(
@@ -69,74 +65,149 @@ export function ProductSelector({ onSelect, onCategorySelect, onBrandSelect, sel
     }
   }, [onBrandSelect]);
 
-  const handleShowMore = useCallback(() => {
-    setVisibleCount(prev => prev + VISIBLE_LIMIT);
-  }, []);
+  const handleShowMore = useCallback(() => setVisibleCount((p) => p + VISIBLE_LIMIT), []);
 
   const tabs = [
-    { id: 'brands', label: `Marcas (${allBrands.length})` },
-    { id: 'categories', label: 'Categorias' },
-    { id: 'products', label: `Produtos (${allProducts.length})` },
+    { id: 'brands',     label: 'Marcas',     count: allBrands.length,    Icon: Bookmark },
+    { id: 'categories', label: 'Categorias', count: categories.length,   Icon: Layers },
+    { id: 'products',   label: 'Produtos',   count: allProducts.length,  Icon: Package },
   ];
 
   return (
-    <div className="h-full bg-surface-card border-r border-border flex flex-col overflow-hidden">
-      <div className="rainbow-gradient h-[3px] shrink-0" />
-
-      <div className="flex border-b border-border">
-        {tabs.map(t => (
-          <button
-            key={t.id}
-            className={cn(
-              'flex-1 py-3 px-2 text-sm font-semibold border-b-2 transition-all',
-              activeTab === t.id
-                ? 'text-navy dark:text-coral border-navy dark:border-coral'
-                : 'text-text-muted border-transparent hover:text-text-primary hover:bg-muted/50'
-            )}
-            onClick={() => setActiveTab(t.id)}
-          >
-            {t.label}
-          </button>
-        ))}
+    <div className="h-full flex flex-col overflow-hidden" style={{ background: 'var(--color-surface-card)' }}>
+      {/* Header editorial da sidebar */}
+      <div
+        className="px-4 py-3 flex items-center justify-between"
+        style={{ background: 'var(--color-paper-2)', borderBottom: '1px solid var(--color-rule)' }}
+      >
+        <div>
+          <div className="eyebrow">Catálogo · NO. 01</div>
+          <div className="display-md mt-0.5" style={{ fontSize: 15 }}>Acervo Gama</div>
+        </div>
+        <span className="tape" style={{ fontSize: 8, padding: '1px 6px' }}>1200+</span>
       </div>
 
+      {/* Tabs editorial */}
+      <div className="flex" style={{ borderBottom: '1px solid var(--color-rule)' }}>
+        {tabs.map(({ id, label, count, Icon }) => {
+          const active = activeTab === id;
+          return (
+            <button
+              key={id}
+              onClick={() => setActiveTab(id)}
+              className={cn(
+                'flex-1 py-2.5 px-2 flex flex-col items-center gap-0.5 transition-all border-b-2',
+                active ? '' : 'opacity-50 hover:opacity-80'
+              )}
+              style={{
+                borderBottomColor: active ? 'var(--color-gama-amarelo)' : 'transparent',
+                background: active ? 'var(--color-paper)' : 'transparent',
+              }}
+            >
+              <Icon size={14} style={{ color: active ? 'var(--color-ink)' : 'var(--color-text-muted)' }} />
+              <span
+                className="mono text-[9px] font-bold"
+                style={{
+                  color: active ? 'var(--color-ink)' : 'var(--color-text-muted)',
+                  letterSpacing: '0.08em',
+                  textTransform: 'uppercase',
+                }}
+              >
+                {label} · {count}
+              </span>
+            </button>
+          );
+        })}
+      </div>
+
+      {/* BRANDS */}
       {activeTab === 'brands' && (
         <>
-          <div className="p-3 px-4 border-b border-border">
+          <div className="p-3" style={{ borderBottom: '1px solid var(--color-rule)' }}>
             <div className="relative">
-              <Search size={14} className="absolute left-2.5 top-1/2 -translate-y-1/2 text-text-muted" />
-              <Input placeholder="Buscar marca..." value={brandSearch} onChange={(e) => setBrandSearch(e.target.value)} className="pl-8 h-8 text-sm" />
+              <Search size={13} className="absolute left-2.5 top-1/2 -translate-y-1/2" style={{ color: 'var(--color-text-muted)' }} />
+              <input
+                placeholder="Buscar marca…"
+                value={brandSearch}
+                onChange={(e) => setBrandSearch(e.target.value)}
+                className="w-full pl-8 pr-2 py-1.5 text-sm"
+                style={{
+                  background: 'var(--color-paper-2)',
+                  border: '1px solid var(--color-rule)',
+                  borderRadius: 2,
+                  fontFamily: 'var(--font-mono)',
+                }}
+              />
             </div>
-            <div className="text-xs text-text-muted mt-1.5">{filteredBrands.length} marcas parceiras</div>
+            <div className="mono text-[9px] mt-2" style={{ color: 'var(--color-text-muted)', letterSpacing: '0.08em' }}>
+              ▸ {filteredBrands.length} MARCAS PARCEIRAS
+            </div>
           </div>
           <ScrollArea className="flex-1">
-            <div className="py-1">
-              {filteredBrands.map(brand => {
+            <div>
+              {filteredBrands.map((brand, i) => {
                 const ctx = BrandService.getBrandContext(brand.name);
+                const tier = TIER_META[ctx.tier] || TIER_META.mainstream;
                 const isSelected = selectedItem?.type === 'brand' && selectedItem?.name === brand.name;
                 return (
-                  <div
+                  <button
                     key={brand.name}
-                    className={cn(
-                      'flex items-center gap-3 px-4 py-3 cursor-pointer transition-colors border-l-[3px]',
-                      isSelected
-                        ? 'bg-navy/[0.06] dark:bg-coral/10 border-l-navy dark:border-l-coral'
-                        : 'border-l-transparent hover:bg-muted/50'
-                    )}
                     onClick={() => handleBrandClick(brand)}
+                    className={cn('w-full flex items-center gap-3 px-4 py-3 text-left transition-colors')}
+                    style={{
+                      background: isSelected ? 'var(--color-paper-2)' : 'transparent',
+                      borderLeft: `3px solid ${isSelected ? (brand.isMain ? 'var(--color-coral)' : 'var(--color-ink)') : 'transparent'}`,
+                      borderBottom: '1px solid var(--color-rule)',
+                    }}
                   >
-                    <div className="flex-1 min-w-0">
-                      <div className="flex items-center gap-2 mb-0.5">
-                        <span className="text-sm font-bold text-text-primary">{brand.name}</span>
-                        {brand.isMain && <span className="text-[9px] px-1.5 py-0.5 rounded-full bg-coral text-white font-bold shrink-0">CORAL</span>}
-                        <span className={cn('text-[10px] font-semibold px-1.5 py-0.5 rounded-full shrink-0', TIER_STYLES[ctx.tier])}>
-                          {TIER_LABELS[ctx.tier] || 'Popular'}
-                        </span>
-                      </div>
-                      <div className="text-xs text-text-muted">{ctx.segment}</div>
+                    {/* Chip de tier (mini swatch quadrado) */}
+                    <div
+                      className="shrink-0 flex items-center justify-center"
+                      style={{
+                        width: 28, height: 28,
+                        background: tier.color,
+                        color: '#fff',
+                        borderRadius: 1,
+                        fontFamily: 'var(--font-display)',
+                        fontWeight: 700,
+                        fontSize: 14,
+                        letterSpacing: '-0.04em',
+                      }}
+                    >
+                      {brand.name.charAt(0)}
                     </div>
-                    <Badge variant="outline" className="shrink-0">{brand.productCount}</Badge>
-                  </div>
+
+                    <div className="flex-1 min-w-0">
+                      <div className="flex items-center gap-2">
+                        <span className="text-sm font-bold truncate" style={{ fontFamily: 'var(--font-display)', letterSpacing: '-0.01em' }}>
+                          {brand.name}
+                        </span>
+                        {brand.isMain && (
+                          <span
+                            className="mono text-[8px] font-bold px-1 py-0.5 shrink-0"
+                            style={{ background: 'var(--color-coral)', color: '#fff', borderRadius: 1, letterSpacing: '0.08em' }}
+                          >
+                            CORAL · OFICIAL
+                          </span>
+                        )}
+                      </div>
+                      <div className="mono text-[10px] mt-0.5" style={{ color: 'var(--color-text-muted)' }}>
+                        {ctx.segment} · {tier.label}
+                      </div>
+                    </div>
+
+                    <span
+                      className="mono text-[10px] font-bold shrink-0"
+                      style={{
+                        color: 'var(--color-text-muted)',
+                        border: '1px solid var(--color-rule)',
+                        padding: '2px 5px',
+                        borderRadius: 1,
+                      }}
+                    >
+                      {brand.productCount}
+                    </span>
+                  </button>
                 );
               })}
             </div>
@@ -144,25 +215,42 @@ export function ProductSelector({ onSelect, onCategorySelect, onBrandSelect, sel
         </>
       )}
 
+      {/* CATEGORIES */}
       {activeTab === 'categories' && (
         <ScrollArea className="flex-1">
-          <div className="p-4">
-            <div
+          <div className="p-3">
+            {/* Cartão institucional destaque */}
+            <button
               onClick={() => onCategorySelect({ type: 'institutional', name: 'Gama Distribuidora' })}
-              className="p-4 bg-navy/5 dark:bg-coral/5 border border-navy/20 dark:border-coral/20 rounded-lg cursor-pointer mb-4 hover:bg-navy/10 dark:hover:bg-coral/10 transition-colors"
+              className="w-full mb-4 paper-card overflow-hidden text-left"
             >
-              <div className="font-bold text-navy dark:text-coral mb-1">Institucional (Gama)</div>
-              <div className="text-sm text-text-secondary">Programa CL, Parceria Coral, Expertise técnica Grande SP</div>
-            </div>
-            <div className="text-xs font-semibold uppercase tracking-wider text-text-muted mb-3">Categorias de Produto</div>
-            <div className="flex flex-col gap-0.5">
-              {categories.map(c => {
+              <span className="paint-band" style={{ background: 'var(--color-gama-amarelo)' }} />
+              <div className="p-3">
+                <span className="numero">No. 00 · INSTITUCIONAL</span>
+                <div className="display-md mt-1" style={{ fontSize: 16 }}>Gama Distribuidora</div>
+                <div className="text-[11px] mt-1" style={{ color: 'var(--color-text-secondary)' }}>
+                  Programa CL · Parceria Coral · Expertise Grande SP
+                </div>
+              </div>
+            </button>
+
+            <div className="eyebrow mb-2">Categorias de produto</div>
+            <div className="flex flex-col">
+              {categories.map((c, i) => {
                 const count = GamaDataService.getProductsByCategory(c).length;
                 return (
-                  <div key={c} onClick={() => onCategorySelect({ type: 'category', name: c })} className="flex items-center justify-between px-4 py-3 cursor-pointer hover:bg-muted/50 transition-colors border-b border-border/50 border-l-[3px] border-l-transparent hover:border-l-navy dark:hover:border-l-coral">
-                    <span className="text-sm font-medium text-text-primary">{c}</span>
-                    <span className="text-xs text-text-muted">{count}</span>
-                  </div>
+                  <button
+                    key={c}
+                    onClick={() => onCategorySelect({ type: 'category', name: c })}
+                    className="flex items-center gap-3 px-2 py-2.5 text-left transition-colors hover:bg-[var(--color-paper-2)]"
+                    style={{
+                      borderBottom: '1px solid var(--color-rule)',
+                    }}
+                  >
+                    <span className="mono text-[9px] opacity-50 shrink-0">{String(i + 1).padStart(2, '0')}</span>
+                    <span className="flex-1 text-sm font-medium" style={{ fontFamily: 'var(--font-display)', letterSpacing: '-0.01em' }}>{c}</span>
+                    <span className="mono text-[10px]" style={{ color: 'var(--color-text-muted)' }}>{count}</span>
+                  </button>
                 );
               })}
             </div>
@@ -170,40 +258,94 @@ export function ProductSelector({ onSelect, onCategorySelect, onBrandSelect, sel
         </ScrollArea>
       )}
 
+      {/* PRODUCTS */}
       {activeTab === 'products' && (
         <>
-          <div className="p-3 px-4 border-b border-border space-y-2">
-            <select value={selectedCategory} onChange={(e) => setSelectedCategory(e.target.value)} className="w-full h-8 px-2 text-sm border border-border rounded-md bg-surface-card text-text-primary focus:outline-none focus:ring-2 focus:ring-navy/20">
-              <option value="">Todas as Categorias ({allProducts.length})</option>
-              {categories.map(c => <option key={c} value={c}>{c}</option>)}
+          <div className="p-3 space-y-2" style={{ borderBottom: '1px solid var(--color-rule)' }}>
+            <select
+              value={selectedCategory}
+              onChange={(e) => setSelectedCategory(e.target.value)}
+              className="w-full px-2 py-1.5 text-sm"
+              style={{
+                background: 'var(--color-paper-2)',
+                border: '1px solid var(--color-rule)',
+                borderRadius: 2,
+                fontFamily: 'var(--font-mono)',
+                fontSize: 12,
+              }}
+            >
+              <option value="">Todas as categorias ({allProducts.length})</option>
+              {categories.map((c) => <option key={c} value={c}>{c}</option>)}
             </select>
             <div className="relative">
-              <Search size={14} className="absolute left-2.5 top-1/2 -translate-y-1/2 text-text-muted" />
-              <Input placeholder="Buscar produto..." value={searchTerm} onChange={(e) => setSearchTerm(e.target.value)} className="pl-8 h-8 text-sm" />
+              <Search size={13} className="absolute left-2.5 top-1/2 -translate-y-1/2" style={{ color: 'var(--color-text-muted)' }} />
+              <input
+                placeholder="Buscar produto…"
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
+                className="w-full pl-8 pr-2 py-1.5 text-sm"
+                style={{
+                  background: 'var(--color-paper-2)',
+                  border: '1px solid var(--color-rule)',
+                  borderRadius: 2,
+                  fontFamily: 'var(--font-mono)',
+                }}
+              />
             </div>
           </div>
-          <div className="px-4 py-2 text-xs text-text-muted border-b border-border/50">
-            {filteredProducts.length} produtos{filteredProducts.length !== allProducts.length && ` (filtrado de ${allProducts.length})`}
+          <div className="px-3 py-1.5 mono text-[9px]" style={{ color: 'var(--color-text-muted)', borderBottom: '1px solid var(--color-rule)', letterSpacing: '0.08em' }}>
+            ▸ {filteredProducts.length} {filteredProducts.length !== allProducts.length && `DE ${allProducts.length}`} PRODUTOS
           </div>
           <ScrollArea className="flex-1">
             {visibleProducts.map((p, i) => {
               const isSelected = selectedItem?.name === p.name;
               return (
-                <div key={`${p.id}-${i}`} className={cn('px-4 py-3 cursor-pointer transition-colors border-l-[3px] border-b border-border/50', isSelected ? 'bg-navy/[0.06] dark:bg-coral/10 border-l-navy dark:border-l-coral' : 'border-l-transparent hover:bg-muted/50')} onClick={() => onSelect(p)}>
-                  <div className="text-sm font-semibold text-text-primary">{p.name}</div>
-                  <div className="flex items-center gap-2 mt-0.5">
-                    <span className="text-xs text-text-muted">{p.category}</span>
-                    {p.brand && <Badge variant="outline" className="text-[10px] h-4 px-1">{p.brand}</Badge>}
+                <button
+                  key={`${p.id}-${i}`}
+                  onClick={() => onSelect(p)}
+                  className={cn('w-full px-4 py-3 text-left transition-colors')}
+                  style={{
+                    background: isSelected ? 'var(--color-paper-2)' : 'transparent',
+                    borderLeft: `3px solid ${isSelected ? 'var(--color-gama-amarelo)' : 'transparent'}`,
+                    borderBottom: '1px solid var(--color-rule)',
+                  }}
+                >
+                  <div className="text-sm font-semibold" style={{ fontFamily: 'var(--font-display)', letterSpacing: '-0.01em' }}>
+                    {p.name}
                   </div>
-                </div>
+                  <div className="flex items-center gap-2 mt-1">
+                    <span className="mono text-[10px]" style={{ color: 'var(--color-text-muted)' }}>{p.category}</span>
+                    {p.brand && (
+                      <span
+                        className="mono text-[9px] px-1.5 py-0.5"
+                        style={{
+                          background: 'var(--color-paper-2)',
+                          border: '1px solid var(--color-rule)',
+                          borderRadius: 1,
+                          letterSpacing: '0.06em',
+                        }}
+                      >
+                        {p.brand}
+                      </span>
+                    )}
+                  </div>
+                </button>
               );
             })}
             {visibleCount < filteredProducts.length && (
-              <div className="p-4 text-center">
-                <Button variant="outline" size="sm" onClick={handleShowMore} className="text-xs">
-                  <ChevronDown size={14} className="mr-1" />
-                  Mostrar mais ({filteredProducts.length - visibleCount} restantes)
-                </Button>
+              <div className="p-3 text-center">
+                <button
+                  onClick={handleShowMore}
+                  className="mono text-[10px] px-3 py-1.5 transition-all hover:bg-[var(--color-ink)] hover:text-[var(--color-paper)]"
+                  style={{
+                    border: '1px solid var(--color-ink)',
+                    borderRadius: 2,
+                    letterSpacing: '0.06em',
+                  }}
+                >
+                  <ChevronDown size={11} className="inline mr-1" />
+                  + {filteredProducts.length - visibleCount} RESTANTES
+                </button>
               </div>
             )}
           </ScrollArea>
