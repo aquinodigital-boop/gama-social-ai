@@ -56,7 +56,7 @@ const VIEWS = [
 ];
 
 export function ContentGenerator({ item }) {
-  const { history, addToHistory, removeFromHistory, clearHistory, setFeedback } = useContentHistory();
+  const { history, addToHistory, removeFromHistory, clearHistory, setFeedback, setStatus, getStatusCounts } = useContentHistory();
 
   const [activeProviderId, setActiveProviderId] = useState(providerRegistry.getActiveId());
   const [activeModel, setActiveModel] = useState(providerRegistry.getGeminiModel());
@@ -437,7 +437,15 @@ export function ContentGenerator({ item }) {
       )}
 
       {/* HISTORY VIEW */}
-      {activeView === 'history' && <HistoryPanel history={history} onRemove={removeFromHistory} onClear={clearHistory} />}
+      {activeView === 'history' && (
+        <HistoryPanel
+          history={history}
+          onRemove={removeFromHistory}
+          onClear={clearHistory}
+          onSetStatus={setStatus}
+          statusCounts={getStatusCounts()}
+        />
+      )}
     </div>
   );
 }
