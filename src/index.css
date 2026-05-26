@@ -1,157 +1,521 @@
 @import "tailwindcss";
 
-@layer base {
-  @font-face {
-    font-family: 'Inter';
-    font-display: swap;
-    src: url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
-  }
-}
+/* ============================================================
+   GAMA TRADE HUB — Design System "Tintas Editorial"
+   ─────────────────────────────────────────────────────────────
+   Linguagem visual de cartão Pantone + editorial magazine.
+   Cor protagonista (somos uma distribuidora de TINTAS), não escondida.
+   Tipografia: Bricolage Grotesque (display) + DM Sans (body) + JetBrains Mono.
+   Textura: grão de papel sutil. Decoração: paint stroke SVG.
+   Motion: stagger reveal no load + lift sutil no hover.
+   ============================================================ */
 
 @theme {
-  /* ─── Brand Colors — Gama (do logo real) ─── */
-  --color-navy: #2D2D6B;
-  --color-navy-light: #3D3D8B;
-  --color-navy-dark: #1E1E4A;
-  --color-coral: #E85D3B;
-  --color-coral-light: #F4A68C;
-  --color-coral-dark: #C04020;
+  /* ─── Brand Gama ─── */
+  --color-gama-amarelo:    #FFB800;  /* protagonista — usar com confiança */
+  --color-gama-amarelo-2:  #FFD340;  /* hover/light */
+  --color-gama-amarelo-3:  #C58A00;  /* deep */
+  --color-coral:           #E60012;  /* só co-branded Coral */
+  --color-navy:            #0B0B0F;  /* quase preto absoluto */
+  --color-navy-2:          #181820;  /* surfaces escuras */
+  --color-navy-3:          #2A2A35;  /* hover dark */
 
-  /* ─── Arco-íris Gama ─── */
-  --color-gama-azul: #4AB8D8;
-  --color-gama-verde: #7CBF44;
-  --color-gama-amarelo: #F5C800;
-  --color-gama-laranja: #F08020;
-  --color-gama-vermelho: #D93020;
+  /* ─── Paint chip swatches (nav) ─── */
+  --color-chip-trade:      #E85D3B;
+  --color-chip-kit:        #FFB800;
+  --color-chip-whatsapp:   #25D366;
+  --color-chip-social:     #6E5BFF;
+  --color-chip-intel:      #1B9AAA;
+  --color-chip-settings:   #4A4A55;
 
-  /* ─── Semantic ─── */
-  --color-success: #22C55E;
-  --color-warning: #F59E0B;
-  --color-error: #EF4444;
-  --color-info: #3B82F6;
+  /* ─── Status workflow (vivem nos badges) ─── */
+  --color-status-rascunho:  #6B6B6B;
+  --color-status-revisado:  #3B82F6;
+  --color-status-aprovado:  #10B981;
+  --color-status-agendado:  #8B5CF6;
+  --color-status-publicado: #059669;
+  --color-status-recusado:  #EF4444;
 
-  /* ─── Surfaces (light mode defaults) ─── */
-  --color-surface-bg: #F0F2F8;
-  --color-surface-card: #FFFFFF;
+  /* ─── Surfaces (Editorial Light) ─── */
+  --color-paper:           #F7F4ED;  /* off-white quente, papel reciclado */
+  --color-paper-2:         #EFEAE0;  /* swatch zone */
+  --color-ink:             #0B0B0F;  /* tinta preta */
+  --color-ink-2:           #2D2D35;  /* meio tom */
+  --color-ink-3:           #5A5A66;  /* secundário */
+  --color-rule:            #D8D0C2;  /* régua editorial */
+
+  /* aliases que componentes esperam */
+  --color-surface-bg:       var(--color-paper);
+  --color-surface-card:     #FFFFFF;
   --color-surface-elevated: #FFFFFF;
-  --color-surface-dark: #2D2D6B;
+  --color-text-primary:     var(--color-ink);
+  --color-text-secondary:   var(--color-ink-2);
+  --color-text-muted:       var(--color-ink-3);
+  --color-border:           var(--color-rule);
+  --color-border-hover:     #B8AE9A;
 
-  /* ─── Text ─── */
-  --color-text-primary: #111827;
-  --color-text-secondary: #4B5563;
-  --color-text-muted: #9CA3AF;
-  --color-text-on-dark: #F9FAFB;
+  /* semantic */
+  --color-success: var(--color-status-aprovado);
+  --color-warning: #F59E0B;
+  --color-error:   var(--color-status-recusado);
+  --color-info:    #3B82F6;
 
-  /* ─── Borders ─── */
-  --color-border: #E5E7EB;
-  --color-border-hover: #D1D5DB;
-
-  /* ─── Radius ─── */
-  --radius-sm: 4px;
-  --radius-md: 6px;
-  --radius-lg: 8px;
-  --radius-xl: 12px;
-
-  /* ─── Format tag colors ─── */
-  --color-format-reels: #DC2626;
+  /* ─── Format chips ─── */
+  --color-format-reels:     #DC2626;
   --color-format-carrossel: #7C3AED;
-  --color-format-stories: #D97706;
-  --color-format-post: #2563EB;
-  --color-format-banner: #059669;
-  --color-format-whatsapp: #16A34A;
+  --color-format-stories:   #D97706;
+  --color-format-post:      #2563EB;
+  --color-format-banner:    #059669;
+  --color-format-whatsapp:  #16A34A;
+
+  /* ─── Editorial radii — quase nada (cartões de papel não têm canto rolado) ─── */
+  --radius-sm: 2px;
+  --radius-md: 3px;
+  --radius-lg: 4px;
+  --radius-xl: 6px;
+
+  /* ─── Fontes ─── */
+  --font-display: 'Bricolage Grotesque', 'Söhne Breit', Georgia, serif;
+  --font-sans:    'DM Sans', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+  --font-mono:    'JetBrains Mono', 'SF Mono', Monaco, monospace;
+
+  /* sombras "papel" */
+  --shadow-paper: 0 1px 0 rgba(11,11,15,0.04), 0 8px 24px -8px rgba(11,11,15,0.06);
+  --shadow-lift:  0 2px 0 rgba(11,11,15,0.04), 0 18px 40px -12px rgba(11,11,15,0.18);
 }
 
-/* ─── shadcn/ui CSS variables (light mode) ─── */
+/* ─── shadcn — re-mapeia pras nossas tokens ─── */
 :root {
-  --background: 240 6% 96%;
-  --foreground: 222 47% 11%;
+  --background: 36 30% 95%;     /* paper */
+  --foreground: 240 14% 6%;     /* ink */
   --card: 0 0% 100%;
-  --card-foreground: 222 47% 11%;
+  --card-foreground: 240 14% 6%;
   --popover: 0 0% 100%;
-  --popover-foreground: 222 47% 11%;
-  --primary: 243 42% 30%;
-  --primary-foreground: 210 40% 98%;
-  --secondary: 14 78% 57%;
-  --secondary-foreground: 0 0% 100%;
-  --muted: 210 40% 96%;
-  --muted-foreground: 215 16% 47%;
-  --accent: 210 40% 96%;
-  --accent-foreground: 222 47% 11%;
+  --popover-foreground: 240 14% 6%;
+  --primary: 240 14% 6%;        /* ink — botão padrão é PRETO editorial */
+  --primary-foreground: 36 30% 95%;
+  --secondary: 41 100% 50%;     /* amarelo Gama */
+  --secondary-foreground: 240 14% 6%;
+  --muted: 36 20% 90%;
+  --muted-foreground: 240 8% 36%;
+  --accent: 41 100% 50%;        /* yellow accent */
+  --accent-foreground: 240 14% 6%;
   --destructive: 0 84% 60%;
-  --destructive-foreground: 210 40% 98%;
-  --border: 214 20% 90%;
-  --input: 214 20% 90%;
-  --ring: 243 42% 30%;
-  --radius: 0.5rem;
+  --destructive-foreground: 36 30% 95%;
+  --border: 35 19% 80%;
+  --input: 35 19% 80%;
+  --ring: 41 100% 50%;
+  --radius: 3px;
 }
 
-/* ─── Dark mode ─── */
+/* ─── Dark mode (Editorial Noir) ─── */
 .dark {
-  --background: 222 47% 8%;
-  --foreground: 210 40% 98%;
-  --card: 222 35% 13%;
-  --card-foreground: 210 40% 98%;
-  --popover: 222 35% 13%;
-  --popover-foreground: 210 40% 98%;
-  --primary: 14 78% 57%;
-  --primary-foreground: 0 0% 100%;
-  --secondary: 243 42% 30%;
-  --secondary-foreground: 210 40% 98%;
-  --muted: 222 30% 18%;
-  --muted-foreground: 215 20% 65%;
-  --accent: 222 30% 18%;
-  --accent-foreground: 210 40% 98%;
-  --destructive: 0 63% 31%;
-  --destructive-foreground: 210 40% 98%;
-  --border: 222 25% 22%;
-  --input: 222 25% 22%;
-  --ring: 14 78% 57%;
+  --color-surface-bg:       #0B0B0F;
+  --color-surface-card:     #181820;
+  --color-surface-elevated: #1F1F28;
+  --color-text-primary:     #F4ECDD;
+  --color-text-secondary:   #C9C1B0;
+  --color-text-muted:       #8A8275;
+  --color-border:           #2A2A33;
+  --color-border-hover:     #3D3D48;
+  --color-paper:            #0B0B0F;
+  --color-paper-2:          #151519;
+  --color-rule:             #2A2A33;
 
-  /* Override surface colors for dark */
-  --color-surface-bg: #0B1929;
-  --color-surface-card: #1a2744;
-  --color-surface-elevated: #213352;
-  --color-text-primary: #e2e8f0;
-  --color-text-secondary: #94a3b8;
-  --color-text-muted: #64748b;
-  --color-border: #2d3748;
-  --color-border-hover: #4a5568;
+  --background: 240 14% 6%;
+  --foreground: 36 30% 92%;
+  --card: 240 12% 11%;
+  --card-foreground: 36 30% 92%;
+  --popover: 240 12% 11%;
+  --popover-foreground: 36 30% 92%;
+  --primary: 41 100% 50%;       /* dark mode: amarelo Gama vira o primary */
+  --primary-foreground: 240 14% 6%;
+  --secondary: 240 12% 18%;
+  --secondary-foreground: 36 30% 92%;
+  --muted: 240 12% 14%;
+  --muted-foreground: 36 8% 60%;
+  --accent: 41 100% 50%;
+  --accent-foreground: 240 14% 6%;
+  --destructive: 0 63% 50%;
+  --destructive-foreground: 36 30% 92%;
+  --border: 240 8% 18%;
+  --input: 240 8% 18%;
+  --ring: 41 100% 50%;
 }
 
-/* ─── Base styles ─── */
+/* ──────────────────────────────────────────────────────────
+   BASE
+   ────────────────────────────────────────────────────────── */
 @layer base {
   * {
     @apply border-border;
   }
-
   html {
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
   }
-
   body {
-    @apply bg-surface-bg text-text-primary font-sans;
-    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    background: var(--color-paper);
+    color: var(--color-text-primary);
+    font-family: var(--font-sans);
+    font-feature-settings: "ss01", "cv11";
+    /* Grão de papel sutil — assinatura editorial */
+    background-image:
+      radial-gradient(rgba(11,11,15,0.025) 1px, transparent 1px),
+      radial-gradient(rgba(11,11,15,0.018) 1px, transparent 1px);
+    background-size: 3px 3px, 7px 7px;
+    background-position: 0 0, 1.5px 1.5px;
+  }
+  .dark body {
+    background: var(--color-paper);
+    background-image:
+      radial-gradient(rgba(255,255,255,0.020) 1px, transparent 1px),
+      radial-gradient(rgba(255,255,255,0.012) 1px, transparent 1px);
+    background-size: 3px 3px, 7px 7px;
+  }
+
+  /* tipo display — sempre Bricolage com tracking apertado */
+  h1, h2, h3 {
+    font-family: var(--font-display);
+    letter-spacing: -0.025em;
+    line-height: 1.02;
+  }
+  h1 { font-weight: 700; }
+  h2 { font-weight: 700; }
+  h3 { font-weight: 600; }
+
+  /* mono pra códigos, SKU, números */
+  code, kbd, samp, pre,
+  .font-mono, .mono {
+    font-family: var(--font-mono);
+    font-feature-settings: "ss02";
+  }
+
+  /* seleção amarela Gama */
+  ::selection {
+    background: var(--color-gama-amarelo);
+    color: var(--color-navy);
+  }
+
+  /* scroll bar editorial */
+  ::-webkit-scrollbar { width: 10px; height: 10px; }
+  ::-webkit-scrollbar-track { background: transparent; }
+  ::-webkit-scrollbar-thumb {
+    background: color-mix(in srgb, var(--color-ink) 25%, transparent);
+    border-radius: 0;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: color-mix(in srgb, var(--color-ink) 50%, transparent);
   }
 }
 
-/* ─── Rainbow gradient (reusable) ─── */
-.rainbow-gradient {
-  background: linear-gradient(90deg, #4AB8D8, #7CBF44, #F5C800, #F08020, #D93020);
+/* ──────────────────────────────────────────────────────────
+   EDITORIAL UTILITIES
+   ────────────────────────────────────────────────────────── */
+
+/* Eyebrow tipo magazine — letras pequenas, espaçadas, mono */
+.eyebrow {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--color-text-muted);
 }
 
-/* ─── Spinner animation ─── */
+/* Numerador editorial (No. 01, etc) */
+.numero {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  color: var(--color-gama-amarelo-3);
+}
+.dark .numero { color: var(--color-gama-amarelo-2); }
+
+/* Régua horizontal editorial — fininha, com nota mono opcional */
+.regua {
+  height: 1px;
+  background: var(--color-rule);
+  width: 100%;
+}
+
+/* Cartão papel — base de todos os "cards" */
+.paper-card {
+  background: var(--color-surface-card);
+  border: 1px solid var(--color-rule);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-paper);
+  transition: transform .25s cubic-bezier(.2,.7,.2,1), box-shadow .25s ease, border-color .25s ease;
+}
+.paper-card:hover {
+  transform: translateY(-1px);
+  box-shadow: var(--shadow-lift);
+  border-color: var(--color-border-hover);
+}
+
+/* Faixa colorida superior — language de cartão Pantone */
+.paint-band {
+  height: 6px;
+  width: 100%;
+  display: block;
+}
+
+/* Chip-swatch — usado na nav lateral */
+.swatch {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 18px;
+  letter-spacing: -0.04em;
+  color: var(--color-paper);
+  border-radius: 2px;
+  position: relative;
+  transition: transform .15s ease;
+}
+.swatch::after {
+  content: attr(data-code);
+  position: absolute;
+  top: 4px;
+  right: 4px;
+  font-family: var(--font-mono);
+  font-size: 7px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  color: var(--color-paper);
+  opacity: 0.65;
+}
+.swatch:hover { transform: scale(1.05); }
+.swatch.active {
+  outline: 2px solid var(--color-ink);
+  outline-offset: 3px;
+}
+.dark .swatch.active {
+  outline-color: var(--color-gama-amarelo);
+}
+
+/* Yellow tape — assinatura visual Gama (faixa amarela diagonal) */
+.tape {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  padding: 2px 10px;
+  font-family: var(--font-mono);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--color-navy);
+  background: var(--color-gama-amarelo);
+  border: 1px solid var(--color-gama-amarelo-3);
+  border-radius: 2px;
+  box-shadow: 1px 1px 0 var(--color-ink);
+}
+
+/* Paint stroke (svg decorativo) */
+.stroke-y {
+  display: inline-block;
+  height: 0.4em;
+  background: var(--color-gama-amarelo);
+  position: absolute;
+  bottom: 0.08em;
+  left: -0.1em;
+  right: -0.1em;
+  z-index: -1;
+  transform: skew(-4deg);
+}
+
+/* Status pill (badges de workflow já com cor editorial) */
+.status-dot {
+  display: inline-block;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+}
+
+/* ──────────────────────────────────────────────────────────
+   MOTION
+   ────────────────────────────────────────────────────────── */
+@keyframes fade-up {
+  from { opacity: 0; transform: translateY(10px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+@keyframes fade-in-soft {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+@keyframes shimmer-yellow {
+  0%, 100% { background-position: -200% 0; }
+  50%      { background-position: 200% 0; }
+}
+
+.fade-in   { animation: fade-in-soft .35s ease both; }
+.fade-up   { animation: fade-up .5s cubic-bezier(.2,.7,.2,1) both; }
+
+/* Stagger: aplique .stagger no container e .stagger-item nos filhos */
+.stagger > .stagger-item     { opacity: 0; animation: fade-up .55s cubic-bezier(.2,.7,.2,1) both; }
+.stagger > .stagger-item:nth-child(1) { animation-delay: .04s; }
+.stagger > .stagger-item:nth-child(2) { animation-delay: .10s; }
+.stagger > .stagger-item:nth-child(3) { animation-delay: .16s; }
+.stagger > .stagger-item:nth-child(4) { animation-delay: .22s; }
+.stagger > .stagger-item:nth-child(5) { animation-delay: .28s; }
+.stagger > .stagger-item:nth-child(6) { animation-delay: .34s; }
+.stagger > .stagger-item:nth-child(7) { animation-delay: .40s; }
+.stagger > .stagger-item:nth-child(n+8) { animation-delay: .46s; }
+
+/* Spinner editorial — barrinha em vez de circle */
 @keyframes spin { to { transform: rotate(360deg); } }
 .spinner {
   display: inline-block;
-  width: 20px;
-  height: 20px;
-  border: 2px solid rgba(255,255,255,0.3);
-  border-top-color: white;
+  width: 16px; height: 16px;
+  border: 1.5px solid color-mix(in srgb, var(--color-ink) 20%, transparent);
+  border-top-color: var(--color-gama-amarelo);
   border-radius: 50%;
-  animation: spin 0.7s linear infinite;
+  animation: spin .65s linear infinite;
 }
 
-/* ─── Fade in animation ─── */
-@keyframes fadeIn { from { opacity: 0; transform: translateY(4px); } to { opacity: 1; transform: translateY(0); } }
-.fade-in { animation: fadeIn 0.25s ease; }
+/* Skeleton de carregamento (papel)  */
+@keyframes skeleton {
+  0% { background-position: -200px 0; }
+  100% { background-position: calc(200px + 100%) 0; }
+}
+.skeleton {
+  background: linear-gradient(90deg,
+    color-mix(in srgb, var(--color-rule) 50%, transparent) 0%,
+    color-mix(in srgb, var(--color-gama-amarelo) 10%, transparent) 50%,
+    color-mix(in srgb, var(--color-rule) 50%, transparent) 100%);
+  background-size: 200px 100%;
+  background-repeat: no-repeat;
+  animation: skeleton 1.4s ease-in-out infinite;
+}
+
+/* ──────────────────────────────────────────────────────────
+   FOCUS — anel amarelo Gama, não o azul genérico do browser
+   ────────────────────────────────────────────────────────── */
+*:focus-visible {
+  outline: 2px solid var(--color-gama-amarelo);
+  outline-offset: 2px;
+  border-radius: 1px;
+}
+
+/* ──────────────────────────────────────────────────────────
+   HEADLINES utilitárias
+   ────────────────────────────────────────────────────────── */
+.display-xl {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: clamp(2.25rem, 4vw, 3.75rem);
+  letter-spacing: -0.03em;
+  line-height: 0.94;
+}
+.display-lg {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: clamp(1.75rem, 2.6vw, 2.5rem);
+  letter-spacing: -0.025em;
+  line-height: 1;
+}
+.display-md {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 1.375rem;
+  letter-spacing: -0.02em;
+  line-height: 1.1;
+}
+
+.lead {
+  font-family: var(--font-sans);
+  font-size: 1rem;
+  line-height: 1.55;
+  color: var(--color-text-secondary);
+  max-width: 60ch;
+}
+
+/* Pull-quote editorial — pra usar em peças geradas */
+.pullquote {
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: 1.5rem;
+  line-height: 1.2;
+  letter-spacing: -0.02em;
+  font-style: italic;
+  padding-left: 1rem;
+  border-left: 3px solid var(--color-gama-amarelo);
+}
+
+/* Mono Tag — pra rotular ângulo, persona, formato */
+.mtag {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 3px 8px 3px 6px;
+  font-family: var(--font-mono);
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--color-text-primary);
+  background: var(--color-paper-2);
+  border: 1px solid var(--color-rule);
+  border-radius: 1px;
+}
+.mtag::before {
+  content: '';
+  display: inline-block;
+  width: 6px;
+  height: 6px;
+  background: currentColor;
+  opacity: 0.55;
+}
+
+/* Botão primário "lacre amarelo" — overrride do shadcn default sem perder a API */
+.btn-yellow {
+  background: var(--color-gama-amarelo);
+  color: var(--color-navy);
+  font-family: var(--font-display);
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  border: 1px solid var(--color-gama-amarelo-3);
+  box-shadow: 2px 2px 0 var(--color-ink);
+  transition: transform .12s ease, box-shadow .12s ease, background .15s ease;
+}
+.btn-yellow:hover {
+  background: var(--color-gama-amarelo-2);
+  transform: translate(-1px, -1px);
+  box-shadow: 3px 3px 0 var(--color-ink);
+}
+.btn-yellow:active {
+  transform: translate(1px, 1px);
+  box-shadow: 0 0 0 var(--color-ink);
+}
+.dark .btn-yellow {
+  box-shadow: 2px 2px 0 var(--color-gama-amarelo-3);
+}
+
+/* Botão ghost editorial */
+.btn-ink {
+  background: var(--color-ink);
+  color: var(--color-paper);
+  border: 1px solid var(--color-ink);
+}
+.btn-ink:hover {
+  background: var(--color-ink-2);
+}
+
+/* Hover de link sublinhado animado */
+.hover-underline {
+  background-image: linear-gradient(var(--color-gama-amarelo), var(--color-gama-amarelo));
+  background-size: 0% 6px;
+  background-position: 0 100%;
+  background-repeat: no-repeat;
+  transition: background-size .3s cubic-bezier(.2,.7,.2,1);
+  padding-bottom: 1px;
+}
+.hover-underline:hover {
+  background-size: 100% 6px;
+}
