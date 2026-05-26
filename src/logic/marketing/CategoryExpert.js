@@ -13,7 +13,7 @@ const CATEGORY_CONTEXTS = {
   "Tintas Externas": {
     hook: "Fachada é o cartão de visitas do imóvel — e da loja que vendeu a tinta.",
     keywords: ["resistência", "clima", "UV", "impermeável", "durabilidade"],
-    visual_cue: "Fachada de casa recém pintada, sol do litoral, cores vibrantes.",
+    visual_cue: "Fachada de casa recém pintada na Grande SP, sol forte, cores vibrantes.",
     b2b_angle: "Produto de ticket maior — margem relevante para o lojista.",
   },
   "Tintas de Piso": {
@@ -41,10 +41,10 @@ const CATEGORY_CONTEXTS = {
     b2b_angle: "Venda obrigatória junto com tinta — não tem como separar.",
   },
   "Impermeabilizantes": {
-    hook: "No litoral, umidade não perdoa. Impermeabilizante não é opcional.",
-    keywords: ["umidade", "infiltração", "laje", "terraço", "litoral"],
-    visual_cue: "Aplicação de impermeabilizante em laje, região costeira ao fundo.",
-    b2b_angle: "Altíssima relevância na Baixada Santista — diferencial regional.",
+    hook: "Chuva forte na Grande SP não perdoa fachada e laje sem impermeabilizante.",
+    keywords: ["umidade", "infiltração", "laje", "terraço", "fachada"],
+    visual_cue: "Aplicação de impermeabilizante em laje urbana, prédio ao fundo.",
+    b2b_angle: "Alta margem + recorrência (manutenção anual) — produto que fideliza obra.",
   },
   "Tintometria / Tinting": {
     hook: "A cor certa na hora certa — sem perder o cliente pra concorrência.",

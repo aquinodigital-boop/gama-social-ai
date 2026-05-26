@@ -1,6 +1,9 @@
 /**
  * BrandBrain.js — Gama Distribuidora
  * Identidade de marca, personas B2B, ângulos estratégicos e dados competitivos.
+ *
+ * REGRA HARD: área de atuação = Grande São Paulo APENAS.
+ * Nunca citar Baixada Santista, Santos ou litoral em copy externa Gama.
  */
 export const BrandBrain = {
   identity: {
@@ -16,33 +19,33 @@ export const BrandBrain = {
 
   regionalContext: {
     regions: {
-      baixada_santista: {
-        label: "Baixada Santista",
-        cities: ["Santos", "São Vicente", "Guarujá", "Cubatão", "Praia Grande"],
-        hooks: [
-          "Entrega ágil na Baixada Santista",
-          "Abastecemos toda a região de Santos",
-          "Parceiro oficial Coral na sua região",
-        ],
-      },
       grande_sp: {
         label: "Grande São Paulo",
-        cities: ["São Paulo", "Guarulhos", "Osasco"],
+        cities: ["São Paulo", "Guarulhos", "Osasco", "Barueri", "Cotia", "Taboão da Serra"],
         hooks: [
-          "Atendimento B2B em toda Grande SP",
-          "Estoque disponível para a Capital e região",
+          "Atendimento B2B em toda Grande São Paulo",
+          "Estoque disponível para a Capital e região metropolitana",
+          "Parceiro oficial Coral na Grande SP",
         ],
       },
       abc: {
         label: "ABC Paulista",
-        cities: ["São Bernardo", "Santo André", "São Caetano", "Diadema"],
+        cities: ["São Bernardo", "Santo André", "São Caetano", "Diadema", "Mauá"],
         hooks: [
-          "Do ABC ao litoral, a Gama chega",
-          "Estoque reposto para você não perder venda",
+          "Cobrimos o ABC Paulista com estoque reposto",
+          "Atendimento consultivo para lojistas do ABC",
+        ],
+      },
+      zona_oeste: {
+        label: "Zona Oeste / Alphaville",
+        cities: ["Alphaville", "Barueri", "Osasco", "Carapicuíba"],
+        hooks: [
+          "Suporte técnico e logística para o eixo Alphaville",
+          "Distribuidor oficial Coral na Zona Oeste",
         ],
       },
     },
-    focusCampaign: "Projeto Reconquista Santos",
+    focusCampaign: "Programa CL — Parceria & Crescimento",
     competitor: "Suvinil",
   },
 
@@ -61,7 +64,7 @@ export const BrandBrain = {
     lojista_prospeccao: {
       id: 'lojista_prospeccao',
       label: 'Lojista (Prospecção)',
-      description: 'Lojista que compra do concorrente (Suvinil/Lukscolor). Foco em conquista.',
+      description: 'Lojista da Grande SP que compra do concorrente (Suvinil/Lukscolor). Foco em conquista.',
       pain: 'Fornecedor que não entrega no prazo ou não dá suporte',
       desire: 'Um parceiro confiável que resolve e agrega valor',
       tone: 'Confiante, com dados. Mostrar diferencial sem atacar o concorrente.',
@@ -80,13 +83,13 @@ export const BrandBrain = {
     },
   },
 
-  // 6 novos ângulos estratégicos
+  // 6 ângulos estratégicos da Gama (todos B2B, escopo Grande SP)
   strategicAngles: [
     { id: "parceria_confianca", label: "Parceria & Confiança", icon: "🤝", focus: "20 anos de parceria, atendimento humano, consultor dedicado, confiança." },
-    { id: "bastidores_operacao", label: "Bastidores da Operação", icon: "🚛", focus: "Logística, estoque, entrega ágil, time Gama em ação." },
+    { id: "bastidores_operacao", label: "Bastidores da Operação", icon: "🚛", focus: "Logística na Grande SP, estoque, entrega ágil, time Gama em ação." },
     { id: "case_lojista", label: "Case de Lojista", icon: "📊", focus: "Resultado real de lojistas parceiros, depoimento, antes e depois." },
     { id: "produto_margem", label: "Produto & Margem", icon: "💰", focus: "Rentabilidade, giro de estoque, produto que vende e dá margem." },
-    { id: "reconquista_santos", label: "Reconquista Santos", icon: "🏆", focus: "Retomada de market share na Baixada Santista vs Suvinil." },
+    { id: "expertise_coral", label: "Expertise Coral", icon: "🎨", focus: "Distribuidor OFICIAL Coral, conhecimento técnico das linhas, suporte de aplicação." },
     { id: "programa_cl", label: "Programa CL", icon: "⭐", focus: "Programa de níveis, transformação de fachada, benefícios exclusivos." },
   ],
 
@@ -94,7 +97,7 @@ export const BrandBrain = {
   competitors: {
     suvinil: {
       name: 'Suvinil',
-      weaknesses: ['Atendimento distante', 'Logística lenta no litoral', 'Menos flexibilidade para lojas pequenas'],
+      weaknesses: ['Atendimento distante', 'Menor flexibilidade pra lojas pequenas da Grande SP', 'Suporte técnico pouco presente'],
       gamaAdvantage: ['Entrega ágil', 'Consultor dedicado', 'Flexibilidade de pedido', 'Mix Coral + parceiras'],
     },
     lukscolor: {
@@ -107,18 +110,18 @@ export const BrandBrain = {
   // Dados de mercado
   marketData: {
     coralMarketShare: '~30% do mercado nacional de tintas decorativas',
-    gamaExperience: '20+ anos como distribuidor oficial',
-    deliveryTime: 'Entrega em até 24h na região de atuação',
+    gamaExperience: '20+ anos como distribuidor oficial Coral',
+    deliveryTime: 'Logística ágil em toda Grande São Paulo',
     productCount: '1200+ produtos no catálogo',
     partnerBrandsCount: '19 marcas parceiras',
   },
 
   getRegionLabel(regionId) {
-    return this.regionalContext.regions[regionId]?.label || 'Baixada Santista';
+    return this.regionalContext.regions[regionId]?.label || 'Grande São Paulo';
   },
 
   getRegionHook(regionId) {
-    const hooks = this.regionalContext.regions[regionId]?.hooks || this.regionalContext.regions.baixada_santista.hooks;
+    const hooks = this.regionalContext.regions[regionId]?.hooks || this.regionalContext.regions.grande_sp.hooks;
     return hooks[Math.floor(Math.random() * hooks.length)];
   },
 

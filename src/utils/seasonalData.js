@@ -9,11 +9,11 @@ const SEASONS = {
     months: [12, 1, 2],
     icon: 'Sun',
     highlights: ['Impermeabilizantes', 'Sol & Chuva', 'Tintas Externas'],
-    reason: 'Temporada de chuvas e reformas de verão — proteção de fachadas no litoral',
+    reason: 'Temporada de chuvas fortes na Grande SP — proteção de fachadas e lajes',
     campaigns: [
       'Proteção de fachada antes das chuvas de verão',
       'Reforma de verão: pinte a loja antes da alta temporada',
-      'Kit impermeabilização para o litoral — Sol & Chuva + Fundo Preparador',
+      'Kit impermeabilização Grande SP — Sol & Chuva + Fundo Preparador',
     ],
   },
   outono: {
