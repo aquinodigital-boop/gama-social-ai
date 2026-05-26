@@ -2,27 +2,49 @@ import React from 'react';
 import { WORKFLOW_STATUS } from '../hooks/useContentHistory.js';
 import { cn } from '@/lib/utils';
 
-const COLOR_STYLES = {
-  gray:    'bg-gray-100 text-gray-700 dark:bg-gray-800 dark:text-gray-300',
-  blue:    'bg-blue-100 text-blue-700 dark:bg-blue-900/40 dark:text-blue-300',
-  green:   'bg-green-100 text-green-700 dark:bg-green-900/40 dark:text-green-300',
-  purple:  'bg-purple-100 text-purple-700 dark:bg-purple-900/40 dark:text-purple-300',
-  emerald: 'bg-emerald-100 text-emerald-700 dark:bg-emerald-900/40 dark:text-emerald-300',
-  red:     'bg-red-100 text-red-700 dark:bg-red-900/40 dark:text-red-300',
+/**
+ * Badge editorial — dot colorido + texto mono uppercase.
+ * Visual de "etiqueta de arquivo" em vez de pill colorida genérica.
+ */
+const DOT_COLOR = {
+  gray:    'var(--color-status-rascunho)',
+  blue:    'var(--color-status-revisado)',
+  green:   'var(--color-status-aprovado)',
+  purple:  'var(--color-status-agendado)',
+  emerald: 'var(--color-status-publicado)',
+  red:     'var(--color-status-recusado)',
 };
 
 export function WorkflowStatusBadge({ status, compact = false }) {
   const def = WORKFLOW_STATUS[status] || WORKFLOW_STATUS.rascunho;
+  const dotColor = DOT_COLOR[def.color] || DOT_COLOR.gray;
+
   return (
     <span
-      className={cn(
-        'inline-flex items-center gap-1 rounded-full font-medium',
-        COLOR_STYLES[def.color] || COLOR_STYLES.gray,
-        compact ? 'px-1.5 py-0.5 text-[10px]' : 'px-2 py-0.5 text-xs'
-      )}
+      className={cn('inline-flex items-center gap-1.5')}
+      style={{
+        fontFamily: 'var(--font-mono)',
+        fontSize: compact ? 9 : 10,
+        fontWeight: 700,
+        letterSpacing: '0.08em',
+        textTransform: 'uppercase',
+        color: 'var(--color-text-primary)',
+        padding: compact ? '2px 6px 2px 5px' : '3px 8px 3px 6px',
+        border: '1px solid var(--color-rule)',
+        borderRadius: 1,
+        background: 'var(--color-paper)',
+      }}
     >
-      <span>{def.icon}</span>
-      <span>{def.label}</span>
+      <span
+        className="status-dot"
+        style={{
+          background: dotColor,
+          width: compact ? 5 : 6,
+          height: compact ? 5 : 6,
+          boxShadow: `0 0 0 2px color-mix(in srgb, ${dotColor} 18%, transparent)`,
+        }}
+      />
+      {def.label}
     </span>
   );
 }

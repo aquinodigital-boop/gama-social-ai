@@ -1,5 +1,5 @@
 import React, { useState, useCallback } from 'react';
-import { providerRegistry, GEMINI_MODELS } from '../providers/index.js';
+import { providerRegistry } from '../providers/index.js';
 import { GamaDataService } from '../logic/GamaDataService.js';
 import { BrandBrain } from '../logic/BrandBrain.js';
 import { BrandExpert } from '../logic/marketing/BrandExpert.js';
@@ -7,45 +7,39 @@ import { useContentHistory } from '../hooks/useContentHistory.js';
 import { ContentDisplay } from './ContentDisplay.jsx';
 import { QualityPanel } from './QualityPanel.jsx';
 import { cn } from '@/lib/utils';
-import { Button } from '@/components/ui/button';
-import { Badge } from '@/components/ui/badge';
 import { toast } from 'sonner';
-import { Sparkles, Loader2, Camera, Video, Image } from 'lucide-react';
+import { Sparkles, Loader2, Camera, Video } from 'lucide-react';
 
+/* ──────────────────────────────────────────────────────────
+   Catálogo de escolhas — cada uma vira um "cartão Pantone"
+   ────────────────────────────────────────────────────────── */
 const FORMATS = [
-  { id: 'reels', label: 'Reels', icon: '🎬' },
-  { id: 'carrossel', label: 'Carrossel', icon: '📸' },
-  { id: 'stories', label: 'Stories', icon: '📱' },
-  { id: 'post_estatico', label: 'Post Estático', icon: '📌' },
+  { id: 'reels',         label: 'Reels',         code: 'REL-01', color: 'var(--color-format-reels)',     hint: '15-30s · vertical' },
+  { id: 'carrossel',     label: 'Carrossel',     code: 'CAR-02', color: 'var(--color-format-carrossel)', hint: '5 slides · 1:1' },
+  { id: 'stories',       label: 'Stories',       code: 'STO-03', color: 'var(--color-format-stories)',   hint: '3-5 telas · vertical' },
+  { id: 'post_estatico', label: 'Post estático', code: 'POS-04', color: 'var(--color-format-post)',      hint: 'imagem única · feed' },
 ];
 
-const ANGLES = BrandBrain.strategicAngles.map(a => ({
-  id: a.id, label: a.label, icon: a.icon,
+const ANGLES = BrandBrain.strategicAngles.map((a) => ({
+  id: a.id, label: a.label, icon: a.icon, focus: a.focus,
 }));
 
-const PERSONAS = Object.values(BrandBrain.personas).map(p => ({
-  id: p.id, label: p.label, icon: p.icon,
+const PERSONAS = Object.values(BrandBrain.personas).map((p) => ({
+  id: p.id, label: p.label, icon: p.icon, pain: p.pain,
 }));
+
+const MODE_OPTIONS = [
+  { id: 'product',       label: 'Produto',        hint: 'um SKU específico da sidebar' },
+  { id: 'category_mix',  label: 'Categoria',      hint: 'um grupo de produtos' },
+  { id: 'brand',         label: 'Marca parceira', hint: 'destaque de uma marca' },
+  { id: 'institucional', label: 'Institucional',  hint: 'a Gama em primeiro plano' },
+];
 
 export function SocialContent({ item }) {
-  const { history, addToHistory } = useContentHistory();
+  const { addToHistory } = useContentHistory();
 
   const [activeProviderId, setActiveProviderId] = useState(providerRegistry.getActiveId());
-  const [activeModel, setActiveModel] = useState(providerRegistry.getGeminiModel());
   const providers = providerRegistry.listProviders();
-
-  const handleProviderChange = (id) => {
-    providerRegistry.setActive(id);
-    setActiveProviderId(id);
-    toast.info(`Motor: ${providerRegistry.getProviderName()}`);
-  };
-
-  const handleModelChange = (modelId) => {
-    providerRegistry.setGeminiModel(modelId);
-    setActiveModel(modelId);
-    const m = GEMINI_MODELS.find(m => m.id === modelId);
-    toast.info(`Modelo: ${m?.label || modelId}`);
-  };
 
   const [mode, setMode] = useState('product');
   const [selectedFormat, setSelectedFormat] = useState('reels');
@@ -58,17 +52,22 @@ export function SocialContent({ item }) {
   const [isGenerating, setIsGenerating] = useState(false);
 
   React.useEffect(() => {
-    if (item) {
-      if (item.type === 'institutional') setMode('institutional');
-      else if (item.type === 'category') { setMode('category_mix'); setSelectedCategory(item.name); }
-      else if (item.type === 'brand') setMode('brand');
-      else setMode('product');
-    }
+    if (!item) return;
+    if (item.type === 'institutional') setMode('institucional');
+    else if (item.type === 'category') { setMode('category_mix'); setSelectedCategory(item.name); }
+    else if (item.type === 'brand') setMode('brand');
+    else setMode('product');
   }, [item]);
+
+  const handleProviderChange = (id) => {
+    providerRegistry.setActive(id);
+    setActiveProviderId(id);
+    toast.success(`Motor: ${providerRegistry.getProviderName()}`);
+  };
 
   const buildRequest = useCallback(() => {
     let name, category, requestMode, brandContext;
-    if (mode === 'institutional') {
+    if (mode === 'institucional') {
       name = 'Gama Distribuidora'; category = 'Institucional'; requestMode = 'institutional';
     } else if (mode === 'category_mix') {
       name = selectedCategory; category = selectedCategory; requestMode = 'category';
@@ -86,192 +85,365 @@ export function SocialContent({ item }) {
     return { mode: requestMode, name, category, angle: selectedAngle, persona: selectedPersona, format: selectedFormat, brandContext };
   }, [mode, item, selectedCategory, selectedAngle, selectedPersona, selectedFormat]);
 
-  const handleGenerate = useCallback(async () => {
+  async function runGenerate(method, label) {
     const request = buildRequest();
-    if (!request) { toast.error('Selecione um produto ou categoria primeiro'); return; }
+    if (!request) { toast.error('Selecione um produto, marca ou categoria primeiro'); return; }
     setIsGenerating(true); setGeneratedContent(null);
     try {
       const start = performance.now();
-      const content = await providerRegistry.current.generate(request);
+      const content = await providerRegistry.current[method](request);
       setGeneratedContent(content); addToHistory(content);
-      toast.success(`Conteúdo gerado em ${Math.round(performance.now() - start)}ms`);
-    } catch (err) { toast.error(`Erro: ${err.message}`); }
-    finally { setIsGenerating(false); }
-  }, [buildRequest, addToHistory]);
+      toast.success(`${label} em ${Math.round(performance.now() - start)}ms`);
+    } catch (err) {
+      toast.error(`Falhou: ${err.message}`);
+    } finally {
+      setIsGenerating(false);
+    }
+  }
 
-  const handleQuickImage = useCallback(async () => {
-    const request = buildRequest();
-    if (!request) { toast.error('Selecione um produto ou categoria primeiro'); return; }
-    setIsGenerating(true); setGeneratedContent(null);
-    try {
-      const start = performance.now();
-      const content = await providerRegistry.current.generateQuickImage(request);
-      setGeneratedContent(content); addToHistory(content);
-      toast.success(`Quick Image gerado em ${Math.round(performance.now() - start)}ms`);
-    } catch (err) { toast.error(`Erro: ${err.message}`); }
-    finally { setIsGenerating(false); }
-  }, [buildRequest, addToHistory]);
+  const handleGenerate    = () => runGenerate('generate', 'Conteúdo gerado');
+  const handleQuickImage  = () => runGenerate('generateQuickImage', 'Quick Image');
+  const handleQuickVideo  = () => runGenerate('generateQuickVideo', 'Quick Video');
 
-  const handleQuickVideo = useCallback(async () => {
-    const request = buildRequest();
-    if (!request) { toast.error('Selecione um produto ou categoria primeiro'); return; }
-    setIsGenerating(true); setGeneratedContent(null);
-    try {
-      const start = performance.now();
-      const content = await providerRegistry.current.generateQuickVideo(request);
-      setGeneratedContent(content); addToHistory(content);
-      toast.success(`Quick Video gerado em ${Math.round(performance.now() - start)}ms`);
-    } catch (err) { toast.error(`Erro: ${err.message}`); }
-    finally { setIsGenerating(false); }
-  }, [buildRequest, addToHistory]);
+  const needsItem = (mode === 'product' || mode === 'brand') && !item;
+  const itemLabel = item?.name || item || 'Nenhum';
 
   return (
-    <div className="fade-in">
-      <div className="flex items-center justify-between gap-3 mb-4 flex-wrap">
-        <div className="flex items-center gap-2">
-          <Image size={24} className="text-purple-500" />
-          <h2 className="text-lg font-bold text-text-primary">Conteúdo Social</h2>
+    <div className="fade-in space-y-10">
+      {/* ──────── HERO editorial ──────── */}
+      <section className="space-y-4">
+        <div className="flex items-center gap-3">
+          <span className="numero">No. 04</span>
+          <div className="regua flex-1" />
+          <span className="eyebrow">Estúdio de Conteúdo · GMA-004</span>
         </div>
 
-        <div className="flex items-center gap-2 flex-wrap">
-          <div className="flex bg-surface-card border border-border rounded-full p-0.5">
-            {providers.filter(p => p.available).map(p => (
+        <h1 className="display-xl" style={{ color: 'var(--color-ink)' }}>
+          Gere uma peça B2B<br />
+          <span style={{ position: 'relative', display: 'inline-block' }}>
+            <span style={{ position: 'relative', zIndex: 1 }}>conforme ao DNA Gama.</span>
+            <span className="stroke-y" />
+          </span>
+        </h1>
+
+        <p className="lead">
+          Escolha o <strong>modo</strong>, o <strong>formato</strong>, o <strong>ângulo</strong> e a <strong>persona</strong>.
+          O validador HARD bloqueia automaticamente qualquer saída fora das regras da marca.
+        </p>
+
+        {/* Provider switcher — pílulas mono */}
+        <div className="flex flex-wrap items-center gap-2 pt-2">
+          <span className="eyebrow">motor:</span>
+          {providers.filter((p) => p.available).map((p) => (
+            <button
+              key={p.id}
+              onClick={() => handleProviderChange(p.id)}
+              className="px-3 py-1 transition-all"
+              style={{
+                background: activeProviderId === p.id ? 'var(--color-ink)' : 'transparent',
+                color: activeProviderId === p.id ? 'var(--color-paper)' : 'var(--color-text-primary)',
+                border: '1px solid var(--color-ink)',
+                borderRadius: 1,
+                fontFamily: 'var(--font-mono)',
+                fontSize: 10,
+                fontWeight: 600,
+                letterSpacing: '0.08em',
+                textTransform: 'uppercase',
+              }}
+              title={p.description}
+            >
+              {p.id === 'claude' && '◆ '}{p.id === 'gemini' && '◇ '}{p.id === 'local' && '◌ '}
+              {p.name}
+              {p.recommended && <span style={{ marginLeft: 6, color: 'var(--color-gama-amarelo-2)' }}>★</span>}
+            </button>
+          ))}
+        </div>
+      </section>
+
+      {/* ──────── 1. MODO ──────── */}
+      <Section number="01" title="Modo" subtitle="Quem é o protagonista desta peça?">
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-3 stagger">
+          {MODE_OPTIONS.map((m, i) => {
+            const active = mode === m.id;
+            return (
               <button
-                key={p.id}
-                onClick={() => handleProviderChange(p.id)}
-                className={cn(
-                  'px-3 py-1 text-xs font-semibold rounded-full transition-all',
-                  activeProviderId === p.id
-                    ? p.id === 'gemini' ? 'bg-gradient-to-r from-blue-500 to-green-500 text-white' : 'bg-navy text-white'
-                    : 'text-text-muted hover:text-text-primary'
-                )}
+                key={m.id}
+                onClick={() => setMode(m.id)}
+                className={cn('stagger-item paper-card p-4 text-left transition-all', active && 'shadow-[2px_2px_0_var(--color-ink)]')}
+                style={active ? { borderColor: 'var(--color-ink)', borderWidth: 2 } : {}}
               >
-                {p.id === 'gemini' ? '🤖' : '📝'} {p.name}
+                <div className="flex items-baseline justify-between gap-2">
+                  <span className="display-md" style={{ fontSize: 18 }}>{m.label}</span>
+                  <span className="mono text-[9px] opacity-50">M/{String(i + 1).padStart(2, '0')}</span>
+                </div>
+                <div className="text-xs text-text-muted mt-1">{m.hint}</div>
               </button>
+            );
+          })}
+        </div>
+
+        {/* Context card */}
+        <div className="mt-4 paper-card overflow-hidden">
+          <span className="paint-band" style={{ background: 'var(--color-gama-amarelo)' }} />
+          <div className="p-4 flex items-center justify-between gap-3 flex-wrap">
+            <div className="min-w-0">
+              <span className="eyebrow">Selecionado</span>
+              <div className="display-md mt-1 truncate" style={{ maxWidth: '40ch' }}>{itemLabel}</div>
+              <div className="flex gap-2 mt-2 flex-wrap">
+                {item?.category && <span className="mtag">cat · {item.category}</span>}
+                {item?.type === 'brand' && (
+                  <span className="mtag" style={{ color: 'var(--color-chip-social)' }}>marca · {item.segment}</span>
+                )}
+              </div>
+            </div>
+
+            {needsItem && (
+              <div className="mono text-[10px] px-3 py-1.5"
+                style={{ background: 'var(--color-status-recusado)', color: '#fff', borderRadius: 1, letterSpacing: '0.08em' }}>
+                ▸ ESCOLHA UM ITEM NA SIDEBAR
+              </div>
+            )}
+
+            {mode === 'category_mix' && (
+              <select
+                value={selectedCategory}
+                onChange={(e) => setSelectedCategory(e.target.value)}
+                className="px-3 py-2 text-sm bg-white"
+                style={{ border: '1px solid var(--color-rule)', borderRadius: 2, fontFamily: 'var(--font-mono)' }}
+              >
+                {GamaDataService.getUniqueCategories().map((c) => <option key={c} value={c}>{c}</option>)}
+              </select>
+            )}
+
+            {mode === 'institucional' && (
+              <div className="flex flex-wrap gap-1.5 max-w-md justify-end">
+                {BrandExpert.themes.map((t) => (
+                  <button
+                    key={t.id}
+                    onClick={() => setSelectedThemeId(t.id)}
+                    className="px-2.5 py-1.5 text-xs transition-all"
+                    style={{
+                      background: selectedThemeId === t.id ? 'var(--color-ink)' : 'transparent',
+                      color: selectedThemeId === t.id ? 'var(--color-paper)' : 'var(--color-text-primary)',
+                      border: '1px solid var(--color-rule)',
+                      borderRadius: 1,
+                      fontFamily: 'var(--font-mono)',
+                      letterSpacing: '0.04em',
+                    }}
+                  >
+                    {t.label}
+                  </button>
+                ))}
+              </div>
+            )}
+          </div>
+        </div>
+      </Section>
+
+      {/* ──────── 2. FORMATO ──────── */}
+      <Section number="02" title="Formato" subtitle="Onde a peça vai morar.">
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-3 stagger">
+          {FORMATS.map((f) => (
+            <SwatchPick
+              key={f.id}
+              active={selectedFormat === f.id}
+              onClick={() => setSelectedFormat(f.id)}
+              color={f.color}
+              code={f.code}
+              label={f.label}
+              hint={f.hint}
+            />
+          ))}
+        </div>
+      </Section>
+
+      {/* ──────── 3 + 4. ÂNGULO + PERSONA ──────── */}
+      <div className="grid lg:grid-cols-2 gap-6">
+        <Section number="03" title="Ângulo" subtitle="O argumento estratégico.">
+          <div className="flex flex-col gap-2 stagger">
+            {ANGLES.map((a) => (
+              <SelectableRow
+                key={a.id}
+                active={selectedAngle === a.id}
+                onClick={() => setSelectedAngle(a.id)}
+                icon={a.icon}
+                title={a.label}
+                desc={a.focus}
+              />
             ))}
           </div>
-          {activeProviderId === 'gemini' && (
-            <div className="flex bg-surface-card border border-border rounded-full p-0.5">
-              {GEMINI_MODELS.map(m => (
-                <button
-                  key={m.id}
-                  onClick={() => handleModelChange(m.id)}
-                  title={m.description}
-                  className={cn(
-                    'px-3 py-1 text-xs font-semibold rounded-full transition-all',
-                    activeModel === m.id ? 'bg-coral text-white' : 'text-text-muted hover:text-text-primary'
-                  )}
-                >
-                  {m.label}
-                </button>
-              ))}
+        </Section>
+
+        <Section number="04" title="Persona" subtitle="Pra quem a peça fala.">
+          <div className="flex flex-col gap-2 stagger">
+            {PERSONAS.map((p) => (
+              <SelectableRow
+                key={p.id}
+                active={selectedPersona === p.id}
+                onClick={() => setSelectedPersona(p.id)}
+                icon={p.icon}
+                title={p.label}
+                desc={p.pain && `Dor: ${p.pain}`}
+              />
+            ))}
+          </div>
+        </Section>
+      </div>
+
+      {/* ──────── 5. EXECUTE ──────── */}
+      <section className="paper-card overflow-hidden">
+        <span className="paint-band" style={{ background: 'var(--color-ink)' }} />
+        <div className="p-6 space-y-4">
+          <div className="flex items-center gap-3">
+            <span className="numero">No. 05</span>
+            <div className="regua flex-1" />
+            <span className="eyebrow">Execute</span>
+          </div>
+
+          <div className="grid sm:grid-cols-2 gap-3">
+            <QuickButton onClick={handleQuickImage} disabled={isGenerating || needsItem} Icon={Camera} label="Quick Image" code="QIM-01" hint="1 prompt + caption pronta" />
+            <QuickButton onClick={handleQuickVideo} disabled={isGenerating || needsItem} Icon={Video} label="Quick Video" code="QVD-01" hint="3 cenas + caption" />
+          </div>
+
+          {/* Botão lacrado amarelo */}
+          <button
+            onClick={handleGenerate}
+            disabled={isGenerating || needsItem}
+            className="btn-yellow w-full px-6 py-4 flex items-center justify-center gap-3 disabled:opacity-40 disabled:cursor-not-allowed disabled:shadow-none"
+            style={{ borderRadius: 2, fontSize: 18 }}
+          >
+            {isGenerating ? (
+              <>
+                <Loader2 size={20} className="animate-spin" />
+                <span style={{ textTransform: 'uppercase', letterSpacing: '0.04em' }}>Gerando…</span>
+              </>
+            ) : (
+              <>
+                <Sparkles size={20} />
+                <span style={{ textTransform: 'uppercase', letterSpacing: '0.04em' }}>Gerar peça completa</span>
+              </>
+            )}
+          </button>
+
+          {needsItem && (
+            <div className="mono text-[10px] text-center" style={{ color: 'var(--color-text-muted)' }}>
+              ▸ ABRA A SIDEBAR E ESCOLHA UM PRODUTO/MARCA ANTES DE GERAR
             </div>
           )}
         </div>
-      </div>
+      </section>
 
-      {/* Mode selector */}
-      <div className="bg-surface-card border border-border rounded-lg p-4 mb-4">
-        <div className="flex gap-2 mb-4 flex-wrap">
-          {[
-            { id: 'product', label: 'Produto', disabled: !item || item.type === 'brand' },
-            { id: 'category_mix', label: 'Categoria', disabled: false },
-            { id: 'brand', label: 'Marca', disabled: !item || item.type !== 'brand' },
-            { id: 'institutional', label: 'Institucional', disabled: false },
-          ].map(m => (
-            <Button key={m.id} variant={mode === m.id ? 'default' : 'outline'} size="sm" onClick={() => setMode(m.id)} disabled={m.disabled} className={cn(mode === m.id && 'bg-purple-600 hover:bg-purple-700')}>
-              {m.label}
-            </Button>
-          ))}
-        </div>
-
-        {mode === 'product' && item && item.type !== 'brand' && (
-          <div className="p-3 bg-muted/50 rounded-md text-sm">
-            <strong className="text-purple-500 dark:text-purple-400">{item.name || item}</strong>
-            <span className="text-text-muted ml-2">{item.category || ''}</span>
-          </div>
-        )}
-        {mode === 'product' && !item && <div className="text-text-muted text-sm">Selecione um produto na sidebar</div>}
-
-        {mode === 'brand' && item?.type === 'brand' && (
-          <div className="p-3 bg-purple-500/5 border border-purple-500/20 rounded-md text-sm">
-            <div className="flex items-center gap-2 mb-1">
-              <strong className="text-purple-500">{item.name}</strong>
-              <Badge variant="secondary">{item.productCount} produtos</Badge>
-            </div>
-            <div className="text-text-secondary text-xs">{item.segment} - {item.strength}</div>
-          </div>
-        )}
-
-        {mode === 'category_mix' && (
-          <select value={selectedCategory} onChange={e => setSelectedCategory(e.target.value)} className="w-full h-9 px-3 text-sm border border-border rounded-md bg-surface-card text-text-primary">
-            {GamaDataService.getUniqueCategories().map(c => <option key={c} value={c}>{c}</option>)}
-          </select>
-        )}
-
-        {mode === 'institutional' && (
-          <div className="flex gap-2 flex-wrap">
-            {BrandExpert.themes.map(t => (
-              <Button key={t.id} variant={selectedThemeId === t.id ? 'default' : 'outline'} size="sm" onClick={() => setSelectedThemeId(t.id)} className={cn('text-left', selectedThemeId === t.id && 'bg-purple-600')}>
-                <div>
-                  <strong>{t.label}</strong>
-                  <div className="text-xs opacity-70 mt-0.5">{t.context.slice(0, 50)}...</div>
-                </div>
-              </Button>
-            ))}
-          </div>
-        )}
-      </div>
-
-      {/* Format + Angle + Persona */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
-        {[
-          { label: 'Formato', items: FORMATS, selected: selectedFormat, onSelect: setSelectedFormat },
-          { label: 'Ângulo', items: ANGLES, selected: selectedAngle, onSelect: setSelectedAngle },
-          { label: 'Persona', items: PERSONAS, selected: selectedPersona, onSelect: setSelectedPersona },
-        ].map(({ label, items, selected, onSelect }) => (
-          <div className="bg-surface-card border border-border rounded-lg p-4" key={label}>
-            <div className="text-xs font-semibold uppercase tracking-wider text-text-muted mb-3">{label}</div>
-            <div className="flex flex-col gap-1">
-              {items.map(f => (
-                <button
-                  key={f.id}
-                  className={cn(
-                    'w-full flex items-center gap-2 px-3 py-2 rounded-md text-sm text-left transition-all',
-                    selected === f.id
-                      ? 'bg-purple-600 text-white'
-                      : 'text-text-secondary hover:bg-muted/50'
-                  )}
-                  onClick={() => onSelect(f.id)}
-                >
-                  <span>{f.icon}</span> {f.label}
-                </button>
-              ))}
-            </div>
-          </div>
-        ))}
-      </div>
-
-      {/* Quick Content */}
-      <div className="flex gap-3 mb-3">
-        <Button variant="outline" onClick={handleQuickImage} disabled={isGenerating || ((mode === 'product' || mode === 'brand') && !item)} className="flex-1 h-10">
-          <Camera size={16} className="mr-2" /> Quick Image
-        </Button>
-        <Button variant="outline" onClick={handleQuickVideo} disabled={isGenerating || ((mode === 'product' || mode === 'brand') && !item)} className="flex-1 h-10">
-          <Video size={16} className="mr-2" /> Quick Video
-        </Button>
-      </div>
-
-      <Button onClick={handleGenerate} disabled={isGenerating || ((mode === 'product' || mode === 'brand') && !item)} className="w-full h-12 text-base bg-gradient-to-r from-purple-600 to-purple-800 hover:from-purple-500 hover:to-purple-700 text-white mb-6 shadow-md">
-        {isGenerating ? <><Loader2 size={18} className="animate-spin mr-2" />Gerando...</> : <><Sparkles size={18} className="mr-2" />Gerar Conteúdo Social</>}
-      </Button>
-
+      {/* ──────── RESULTADO ──────── */}
       {generatedContent && !isGenerating && (
-        <div className="fade-in">
-          <ContentDisplay content={generatedContent} selectedItem={item} />
-          {generatedContent.quality && <QualityPanel quality={generatedContent.quality} />}
-        </div>
+        <section className="fade-up paper-card overflow-hidden">
+          <span className="paint-band" style={{ background: 'var(--color-gama-amarelo)' }} />
+          <div className="p-6 space-y-6">
+            <div className="flex items-center gap-3">
+              <span className="numero">RESULTADO</span>
+              <div className="regua flex-1" />
+              <span className="eyebrow">{generatedContent.provider || 'IA'}</span>
+            </div>
+            <ContentDisplay content={generatedContent} selectedItem={item} />
+            {generatedContent.quality && <QualityPanel quality={generatedContent.quality} />}
+          </div>
+        </section>
       )}
     </div>
+  );
+}
+
+/* ──────────────────────────────────────────────────────────
+   Sub-componentes editorial
+   ────────────────────────────────────────────────────────── */
+
+function Section({ number, title, subtitle, children }) {
+  return (
+    <section>
+      <div className="flex items-center gap-3 mb-4">
+        <span className="numero whitespace-nowrap">No. {number}</span>
+        <div className="min-w-0">
+          <h2 className="display-lg" style={{ fontSize: 22 }}>{title}</h2>
+          {subtitle && (
+            <p className="text-xs mt-0.5" style={{ color: 'var(--color-text-muted)', fontStyle: 'italic' }}>{subtitle}</p>
+          )}
+        </div>
+        <div className="regua flex-1 ml-2" />
+      </div>
+      {children}
+    </section>
+  );
+}
+
+function SwatchPick({ active, onClick, color, code, label, hint }) {
+  return (
+    <button
+      onClick={onClick}
+      className={cn('stagger-item paper-card overflow-hidden text-left transition-all', active && 'shadow-[2px_2px_0_var(--color-ink)]')}
+      style={active ? { borderColor: 'var(--color-ink)', borderWidth: 2 } : {}}
+    >
+      <div className="h-20 flex items-end justify-between p-2.5" style={{ background: color }}>
+        <span className="mono text-[9px] font-bold" style={{ color: '#fff', opacity: 0.85, letterSpacing: '0.06em' }}>
+          {code}
+        </span>
+        <span className="mono text-[9px] font-bold" style={{ color: '#fff', opacity: 0.85, letterSpacing: '0.06em' }}>
+          {active ? '✓ ATIVO' : ''}
+        </span>
+      </div>
+      <div className="p-3">
+        <div className="display-md" style={{ fontSize: 16 }}>{label}</div>
+        <div className="text-[11px] text-text-muted mt-0.5">{hint}</div>
+      </div>
+    </button>
+  );
+}
+
+function SelectableRow({ active, onClick, icon, title, desc }) {
+  return (
+    <button
+      onClick={onClick}
+      className={cn(
+        'stagger-item flex items-start gap-3 p-3 text-left transition-all',
+        active ? 'shadow-[2px_2px_0_var(--color-ink)]' : 'hover:bg-[var(--color-paper-2)]'
+      )}
+      style={{
+        background: active ? 'var(--color-paper-2)' : 'transparent',
+        border: `1px solid ${active ? 'var(--color-ink)' : 'var(--color-rule)'}`,
+        borderRadius: 2,
+      }}
+    >
+      <span
+        className="flex items-center justify-center shrink-0"
+        style={{
+          width: 32, height: 32,
+          background: active ? 'var(--color-gama-amarelo)' : 'var(--color-paper-2)',
+          border: `1px solid ${active ? 'var(--color-ink)' : 'var(--color-rule)'}`,
+          borderRadius: 1, fontSize: 16,
+        }}
+      >
+        {icon}
+      </span>
+      <div className="flex-1 min-w-0">
+        <div className="text-sm font-semibold" style={{ fontFamily: 'var(--font-display)', letterSpacing: '-0.01em' }}>{title}</div>
+        {desc && <div className="text-[11px] text-text-muted mt-0.5 line-clamp-2">{desc}</div>}
+      </div>
+    </button>
+  );
+}
+
+function QuickButton({ onClick, disabled, Icon, label, code, hint }) {
+  return (
+    <button
+      onClick={onClick}
+      disabled={disabled}
+      className="paper-card p-4 text-left transition-all hover:translate-y-[-2px] disabled:opacity-40 disabled:cursor-not-allowed"
+    >
+      <div className="flex items-baseline justify-between">
+        <span className="display-md flex items-center gap-2" style={{ fontSize: 16 }}>
+          <Icon size={18} /> {label}
+        </span>
+        <span className="mono text-[9px] opacity-50">{code}</span>
+      </div>
+      <div className="text-xs text-text-muted mt-1">{hint}</div>
+    </button>
   );
 }
